@@ -124,10 +124,11 @@ h1{
 @media(max-width:980px){.metric-row{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.metric-row{grid-template-columns:1fr}.main{padding-left:16px;padding-right:16px}.card{border-radius:20px;padding:18px}}
 
+.codebox{background:#f3e7da;border-radius:15px;padding:14px;font-family:Consolas,monospace;font-size:14px;line-height:1.7;color:#4b4036;white-space:pre-wrap;overflow:auto}
 </style>
 </head>
 <body>
-<header class="header"><div class="nav"><div class="brand"><div class="logo">C</div><div><strong>本科 AI 学习工作台</strong><span>Claude Code · DeepSeek · Skills · MCP</span></div></div><div class="navlinks"><a href="#dashboard">仪表盘</a><a href="#arch">架构图</a><a href="#skills">Skills</a><a href="#downloads">下载</a><a href="#cases">案例</a><a href="#prompts">指令</a><a href="#security">安全</a><a href="#maintenance">维护</a></div></div></header>
+<header class="header"><div class="nav"><div class="brand"><div class="logo">C</div><div><strong>本科 AI 学习工作台</strong><span>Claude Code · DeepSeek · Skills · MCP</span></div></div><div class="navlinks"><a href="#dashboard">仪表盘</a><a href="#audience">适合谁</a><a href="#setup">安装配置</a><a href="#skills">Skills</a><a href="#downloads">下载</a><a href="#prompts">指令</a><a href="#security">安全</a><a href="#docs">文档</a></div></div></header>
 <main class="main">
 <section class="hero" id="top">
 <div><div class="badge">✓ 受控增强版 · 面向本科阶段的 AI 配置方案</div><h1>Claude Code 桌面端配置方案</h1><p class="lead">一套可维护的学习工作流：Claude 负责文档与作业，Codex 负责代码，Tavily 负责联网检索，百度地图 MCP 负责国内路线，AI-Sandbox 负责安全边界。</p><div class="btns"><a class="btn dark" href="#dashboard">查看当前状态</a><a class="btn light" href="#downloads">下载 Skills</a><a class="btn orange" href="#prompts">复制常用指令</a></div></div>
@@ -143,7 +144,46 @@ h1{
 <div class="card panel"><div class="status"><div><div class="icon">SEC</div><h3>AI-Sandbox</h3><p>input/output/backup/temp 结构，用于限制高权限工具操作范围。</p></div><span class="pill warn">安全区</span></div></div>
 </div></section>
 
+
+<section id="audience">
+  <p class="label">02 · Audience</p>
+  <h2>适合谁使用</h2>
+  <div class="grid g3">
+    <div class="card panel"><div class="icon">STU</div><h3>大学生</h3><p>适合需要完成实验报告、课程作业、PPT 汇报、调研报告、期末复习和 Python 学习的本科生。</p></div>
+    <div class="card panel"><div class="icon">LAB</div><h3>实验课高频用户</h3><p>适合经常需要把实验模板、实验指导书照片、数据表和实验图片整理成 Word 报告的人。</p></div>
+    <div class="card panel"><div class="icon">PY</div><h3>Python 初学者</h3><p>适合想用 Codex / Claude Code 学 Python、查报错、做练习、让 AI 审查代码的人。</p></div>
+  </div>
+</section>
+
 <section id="arch"><p class="label">02 · Architecture</p><h2>系统架构图</h2><div class="card"><div class="arch"><div class="grid"><div class="node"><strong>ChatGPT</strong><p>规划、解释、排错、长期学习建议</p></div><div class="node"><strong>Codex</strong><p>Python、代码调试、项目生成</p></div></div><div class="node center"><strong>Claude Code / 桌面端</strong><p>核心执行层：Skills、MCP、文档生成、项目工作区</p></div><div class="grid"><div class="node"><strong>Skills</strong><p>docx / pptx / xlsx / lab / exam / Python</p></div><div class="node"><strong>MCP</strong><p>Tavily 搜索 + 百度地图路线</p></div></div></div></div></section>
+
+
+<section id="setup">
+  <p class="label">Setup Guide</p>
+  <h2>Claude Code 从零安装配置流程</h2>
+  <div class="grid g2">
+    <div class="card"><h3>0. 建立固定工作区</h3><p>建议建立 Desktop\Code 和 AI-Sandbox，避免在系统目录里长期运行 Claude Code。</p><div class="codebox">Desktop\Code\
+├─ Python学习
+├─ 课程作业
+├─ 材料学习
+└─ AI-Sandbox
+   ├─ input
+   ├─ output
+   ├─ backup
+   └─ temp</div></div>
+    <div class="card"><h3>1. 安装并检查 Claude Code</h3><p>安装完成后用命令检查是否能正常启动。</p><div class="codebox">claude --version
+claude</div></div>
+    <div class="card"><h3>2. 配置认证方式</h3><p>官方 Claude 或第三方网关都可能需要环境变量。不要把真实 Key 写进网页或公开仓库。</p><div class="codebox">Get-ChildItem Env:ANTHROPIC* | Select-Object Name
+ANTHROPIC_API_KEY
+ANTHROPIC_AUTH_TOKEN
+ANTHROPIC_BASE_URL</div></div>
+    <div class="card"><h3>3. 写入长期指令</h3><p>CLAUDE.md 用来保存你的学习风格、安全规则和任务偏好。</p><div class="codebox">notepad "$env:USERPROFILE\.claude\CLAUDE.md"</div></div>
+    <div class="card"><h3>4. 安装 Skills</h3><p>Claude Code 本地放入 .claude/skills；桌面端在 Customize → Skills 上传 ZIP。</p><div class="codebox">C:\Users\你的用户名\.claude\skills\skill-name\SKILL.md</div></div>
+    <div class="card"><h3>5. 添加 MCP 工具</h3><p>优先使用 Remote MCP。Key 不要公开，截图前打码。</p><div class="codebox">claude mcp add --transport http --scope user tavily "https://mcp.tavily.com/mcp/?tavilyApiKey=你的Key"
+claude mcp add --transport http --scope user baidu-map "https://mcp.map.baidu.com/mcp?ak=你的AK"
+/mcp</div></div>
+  </div>
+</section>
 
 <section id="skills"><p class="label">03 · Skills</p><h2>Skills 能力地图</h2><div class="grid g2">
 <div class="card"><h3>文档生成</h3><div class="grid"><div class="skill"><div class="name">pptx</div>生成、读取、编辑 PPT。</div><div class="skill"><div class="name">docx</div>生成、读取、编辑 Word。</div><div class="skill"><div class="name">xlsx</div>生成、读取、编辑 Excel。</div><div class="skill"><div class="name">pdf</div>读取和整理 PDF。</div></div></div>
@@ -152,7 +192,7 @@ h1{
 <div class="card"><h3>学习与资料</h3><div class="grid"><div class="skill"><div class="name">pcep-python-tutor</div>Python 教学。</div><div class="skill"><div class="name">python-debug-explainer</div>报错解释和最小修改方案。</div><div class="skill"><div class="name">exam-review-planner</div>六级、Python、期末、专业课复习计划。</div><div class="skill"><div class="name">literature-source-summarizer</div>配合 Tavily 做资料来源整理。</div></div></div>
 </div></section>
 
-<section id="downloads"><p class="label">04 · Downloads</p><h2>Skills 下载区</h2><div class="card"><div class="download-toolbar"><p style="margin:0">下载后在 Claude 桌面端依次进入 <b>Customize → Skills → Upload a skill</b> 上传 ZIP。网页里的下载链接需要保持 <b>skills</b> 文件夹和本网页在同一目录。</p><div class="filters"><button class="filter active" data-filter="全部">全部</button><button class="filter" data-filter="实验报告">实验报告</button><button class="filter" data-filter="课程作业">课程作业</button><button class="filter" data-filter="学习复习">学习复习</button><button class="filter" data-filter="资料检索">资料检索</button></div></div><div class="grid g3" id="downloadGrid">
+<section id="downloads"><p class="label">04 · Downloads</p><h2>Skills 下载区</h2><div class="card"><div class="download-toolbar"><p style="margin:0">下载后在 Claude 桌面端依次进入 <b>Customize → Skills → Upload a skill</b> 上传 ZIP。网页里的下载链接需要保持 <b>skills</b> 文件夹和本网页在同一目录。</p><a class="btn dark" href="skills/all-skills-bundle.zip" download>下载全部 Skills</a><div class="filters"><button class="filter active" data-filter="全部">全部</button><button class="filter" data-filter="实验报告">实验报告</button><button class="filter" data-filter="课程作业">课程作业</button><button class="filter" data-filter="学习复习">学习复习</button><button class="filter" data-filter="资料检索">资料检索</button></div></div><div class="grid g3" id="downloadGrid">
     <article class="download-card" data-cat="课程作业">
       <div class="download-top">
         <span class="download-badge">课程作业</span>
@@ -276,14 +316,14 @@ h1{
 <section id="cases"><p class="label">05 · Cases</p><h2>真实场景展示</h2><div class="grid g4">
 <div class="card"><span class="case-tag">实验报告</span><h3>电工实验报告</h3><p>模板 + 实验照片 + 数据 → 识别目的、原理、器材、步骤 → 数据核查 → docx 生成 Word 初稿。</p></div>
 <div class="card"><span class="case-tag">课程作业</span><h3>调研任务</h3><p>先拆成 Word、PPT、Excel、讲稿，再分别生成文件，最后人工核验内容和格式。</p></div>
-<div class="card"><span class="case-tag">Python</span><h3>Python 学习</h3><p>pcep-python-tutor 学知识，Codex 写代码，python-debug-explainer 查报错，/grade 做审查。</p></div>
+<div class="card"><span class="case-tag">Python</span><h3>Python 学习</h3><p>Python 教学助手学知识，Codex 写代码，python-debug-explainer 查报错，/grade 做审查。</p></div>
 <div class="card"><span class="case-tag">旅游规划</span><h3>国内旅行</h3><p>Tavily 查攻略和开放时间，百度地图 MCP 查路线距离，Claude 整合成行程。</p></div>
 </div></section>
 
 <section id="workflow"><p class="label">06 · Workflow</p><h2>高频工作流</h2><div class="grid g2">
 <div class="card"><h3>课程作业</h3><div class="grid"><div class="flow"><span class="num">1</span>任务要求放入 Desktop\Code\课程作业。</div><div class="flow"><span class="num">2</span>使用 college-assignment-packager 拆任务。</div><div class="flow"><span class="num">3</span>调用 Word / PPT / Excel 对应 Skill。</div><div class="flow"><span class="num">4</span>生成文件并人工核查。</div></div></div>
 <div class="card"><h3>实验报告</h3><div class="grid"><div class="flow"><span class="num">1</span>模板、照片、数据放同一文件夹。</div><div class="flow"><span class="num">2</span>lab-report-writer 识别报告内容。</div><div class="flow"><span class="num">3</span>lab-data-calculation-checker 核查数据。</div><div class="flow"><span class="num">4</span>docx 生成 Word 初稿。</div></div></div>
-<div class="card"><h3>Python</h3><div class="grid"><div class="flow"><span class="num">1</span>项目放入 Python-Python学习。</div><div class="flow"><span class="num">2</span>学习知识点并写练习。</div><div class="flow"><span class="num">3</span>报错时解释和最小修复。</div><div class="flow"><span class="num">4</span>/grade 做导师式审查。</div></div></div>
+<div class="card"><h3>Python</h3><div class="grid"><div class="flow"><span class="num">1</span>项目放入 Python学习。</div><div class="flow"><span class="num">2</span>学习知识点并写练习。</div><div class="flow"><span class="num">3</span>报错时解释和最小修复。</div><div class="flow"><span class="num">4</span>/grade 做导师式审查。</div></div></div>
 <div class="card"><h3>旅游规划</h3><div class="grid"><div class="flow"><span class="num">1</span>Tavily 搜攻略、门票、开放时间。</div><div class="flow"><span class="num">2</span>百度地图 MCP 查距离路线。</div><div class="flow"><span class="num">3</span>生成不绕路、适合预算的行程。</div><div class="flow"><span class="num">4</span>附百度/高德地图链接。</div></div></div>
 </div></section>
 
@@ -319,6 +359,17 @@ h1{
 
 
 
+
+<section id="docs">
+  <p class="label">References</p>
+  <h2>官方文档入口</h2>
+  <div class="grid g3">
+    <div class="card"><h3>Claude Code 设置</h3><p>查询 settings、CLAUDE.md、权限、MCP、插件和配置层级。</p><a class="btn light" href="https://code.claude.com/docs/en/settings" target="_blank" rel="noreferrer">打开文档</a></div>
+    <div class="card"><h3>环境变量</h3><p>确认 ANTHROPIC_API_KEY、ANTHROPIC_AUTH_TOKEN、ANTHROPIC_BASE_URL 等变量含义。</p><a class="btn light" href="https://code.claude.com/docs/en/env-vars" target="_blank" rel="noreferrer">打开文档</a></div>
+    <div class="card"><h3>认证说明</h3><p>理解登录、API Key、Auth Token、OAuth Token 的优先级与适用范围。</p><a class="btn light" href="https://code.claude.com/docs/en/authentication" target="_blank" rel="noreferrer">打开文档</a></div>
+  </div>
+</section>
+
 <section id="maintenance">
   <p class="label">11 · Maintenance</p>
   <h2>后续维护建议</h2>
@@ -331,6 +382,16 @@ h1{
       <h3>把它当成个人 AI 工具说明书</h3>
       <p>这个网页不追求复杂前端效果，重点是记录真实可用的学习工作流，方便自己复盘，也方便之后分享给同学参考。</p>
     </div>
+  </div>
+</section>
+
+
+<section id="public-checklist">
+  <p class="label">Public Checklist</p>
+  <h2>公开前检查清单</h2>
+  <div class="grid g2">
+    <div class="card safe"><h3>可以公开</h3><p>Skills ZIP、使用说明、工作流、Prompt、README、SECURITY、CHANGELOG。</p></div>
+    <div class="card warnbox"><h3>不要公开</h3><p>API Key、百度地图 AK、Tavily Key、DeepSeek Key、手机号、账号、密钥截图、带 token 的配置文件。</p></div>
   </div>
 </section>
 
