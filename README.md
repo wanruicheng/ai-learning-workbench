@@ -61,3 +61,36 @@ CHANGELOG.md
 - Claude Code Settings: https://code.claude.com/docs/en/settings
 - Environment Variables: https://code.claude.com/docs/en/env-vars
 - Authentication: https://code.claude.com/docs/en/authentication
+
+## Claude 界面中文化
+
+本项目只提供社区汉化项目入口，不直接分发汉化包。使用前请自行检查项目来源、安装脚本和安全风险。
+
+参考：
+- https://github.com/javaht/claude-desktop-zh-cn
+- https://github.com/pheohu-42/Claude_zh-CN_LanguagePack
+- https://github.com/Jyy1529/claude-desktop_win-zh_cn
+
+## 新手友好版说明
+
+v10 增加了以下内容：
+
+- 新手前置须知
+- 小白术语词典
+- 10 分钟入门案例
+- Skill 极简使用卡片
+- 高频排错指南
+
+目标是让从未接触过 Claude Code / MCP / Skills 的用户，也能理解这套系统应该从哪里开始。
+
+## v11 完整新手教程
+
+本版进一步补齐“新手入门最后一公里”：
+
+- 新手零门槛前置准备
+- Key / AK 申请说明
+- 安装命令的预期效果与失败排查
+- Windows / macOS 操作差异
+- Skill 桌面端与 Claude Code 两种安装方式
+- Prompt 使用场景说明
+- 更完整的新手高频排错

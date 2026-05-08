@@ -125,6 +125,34 @@ h1{
 @media(max-width:560px){.metric-row{grid-template-columns:1fr}.main{padding-left:16px;padding-right:16px}.card{border-radius:20px;padding:18px}}
 
 .codebox{background:#f3e7da;border-radius:15px;padding:14px;font-family:Consolas,monospace;font-size:14px;line-height:1.7;color:#4b4036;white-space:pre-wrap;overflow:auto}
+
+.codebox{background:#f3e7da;border-radius:15px;padding:14px;font-family:Consolas,monospace;font-size:14px;line-height:1.7;color:#4b4036;white-space:pre-wrap;overflow:auto}
+.beginner-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:20px}
+.beginner-pill{border:1px solid #eadfd3;background:#fffdf9;border-radius:18px;padding:14px;box-shadow:0 10px 28px rgba(72,47,27,.06)}
+.beginner-pill b{display:block;color:#2f2a24;margin-bottom:5px}.beginner-pill span{font-size:12px;color:#786758;line-height:1.55}
+.term-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.term-card{border:1px solid #efe3d6;background:linear-gradient(180deg,#fffdf9,#fff8ef);border-radius:18px;padding:16px}
+.term-card code{font-family:Consolas,monospace;color:#b8663a;background:#f3e7da;border-radius:9px;padding:4px 7px;font-size:12px}
+.quick-case{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:10px;align-items:stretch}
+.quick-step{border:1px solid #eadfd3;background:#fffdf9;border-radius:18px;padding:16px;text-align:center;display:flex;flex-direction:column;justify-content:center;min-height:120px}
+.quick-step b{display:block;margin-bottom:7px}.quick-step span{font-size:13px;color:#716254;line-height:1.6}
+.quick-arrow{display:grid;place-items:center;color:#b8663a;font-size:24px;font-weight:900}
+.trouble-card{border:1px solid #efe3d6;background:#fffdf9;border-radius:18px;padding:16px}
+.trouble-card h3{display:flex;align-items:center;gap:8px}.trouble-card h3::before{content:"?";display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:#f0dfce;color:#b8663a;font-weight:900}
+.skill-use-card{border:1px solid #eadfd3;background:#fffdf9;border-radius:18px;padding:16px;display:grid;gap:10px}
+.skill-use-card .name{font-family:Consolas,monospace;color:#b8663a;font-weight:900}
+.skill-use-row{border-top:1px solid #efe3d6;padding-top:9px;font-size:13px;color:#65564a;line-height:1.6}.skill-use-row b{color:#2f2a24}
+.small-code{font-family:Consolas,monospace;background:#f3e7da;border-radius:12px;padding:10px;color:#4b4036;font-size:13px;line-height:1.65;white-space:pre-wrap}
+.level-badge{display:inline-flex;align-items:center;gap:6px;border-radius:999px;background:#edf1df;color:#587044;font-size:12px;font-weight:800;padding:6px 10px;margin-bottom:10px}
+.prepare-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.prepare-card{border:1px solid #efe3d6;background:linear-gradient(180deg,#fffdf9,#fff8ef);border-radius:18px;padding:16px}
+.step-detail{border:1px solid #eadfd3;background:#fffdf9;border-radius:20px;padding:18px}.step-detail .expect{margin-top:12px;border-left:4px solid #718e58;background:#f5f2e8;border-radius:12px;padding:11px 13px;color:#5d5146;font-size:14px;line-height:1.65}.step-detail .fail{margin-top:10px;border-left:4px solid #d97745;background:#fff8ed;border-radius:12px;padding:11px 13px;color:#5d5146;font-size:14px;line-height:1.65}
+.os-tabs,.install-compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.os-card,.compare-card{border:1px solid #efe3d6;background:#fffdf9;border-radius:18px;padding:16px}
+.key-flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:10px;align-items:stretch;margin-top:12px}.key-step{border:1px solid #eadfd3;background:#fffdf9;border-radius:16px;padding:14px;text-align:center;display:flex;flex-direction:column;justify-content:center;min-height:98px}.key-arrow{display:grid;place-items:center;color:#b8663a;font-size:22px;font-weight:900}
+.prompt-route{border:1px solid #efe3d6;background:#fffdf9;border-radius:18px;padding:16px}.prompt-route .tag2{display:inline-flex;border-radius:999px;background:#efe2d4;color:#7d6148;padding:5px 9px;font-size:12px;font-weight:800;margin-bottom:8px}
+.danger-line{border:1px solid #efc79e;background:#fff8ed;border-radius:16px;padding:14px;color:#5d5146;line-height:1.7}
+@media(max-width:980px){.beginner-strip,.term-grid,.prepare-grid,.os-tabs,.key-flow,.install-compare,.quick-case{grid-template-columns:1fr}.quick-arrow,.key-arrow{transform:rotate(90deg)}}
+
 </style>
 </head>
 <body>
@@ -158,6 +186,116 @@ h1{
 <section id="arch"><p class="label">02 · Architecture</p><h2>系统架构图</h2><div class="card"><div class="arch"><div class="grid"><div class="node"><strong>ChatGPT</strong><p>规划、解释、排错、长期学习建议</p></div><div class="node"><strong>Codex</strong><p>Python、代码调试、项目生成</p></div></div><div class="node center"><strong>Claude Code / 桌面端</strong><p>核心执行层：Skills、MCP、文档生成、项目工作区</p></div><div class="grid"><div class="node"><strong>Skills</strong><p>docx / pptx / xlsx / lab / exam / Python</p></div><div class="node"><strong>MCP</strong><p>Tavily 搜索 + 百度地图路线</p></div></div></div></div></section>
 
 
+
+<section id="prep">
+  <p class="label">Zero Step</p>
+  <h2>新手零门槛前置准备</h2>
+  <div class="card">
+    <p>这套方案不要求你一开始就全部装完。新手最稳路线是：先跑通 <b>Claude 桌面端 + Skills</b>，再配置 <b>Tavily / 百度地图 MCP</b>，最后再折腾自动化和更多工具。</p>
+    <div class="prepare-grid">
+      <div class="prepare-card">
+        <h3>必备工具</h3>
+        <p>Claude 桌面端、Claude Code、浏览器、PowerShell 或 macOS 终端、GitHub 账号。</p>
+        <div class="small-code">Windows：PowerShell
+macOS：Terminal / iTerm
+网页发布：GitHub Pages</div>
+      </div>
+      <div class="prepare-card">
+        <h3>可选账号与密钥</h3>
+        <p>DeepSeek / Anthropic 认证、Tavily Key、百度地图服务端 AK。没有这些也可以先跑通 Word/PPT/实验报告类 Skills。</p>
+        <div class="small-code">先跑通 Skills
+再配置 Tavily
+最后配置百度地图 MCP</div>
+      </div>
+      <div class="prepare-card">
+        <h3>最低门槛</h3>
+        <p>无需代码基础。只需要会解压、复制粘贴命令、上传 ZIP、保存文件和截图反馈。</p>
+        <div class="small-code">会复制命令
+会解压 zip
+会上传文件
+会截图反馈</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="beginner">
+  <p class="label">Beginner First</p>
+  <h2>新手前置须知</h2>
+  <div class="card">
+    <p>如果你完全没接触过 Claude Code、MCP、Skills，建议先不要追求“一次配置到完美”。先完成最小可用版本：上传文档类 Skills，跑通一个 10 分钟案例，再逐步添加联网和地图 MCP。</p>
+    <div class="beginner-strip">
+      <div class="beginner-pill"><b>第一阶段</b><span>只用 Claude 桌面端 + Word/PPT/Excel/实验报告 Skills。</span></div>
+      <div class="beginner-pill"><b>第二阶段</b><span>添加 Tavily，让 AI 可以搜索网页和整理资料来源。</span></div>
+      <div class="beginner-pill"><b>第三阶段</b><span>添加百度地图 MCP，用于国内地点、路线和距离查询。</span></div>
+      <div class="beginner-pill"><b>第四阶段</b><span>整理自己的工作区、Prompt、作业流程和安全规则。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="glossary">
+  <p class="label">Glossary</p>
+  <h2>小白术语词典</h2>
+  <div class="term-grid">
+    <div class="term-card"><h3>Claude Code</h3><p>可以读写项目文件、调用工具、辅助编程和生成文档的 AI 工作台。</p><code>claude</code></div>
+    <div class="term-card"><h3>Skill</h3><p>给 Claude 的专用工作说明书。它告诉 Claude 什么时候该怎么做某类任务。</p><code>SKILL.md</code></div>
+    <div class="term-card"><h3>MCP</h3><p>让 AI 调用外部工具的连接协议。简单理解：给 AI 接上搜索、地图、数据库等工具。</p><code>Model Context Protocol</code></div>
+    <div class="term-card"><h3>Tavily</h3><p>给 AI 用的联网搜索工具，适合查资料、读网页、整理来源。</p><code>Search MCP</code></div>
+    <div class="term-card"><h3>百度地图 AK</h3><p>百度地图开放平台的访问密钥。用于让地图 MCP 查询地点、距离和路线。</p><code>ak=你的AK</code></div>
+    <div class="term-card"><h3>API Key / Token</h3><p>访问某个服务的密钥。它相当于账号钥匙，不能公开、不能截图泄露。</p><code>不要公开</code></div>
+  </div>
+</section>
+
+<section id="quickstart">
+  <p class="label">Quick Start</p>
+  <h2>10 分钟新手入门案例</h2>
+  <div class="card">
+    <span class="level-badge">目标：先获得一次成功体验</span>
+    <h3>案例：生成一份课程报告大纲</h3>
+    <p>这个案例不需要 Tavily、不需要百度地图 MCP、不需要 API Key。只要 Claude 桌面端和 Word 类 Skill 能用，就能跑通。</p>
+    <div class="quick-case">
+      <div class="quick-step"><b>第 1 步</b><span>打开 Claude 桌面端，进入 Cowork 或 Code。</span></div>
+      <div class="quick-arrow">→</div>
+      <div class="quick-step"><b>第 2 步</b><span>输入一个简单任务：做一篇课程报告大纲。</span></div>
+      <div class="quick-arrow">→</div>
+      <div class="quick-step"><b>第 3 步</b><span>使用 word-college-report-writer 生成结构。</span></div>
+    </div>
+    <div class="small-code" style="margin-top:14px">使用 word-college-report-writer，帮我生成一篇《AI 工具对大学学习效率的影响》的课程报告大纲。要求包括研究背景、核心观点、案例、结论，不要直接生成最终 Word，先给我结构。</div>
+    <p>跑通后，再尝试实验报告、PPT、Excel、Tavily 检索等更复杂任务。</p>
+  </div>
+</section>
+
+<section id="key-apply">
+  <p class="label">Keys</p>
+  <h2>Key / AK 申请说明</h2>
+  <div class="grid g2">
+    <div class="card">
+      <h3>Tavily Key：给 AI 用的搜索钥匙</h3>
+      <p>用于让 Claude Code 调用 Tavily 搜索网页、提取资料。注册 Tavily 后进入 API Keys 页面创建 Key。</p>
+      <div class="key-flow">
+        <div class="key-step"><b>注册 Tavily</b><span>进入 Tavily 官网或控制台</span></div>
+        <div class="key-arrow">→</div>
+        <div class="key-step"><b>创建 API Key</b><span>复制 Key，先存在本地安全位置</span></div>
+        <div class="key-arrow">→</div>
+        <div class="key-step"><b>添加 MCP</b><span>URL 中使用 tavilyApiKey=你的Key</span></div>
+      </div>
+      <div class="danger-line" style="margin-top:14px">提醒：如果 Tavily Key 曾经被公开过，请重新生成新 Key，旧 Key 不建议继续使用。</div>
+    </div>
+    <div class="card">
+      <h3>百度地图 AK：给地图 MCP 用的钥匙</h3>
+      <p>用于查询国内地点、距离、路线。创建应用时建议选择“服务端 AK”，不要用浏览器端 AK。</p>
+      <div class="key-flow">
+        <div class="key-step"><b>进入百度地图开放平台</b><span>控制台 → 应用管理</span></div>
+        <div class="key-arrow">→</div>
+        <div class="key-step"><b>创建服务端应用</b><span>类型选服务端，开启所需服务</span></div>
+        <div class="key-arrow">→</div>
+        <div class="key-step"><b>复制 AK</b><span>添加到百度地图 MCP URL</span></div>
+      </div>
+      <div class="danger-line" style="margin-top:14px">常见错误：用成浏览器端 AK、应用被删除、IP 白名单限制、服务权限没开。</div>
+    </div>
+  </div>
+</section>
+
 <section id="setup">
   <p class="label">Setup Guide</p>
   <h2>Claude Code 从零安装配置流程</h2>
@@ -185,12 +323,68 @@ claude mcp add --transport http --scope user baidu-map "https://mcp.map.baidu.co
   </div>
 </section>
 
+
+<section id="install-details">
+  <p class="label">Install Details</p>
+  <h2>安装命令：怎么判断成功，失败怎么办</h2>
+  <div class="grid g2">
+    <div class="step-detail"><h3>1. 检查 Claude Code 是否可用</h3><div class="codebox">claude --version
+claude</div><div class="expect"><b>预期效果：</b>第一行显示版本号；运行 claude 后能进入 Claude Code 欢迎界面。</div><div class="fail"><b>失败怎么办：</b>如果提示“不是内部或外部命令”，通常是 Claude Code 没安装好或 PATH 没生效。重新打开 PowerShell，仍失败就重新安装。</div></div>
+    <div class="step-detail"><h3>2. 检查 MCP 状态</h3><div class="codebox">claude
+/mcp</div><div class="expect"><b>预期效果：</b>能看到 tavily、baidu-map 等工具，状态为 connected / authenticated。</div><div class="fail"><b>失败怎么办：</b>如果 disconnected，先检查 URL、Key/AK、网络和服务端地址。不要急着重装所有东西。</div></div>
+    <div class="step-detail"><h3>3. 添加 Tavily Remote MCP</h3><div class="codebox">claude mcp add --transport http --scope user tavily "https://mcp.tavily.com/mcp/?tavilyApiKey=你的Key"</div><div class="expect"><b>预期效果：</b>重启 Claude Code 后输入 /mcp，Tavily 显示 connected / authenticated。</div><div class="fail"><b>失败怎么办：</b>检查 Key 有没有复制完整；不要带空格；Key 泄露过就重新生成。</div></div>
+    <div class="step-detail"><h3>4. 添加百度地图 MCP</h3><div class="codebox">claude mcp add --transport http --scope user baidu-map "https://mcp.map.baidu.com/mcp?ak=你的AK"</div><div class="expect"><b>预期效果：</b>能查询地点，例如“贵阳甲秀楼到贵州大学的路线和距离”。</div><div class="fail"><b>失败怎么办：</b>提示 AK 有误时，优先检查是否为“服务端 AK”，不要用浏览器端 AK。</div></div>
+  </div>
+</section>
+
+<section id="os-diff">
+  <p class="label">Windows / macOS</p>
+  <h2>Windows 和 macOS 的操作差异</h2>
+  <div class="os-tabs">
+    <div class="os-card"><h3>Windows</h3><p>推荐使用 PowerShell。路径通常是 <b>C:\Users\你的用户名</b>，用户级 Skills 目录为 <b>.claude\skills</b>。</p><div class="codebox">cd "$env:USERPROFILE\Desktop\Code"
+claude</div></div>
+    <div class="os-card"><h3>macOS</h3><p>推荐使用 Terminal 或 iTerm。路径通常是 <b>/Users/你的用户名</b>，用户级 Skills 目录为 <b>~/.claude/skills</b>。</p><div class="codebox">cd ~/Desktop/Code
+claude</div></div>
+  </div>
+</section>
+
 <section id="skills"><p class="label">03 · Skills</p><h2>Skills 能力地图</h2><div class="grid g2">
 <div class="card"><h3>文档生成</h3><div class="grid"><div class="skill"><div class="name">pptx</div>生成、读取、编辑 PPT。</div><div class="skill"><div class="name">docx</div>生成、读取、编辑 Word。</div><div class="skill"><div class="name">xlsx</div>生成、读取、编辑 Excel。</div><div class="skill"><div class="name">pdf</div>读取和整理 PDF。</div></div></div>
 <div class="card"><h3>课程作业</h3><div class="grid"><div class="skill"><div class="name">college-assignment-packager</div>大作业总控拆解。</div><div class="skill"><div class="name">ppt-course-presentation-designer</div>PPT 大纲、页面结构、演讲备注。</div><div class="skill"><div class="name">word-college-report-writer</div>课程报告、调研报告、读书报告。</div><div class="skill"><div class="name">excel-data-cleaning-assistant</div>问卷、统计表、实验数据整理。</div></div></div>
 <div class="card"><h3>实验报告</h3><div class="grid"><div class="skill"><div class="name">lab-report-writer</div>实验目的、原理、器材、步骤、图表说明、Word 初稿。</div><div class="skill"><div class="name">lab-data-calculation-checker</div>数据、单位、公式、误差、结论一致性核查。</div></div></div>
 <div class="card"><h3>学习与资料</h3><div class="grid"><div class="skill"><div class="name">pcep-python-tutor</div>Python 教学。</div><div class="skill"><div class="name">python-debug-explainer</div>报错解释和最小修改方案。</div><div class="skill"><div class="name">exam-review-planner</div>六级、Python、期末、专业课复习计划。</div><div class="skill"><div class="name">literature-source-summarizer</div>配合 Tavily 做资料来源整理。</div></div></div>
 </div></section>
+
+
+<section id="skill-install">
+  <p class="label">Skill Install</p>
+  <h2>Skill 怎么安装：桌面端 vs Claude Code</h2>
+  <div class="install-compare">
+    <div class="compare-card"><h3>Claude 桌面端 / Cowork</h3><p>适合图形界面用户。下载 ZIP 后，不要解压，直接上传。</p><div class="codebox">Customize
+→ Skills
+→ Upload a skill
+→ 选择 skill-name.zip</div><div class="expect"><b>成功表现：</b>在 Skills 列表里能看到对应 Skill，聊天时可以说“使用 lab-report-writer”。</div></div>
+    <div class="compare-card"><h3>PowerShell / Claude Code</h3><p>适合本地项目和排错。Skill 本质是一个文件夹加 SKILL.md。</p><div class="codebox">C:\Users\你的用户名\.claude\skills\skill-name\SKILL.md
+
+macOS:
+~/.claude/skills/skill-name/SKILL.md</div><div class="expect"><b>成功表现：</b>重启 Claude Code 或 reload 后，能按 Skill 名称调用。</div></div>
+  </div>
+  <div class="danger-line" style="margin-top:14px">常见错误：把 SKILL.md 单独放在 ZIP 根目录，或解压后只上传 SKILL.md。正确结构应是：skill-name/SKILL.md。</div>
+</section>
+
+
+<section id="skill-usage">
+  <p class="label">Skill Usage</p>
+  <h2>Skill 下载后的极简用法</h2>
+  <div class="grid g3">
+    <div class="skill-use-card"><div class="name">lab-report-writer</div><div class="skill-use-row"><b>什么时候用：</b>实验报告、实验指导书照片、模板、数据、图片。</div><div class="skill-use-row"><b>输入要求：</b>模板、实验照片、实验数据、实验名称。</div><div class="skill-use-row"><b>输出效果：</b>目的、原理、器材、步骤、图表说明、Word 初稿结构。</div><div class="small-code">使用 lab-report-writer，只完成实验二。先识别目的、原理、器材、步骤，不要编造数据。</div></div>
+    <div class="skill-use-card"><div class="name">lab-data-calculation-checker</div><div class="skill-use-row"><b>什么时候用：</b>报告提交前检查数据、单位、误差、公式。</div><div class="skill-use-row"><b>输入要求：</b>数据表、公式、实验要求、理论值。</div><div class="skill-use-row"><b>输出效果：</b>计算过程、误差分析、需核对项。</div><div class="small-code">使用 lab-data-calculation-checker，检查这些数据有没有列填错、单位错误、公式错误。</div></div>
+    <div class="skill-use-card"><div class="name">word-college-report-writer</div><div class="skill-use-row"><b>什么时候用：</b>课程报告、读书报告、调研报告。</div><div class="skill-use-row"><b>输入要求：</b>题目、字数、老师要求、参考资料。</div><div class="skill-use-row"><b>输出效果：</b>报告结构、正文草稿、摘要、结论。</div><div class="small-code">使用 word-college-report-writer，先给我课程报告结构，确认后再写正文。</div></div>
+    <div class="skill-use-card"><div class="name">ppt-course-presentation-designer</div><div class="skill-use-row"><b>什么时候用：</b>课程汇报、小组展示、答辩 PPT。</div><div class="skill-use-row"><b>输入要求：</b>主题、时长、页数、听众、材料。</div><div class="skill-use-row"><b>输出效果：</b>PPT 大纲、每页标题、要点、图表建议。</div><div class="small-code">使用 ppt-course-presentation-designer，帮我设计 8 页课程汇报 PPT 大纲。</div></div>
+    <div class="skill-use-card"><div class="name">exam-review-planner</div><div class="skill-use-row"><b>什么时候用：</b>六级、Python、期末、专业课复习。</div><div class="skill-use-row"><b>输入要求：</b>考试日期、目标分数、每天可用时间、薄弱点。</div><div class="skill-use-row"><b>输出效果：</b>每日任务、检查标准、复盘方式。</div><div class="small-code">使用 exam-review-planner，帮我制定 14 天电工期末复习计划。</div></div>
+    <div class="skill-use-card"><div class="name">literature-source-summarizer</div><div class="skill-use-row"><b>什么时候用：</b>调研报告、资料搜集、引用来源整理。</div><div class="skill-use-row"><b>输入要求：</b>主题、时间范围、优先来源类型。</div><div class="skill-use-row"><b>输出效果：</b>来源、观点、数据、可信度、适合写入位置。</div><div class="small-code">使用 literature-source-summarizer，并调用 Tavily 搜索近五年资料。</div></div>
+  </div>
+</section>
 
 <section id="downloads"><p class="label">04 · Downloads</p><h2>Skills 下载区</h2><div class="card"><div class="download-toolbar"><p style="margin:0">下载后在 Claude 桌面端依次进入 <b>Customize → Skills → Upload a skill</b> 上传 ZIP。网页里的下载链接需要保持 <b>skills</b> 文件夹和本网页在同一目录。</p><a class="btn dark" href="skills/all-skills-bundle.zip" download>下载全部 Skills</a><div class="filters"><button class="filter active" data-filter="全部">全部</button><button class="filter" data-filter="实验报告">实验报告</button><button class="filter" data-filter="课程作业">课程作业</button><button class="filter" data-filter="学习复习">学习复习</button><button class="filter" data-filter="资料检索">资料检索</button></div></div><div class="grid g3" id="downloadGrid">
     <article class="download-card" data-cat="课程作业">
@@ -327,6 +521,17 @@ claude mcp add --transport http --scope user baidu-map "https://mcp.map.baidu.co
 <div class="card"><h3>旅游规划</h3><div class="grid"><div class="flow"><span class="num">1</span>Tavily 搜攻略、门票、开放时间。</div><div class="flow"><span class="num">2</span>百度地图 MCP 查距离路线。</div><div class="flow"><span class="num">3</span>生成不绕路、适合预算的行程。</div><div class="flow"><span class="num">4</span>附百度/高德地图链接。</div></div></div>
 </div></section>
 
+
+<section id="prompt-route">
+  <p class="label">Where to Use</p>
+  <h2>这些 Prompt 应该在哪用</h2>
+  <div class="grid g3">
+    <div class="prompt-route"><span class="tag2">Cowork / 桌面端</span><h3>适合文档和作业</h3><p>课程报告、实验报告、PPT 大纲、资料整理、普通聊天都可以在这里做。</p></div>
+    <div class="prompt-route"><span class="tag2">Code / Claude Code</span><h3>适合文件和工具调用</h3><p>需要读取文件夹、生成 Word/PPT/Excel、调用 MCP、处理项目文件时优先用 Code。</p></div>
+    <div class="prompt-route"><span class="tag2">PowerShell</span><h3>适合安装和排错</h3><p>添加 MCP、检查 /mcp、处理环境变量、运行本地命令和排查路径问题时用 PowerShell。</p></div>
+  </div>
+</section>
+
 <section id="prompts"><p class="label">07 · Prompts</p><h2>一键复制 Prompt</h2><div class="grid g2">
 <div class="prompt"><button class="copy">复制</button><h3>实验报告开头</h3><pre>使用 lab-report-writer，只完成本次实验报告。请先识别模板和实验指导书内容，不要编造数据；先整理目的、原理、器材、步骤和图表说明，等我确认后再生成 Word。</pre></div>
 <div class="prompt"><button class="copy">复制</button><h3>实验数据核查</h3><pre>使用 lab-data-calculation-checker，检查这组实验数据有没有列填错、单位错误、公式错误，并生成适合手写的数据处理过程。</pre></div>
@@ -349,6 +554,24 @@ claude mcp add --transport http --scope user baidu-map "https://mcp.map.baidu.co
 <div class="titem"><h3>05 接入 Tavily 与百度地图 MCP</h3><p>实现资料检索与国内路线查询。</p></div>
 <div class="titem"><h3>06 实验报告工作流跑通</h3><p>模板 + 照片 + 数据 → Word 初稿，证明配置具备真实生产力。</p></div>
 </div></section>
+
+
+<section id="troubleshooting">
+  <p class="label">Troubleshooting</p>
+  <h2>新手高频排错指南</h2>
+  <div class="grid g2">
+    <div class="trouble-card"><h3>claude 命令不识别</h3><p>先确认 Claude Code 是否安装成功；重新打开 PowerShell；运行 <b>claude --version</b>。如果仍失败，检查 PATH 或重新安装。</p></div>
+    <div class="trouble-card"><h3>MCP 显示 disconnected</h3><p>先运行 <b>/mcp</b> 看状态；确认 URL、Key、AK 是否正确；Remote MCP 优先检查网络和服务端地址。</p></div>
+    <div class="trouble-card"><h3>百度地图提示 AK 有误</h3><p>确认创建的是“服务端 AK”，不是浏览器端 AK；确认应用没被删除，IP 白名单和服务权限没有限制。</p></div>
+    <div class="trouble-card"><h3>Tavily 无法搜索</h3><p>确认 Tavily Key 没写错，URL 中参数完整；如果 Key 曾经公开过，建议重新生成新 Key。</p></div>
+    <div class="trouble-card"><h3>Skill 上传后看不到</h3><p>确认上传的是 ZIP，且 ZIP 内部包含 skill-name/SKILL.md；不要只把 SKILL.md 放在 ZIP 根目录。</p></div>
+    <div class="trouble-card"><h3>生成 Word/PPT 失败</h3><p>先让 Claude 只分析模板和结构，不要一步生成最终文件；确认输出目录存在，不覆盖原模板。</p></div>
+    <div class="trouble-card"><h3>生成的文件找不到</h3><p>让 Claude 明确保存到 output 文件夹；生成前先创建 output；不要只说“帮我生成”，要指定文件名和路径。</p></div>
+    <div class="trouble-card"><h3>GitHub Pages 没更新</h3><p>确认仓库里的 index.html 已更新；等待 Pages 部署完成；用 Ctrl+F5 或在网址后加 ?v=11 强制刷新。</p></div>
+    <div class="trouble-card"><h3>PowerShell 权限不足</h3><p>用户级设置优先，不要随便改 Machine 级环境变量；需要管理员权限时先确认命令风险。</p></div>
+    <div class="trouble-card"><h3>Windows 和 macOS 路径混乱</h3><p>Windows 用反斜杠和 PowerShell；macOS 用斜杠和 Terminal。不会写路径时，把文件夹拖到终端里获取路径。</p></div>
+  </div>
+</section>
 
 <section id="faq"><p class="label">10 · FAQ</p><h2>常见问题</h2><div class="grid g2">
 <div class="faq"><h3>这个项目技术复杂吗？</h3><p>不复杂。它的价值不在前端技术，而在于真实、可复用的 AI 学习工作流。</p></div>
