@@ -169,10 +169,31 @@ h1{
 .callout-copy{border:1px solid #d8d5bd;background:#f5f2e8;border-radius:16px;padding:13px 14px;color:#5d5146;line-height:1.7;margin:12px 0}
 @media(max-width:980px){.start-grid,.cn-list{grid-template-columns:1fr}}
 
+
+/* v15 remote agent polish */
+.remote-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:14px}
+.remote-card{border:1px solid #eadfd3;background:linear-gradient(180deg,#fffdf9,#fff8ef);border-radius:20px;padding:16px;box-shadow:0 12px 32px rgba(72,47,27,.07)}
+.remote-card h3{margin-bottom:8px}.remote-card p{color:#65564a;line-height:1.7}
+.remote-flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;gap:10px;align-items:stretch;margin-top:16px}
+.remote-node{border:1px solid #efe3d6;background:#fffdf9;border-radius:18px;padding:14px;text-align:center;display:flex;flex-direction:column;justify-content:center;min-height:94px}
+.remote-node b{display:block;color:#2f2a24;margin-bottom:6px}.remote-node span{font-size:12px;color:#786758;line-height:1.55}
+.remote-arrow{display:grid;place-items:center;color:#b8663a;font-size:24px;font-weight:900}
+.rule-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px}
+.rule-item{border:1px solid #efe3d6;background:#fffdf9;border-radius:15px;padding:12px;color:#5f5147;line-height:1.65;font-size:14px}
+.agent-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:14px}
+.agent-card{border:1px solid #eadfd3;background:#fffdf9;border-radius:20px;padding:16px}
+.agent-card .agent-name{font-family:Consolas,monospace;color:#b8663a;font-weight:900;margin-bottom:8px}
+.agent-card ul{margin:8px 0 0 18px;color:#65564a;line-height:1.7}
+.remote-prompt{border:1px solid #efe3d6;background:#fffdf9;border-radius:18px;padding:16px}
+.remote-prompt h3{margin-bottom:8px}
+.remote-prompt pre{white-space:pre-wrap;background:#f3e7da;border-radius:14px;padding:12px;line-height:1.65;overflow:auto;color:#4b4036;font-family:Consolas,monospace;font-size:13px}
+.status-pill{display:inline-flex;align-items:center;border-radius:999px;background:#edf1df;color:#587044;font-size:12px;font-weight:800;padding:6px 10px;margin-right:6px;margin-bottom:8px}
+@media(max-width:980px){.remote-grid,.remote-flow,.rule-list,.agent-grid{grid-template-columns:1fr}.remote-arrow{transform:rotate(90deg)}}
+
 </style>
 </head>
 <body>
-<header class="header"><div class="nav"><div class="brand"><div class="logo">C</div><div><strong>本科 AI 学习工作台</strong><span>Claude Code · DeepSeek · Skills · MCP</span></div></div><div class="navlinks"><a href="#top">总览</a><a href="#start-here">从哪开始</a><a href="#quickstart">试跑</a><a href="#setup">教程</a><a href="#downloads">下载</a><a href="#troubleshooting">排错</a><a href="#security">安全</a></div></div></header>
+<header class="header"><div class="nav"><div class="brand"><div class="logo">C</div><div><strong>本科 AI 学习工作台</strong><span>Claude Code · DeepSeek · Skills · MCP</span></div></div><div class="navlinks"><a href="#top">总览</a><a href="#start-here">从哪开始</a><a href="#quickstart">试跑</a><a href="#setup">教程</a><a href="#downloads">下载</a><a href="#remote-control">远程</a><a href="#troubleshooting">排错</a><a href="#security">安全</a></div></div></header>
 <main class="main">
 <section class="hero" id="top">
 <div><div class="badge">✓ 受控增强版 · 面向本科阶段的 AI 配置方案</div><h1>Claude Code 桌面端配置方案</h1><p class="lead">一套可维护的学习工作流：Claude 负责文档与作业，Codex 负责代码，Tavily 负责联网检索，百度地图 MCP 负责国内路线，AI-Sandbox 负责安全边界。</p><div class="btns"><a class="btn dark" href="#start-here">从哪开始</a><a class="btn light" href="#downloads">下载 Skills</a><a class="btn orange" href="#prompts">复制常用指令</a></div></div>
@@ -591,6 +612,139 @@ macOS:
 <div class="prompt"><button class="copy">复制</button><h3>路线规划</h3><pre>请先使用 Tavily 搜索景点信息，再使用百度地图 MCP 查询路线和距离，最后生成适合大学生预算、不太赶的行程，并附地图查看链接。</pre></div>
 </div></section>
 
+
+
+<section id="remote-control">
+  <p class="label">Remote Control</p>
+  <h2>进阶：微信远程控制 Claude Code</h2>
+  <div class="card">
+    <p>这部分适合已经完成基础配置、并希望在手机上远程查看进度、发起只读检查、生成学习文件或维护项目的用户。推荐把它当成“手机遥控器”，而不是全权限远程电脑控制器。</p>
+    <div class="remote-flow">
+      <div class="remote-node"><b>微信</b><span>手机发指令</span></div>
+      <div class="remote-arrow">→</div>
+      <div class="remote-node"><b>cc-connect</b><span>消息桥接服务</span></div>
+      <div class="remote-arrow">→</div>
+      <div class="remote-node"><b>Claude Code</b><span>电脑终端执行</span></div>
+      <div class="remote-arrow">→</div>
+      <div class="remote-node"><b>项目目录</b><span>只操作指定工作区</span></div>
+    </div>
+    <div style="margin-top:16px">
+      <span class="status-pill">已验证：微信消息可达</span>
+      <span class="status-pill">已验证：只读检查</span>
+      <span class="status-pill">已验证：轻量写入</span>
+      <span class="status-pill">建议：保持 plan 模式</span>
+    </div>
+  </div>
+
+  <div class="remote-grid">
+    <div class="remote-card">
+      <h3>适合做什么</h3>
+      <p>远程总结项目结构、检查隐私泄露风险、维护 README / CHANGELOG、生成 Python 练习、整理实验报告结构、生成 Word / PPT 初稿。</p>
+    </div>
+    <div class="remote-card">
+      <h3>不适合做什么</h3>
+      <p>不建议远程删除文件、操作整个 C 盘、修改系统环境变量、读取密钥文件、自动 git push、运行未知脚本或安装陌生包。</p>
+    </div>
+    <div class="remote-card">
+      <h3>推荐目录</h3>
+      <p>建议只绑定 <b>Desktop\Code</b> 下的具体项目目录，例如 ai-learning-workbench、Python学习、实验报告，不要绑定整个桌面。</p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>远程安全规则</h3>
+    <div class="rule-list">
+      <div class="rule-item">只允许操作当前项目目录，不操作系统目录、下载目录和整个桌面。</div>
+      <div class="rule-item">默认禁止读取 .env、settings.json、claude_desktop_config.json。</div>
+      <div class="rule-item">不允许回传 API Key、AK、Token、Cookie、账号密码。</div>
+      <div class="rule-item">修改文件前必须先给计划，并等待确认执行。</div>
+      <div class="rule-item">修改前先备份到 backup 文件夹，输出统一放 output 文件夹。</div>
+      <div class="rule-item">禁止执行 git push、npm publish、format、del、rm -rf 等高风险命令。</div>
+    </div>
+  </div>
+</section>
+
+<section id="remote-prompts">
+  <p class="label">Remote Prompts</p>
+  <h2>微信远程常用提示词</h2>
+  <div class="grid g2">
+    <div class="remote-prompt">
+      <h3>只读项目检查</h3>
+      <pre>请总结当前项目目录结构，不要修改任何文件。
+
+要求：
+1. 说明每个主要文件夹和文件的作用。
+2. 判断这个项目当前适合做什么。
+3. 如果发现明显问题，只给建议，不要执行修改。</pre>
+    </div>
+    <div class="remote-prompt">
+      <h3>隐私泄露检查</h3>
+      <pre>请检查当前项目是否有隐私泄露风险。
+
+重点检查 API Key、AK、Token、Cookie、账号密码、手机号、邮箱、.env、settings.json、claude_desktop_config.json。
+
+要求：
+只读分析，不要修改文件。如果发现风险，只告诉我文件名和风险类型，不要回传密钥原文。</pre>
+    </div>
+    <div class="remote-prompt">
+      <h3>先给计划</h3>
+      <pre>请根据刚才的建议，给出一个修改计划。
+
+要求：
+1. 列出准备修改哪些文件。
+2. 说明每个文件为什么要改。
+3. 说明预期效果。
+4. 暂时不要执行修改。
+5. 等我回复“确认执行”后再开始。</pre>
+    </div>
+    <div class="remote-prompt">
+      <h3>生成 Word / PPT 初稿</h3>
+      <pre>请读取 input 文件夹里的资料，整理一份 Word / PPT 初稿结构。
+
+要求：
+1. 先总结看到了哪些输入文件。
+2. 先给结构，不要直接生成最终文件。
+3. 不要编造数据。
+4. 不要覆盖 input 原始文件。
+5. 等我确认后再输出到 output 文件夹。</pre>
+    </div>
+  </div>
+</section>
+
+<section id="subagents-hooks">
+  <p class="label">Subagents / Hooks</p>
+  <h2>进阶：Subagents 与 Hooks</h2>
+  <div class="card">
+    <p>Subagents 适合把复杂任务拆给专门助手处理；Hooks 适合做自动提醒、拦截和安全守护。当前建议是：先使用 Subagents，Hooks 暂时只设计方案，不急着启用。</p>
+    <div class="agent-grid">
+      <div class="agent-card">
+        <div class="agent-name">security-reviewer</div>
+        <p>专门检查隐私泄露、敏感文件、危险命令、路径越界和 GitHub 发布风险。</p>
+        <ul><li>只读分析</li><li>不回传密钥原文</li><li>只输出风险类型和建议</li></ul>
+      </div>
+      <div class="agent-card">
+        <div class="agent-name">project-maintainer</div>
+        <p>专门维护 README、CHANGELOG、SECURITY、index.html 结构说明和发布说明。</p>
+        <ul><li>先给计划</li><li>修改前备份</li><li>不执行 git push</li></ul>
+      </div>
+      <div class="agent-card">
+        <div class="agent-name">study-file-planner</div>
+        <p>专门规划 Word、PPT、实验报告、Python 学习文件和 input / output / backup 结构。</p>
+        <ul><li>先给结构</li><li>不覆盖原始文件</li><li>输出统一放 output</li></ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>当前建议路线</h3>
+    <div class="rule-list">
+      <div class="rule-item">先在 cc-connect-test 测试目录验证 Subagents。</div>
+      <div class="rule-item">确认稳定后，再复制到 ai-learning-workbench 项目。</div>
+      <div class="rule-item">Hooks 先只做安全方案，不急着启用自动拦截。</div>
+      <div class="rule-item">远程微信入口继续保持 plan 模式，修改前必须确认。</div>
+    </div>
+  </div>
+</section>
 
 <section id="china-note">
   <p class="label">国内用户提醒</p>

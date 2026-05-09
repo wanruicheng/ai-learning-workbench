@@ -118,3 +118,13 @@ v10 增加了以下内容：
 - 新增国内用户使用说明
 - 新增纯小白 FAQ 三问
 - 优化首页按钮跳转目标
+
+## v15 远程控制与 Subagents 版
+
+本版新增：
+
+- 微信 + cc-connect + Claude Code 远程控制说明
+- 远程安全规则
+- 微信远程常用提示词
+- Subagents 说明：security-reviewer、project-maintainer、study-file-planner
+- Hooks 路线建议：先设计方案，不急着启用
