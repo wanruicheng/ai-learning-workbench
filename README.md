@@ -128,3 +128,20 @@ v10 增加了以下内容：
 - 微信远程常用提示词
 - Subagents 说明：security-reviewer、project-maintainer、study-file-planner
 - Hooks 路线建议：先设计方案，不急着启用
+
+## v16 cc-connect 微信远程教程版
+
+- 补充 cc-connect 接入微信完整流程
+- 新增项目设置建议：Claudecode、工作目录、plan 模式
+- 新增 localhost / PATH / 微信重绑等常见排错
+- 扩充微信远程常用提示词收藏
+
+## v17 远程安全与 Subagents / Hooks 版
+
+本版新增：
+
+- 远程安全规则完整板块
+- 可复制的微信远程安全前缀
+- Subagents 配置说明与创建提示词
+- security-reviewer / project-maintainer / study-file-planner 测试指令
+- Hooks 安全方案说明：先设计，不急着启用

@@ -190,10 +190,42 @@ h1{
 .status-pill{display:inline-flex;align-items:center;border-radius:999px;background:#edf1df;color:#587044;font-size:12px;font-weight:800;padding:6px 10px;margin-right:6px;margin-bottom:8px}
 @media(max-width:980px){.remote-grid,.remote-flow,.rule-list,.agent-grid{grid-template-columns:1fr}.remote-arrow{transform:rotate(90deg)}}
 
+
+/* v16 cc-connect guide */
+.guide-steps{display:grid;gap:12px;margin-top:14px}
+.guide-step{display:grid;grid-template-columns:52px 1fr;gap:12px;border:1px solid #eadfd3;background:#fffdf9;border-radius:18px;padding:14px}
+.guide-num{width:38px;height:38px;border-radius:14px;background:#c87142;color:#fff;display:grid;place-items:center;font-weight:900}
+.cmd-box{font-family:Consolas,monospace;background:#2f2a24;color:#fff4e8;border-radius:14px;padding:12px;margin-top:10px;white-space:pre-wrap;overflow:auto;line-height:1.6;font-size:13px}
+.warn-box{border:1px solid #efc79e;background:#fff8ed;border-radius:18px;padding:14px;color:#654b36;line-height:1.7;margin-top:12px}
+.prompt-library,.trouble-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
+.prompt-card,.trouble-card{border:1px solid #eadfd3;background:#fffdf9;border-radius:18px;padding:16px;line-height:1.7}
+.prompt-card pre{white-space:pre-wrap;background:#f3e7da;border-radius:14px;padding:12px;line-height:1.65;overflow:auto;color:#4b4036;font-family:Consolas,monospace;font-size:13px}
+@media(max-width:980px){.prompt-library,.trouble-grid,.guide-step{grid-template-columns:1fr}}
+
+
+/* v17 safety + subagents + hooks */
+.safety-matrix{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
+.safety-card{border:1px solid #eadfd3;background:#fffdf9;border-radius:18px;padding:16px;line-height:1.75;color:#5f5147}
+.safety-card h3{margin-bottom:8px;color:#2f2a24}
+.safety-card.danger{background:#fff8ed;border-color:#efc79e}
+.safety-card.safe{background:#f7f7ee;border-color:#d8d5bd}
+.agent-setup{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:14px}
+.agent-setup-card{border:1px solid #eadfd3;background:linear-gradient(180deg,#fffdf9,#fff8ef);border-radius:20px;padding:16px}
+.agent-setup-card code{font-family:Consolas,monospace;color:#b8663a;background:#f3e7da;border-radius:9px;padding:3px 6px;font-size:12px}
+.copy-block{font-family:Consolas,monospace;background:#2f2a24;color:#fff4e8;border-radius:14px;padding:13px;white-space:pre-wrap;overflow:auto;line-height:1.65;font-size:13px;margin-top:10px}
+.rule-table{width:100%;border-collapse:separate;border-spacing:0 10px;margin-top:12px}
+.rule-table td{background:#fffdf9;border-top:1px solid #efe3d6;border-bottom:1px solid #efe3d6;padding:13px;line-height:1.65;color:#5f5147;font-size:14px}
+.rule-table td:first-child{border-left:1px solid #efe3d6;border-radius:14px 0 0 14px;font-weight:800;color:#2f2a24;width:26%}
+.rule-table td:last-child{border-right:1px solid #efe3d6;border-radius:0 14px 14px 0}
+.hook-lane{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px}
+.hook-step{border:1px solid #eadfd3;background:#fffdf9;border-radius:18px;padding:14px;text-align:center;min-height:112px;display:flex;flex-direction:column;justify-content:center}
+.hook-step b{display:block;color:#2f2a24;margin-bottom:6px}.hook-step span{font-size:12px;color:#786758;line-height:1.55}
+@media(max-width:980px){.safety-matrix,.agent-setup,.hook-lane{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
-<header class="header"><div class="nav"><div class="brand"><div class="logo">C</div><div><strong>本科 AI 学习工作台</strong><span>Claude Code · DeepSeek · Skills · MCP</span></div></div><div class="navlinks"><a href="#top">总览</a><a href="#start-here">从哪开始</a><a href="#quickstart">试跑</a><a href="#setup">教程</a><a href="#downloads">下载</a><a href="#remote-control">远程</a><a href="#troubleshooting">排错</a><a href="#security">安全</a></div></div></header>
+<header class="header"><div class="nav"><div class="brand"><div class="logo">C</div><div><strong>本科 AI 学习工作台</strong><span>Claude Code · DeepSeek · Skills · MCP</span></div></div><div class="navlinks"><a href="#top">总览</a><a href="#start-here">从哪开始</a><a href="#quickstart">试跑</a><a href="#downloads">下载</a><a href="#cc-connect-weixin-guide">微信远程</a><a href="#remote-safety-rules">远程安全</a><a href="#subagents-guide">Subagents</a><a href="#hooks-guide">Hooks</a></div></div></header>
 <main class="main">
 <section class="hero" id="top">
 <div><div class="badge">✓ 受控增强版 · 面向本科阶段的 AI 配置方案</div><h1>Claude Code 桌面端配置方案</h1><p class="lead">一套可维护的学习工作流：Claude 负责文档与作业，Codex 负责代码，Tavily 负责联网检索，百度地图 MCP 负责国内路线，AI-Sandbox 负责安全边界。</p><div class="btns"><a class="btn dark" href="#start-here">从哪开始</a><a class="btn light" href="#downloads">下载 Skills</a><a class="btn orange" href="#prompts">复制常用指令</a></div></div>
@@ -661,6 +693,268 @@ macOS:
       <div class="rule-item">修改前先备份到 backup 文件夹，输出统一放 output 文件夹。</div>
       <div class="rule-item">禁止执行 git push、npm publish、format、del、rm -rf 等高风险命令。</div>
     </div>
+  </div>
+</section>
+
+
+<section id="cc-connect-weixin-guide">
+  <p class="label">cc-connect / WeChat</p>
+  <h2>cc-connect 接入微信：完整流程</h2>
+  <div class="card">
+    <p><b>定位：</b>cc-connect 是微信和电脑终端之间的消息桥。手机微信发消息，cc-connect 转给电脑上的 Claude Code，Claude Code 在指定项目目录里执行，再把结果回到微信。</p>
+    <div class="warn-box"><b>推荐使用方式：</b>先绑定测试目录，保持 plan / 计划模式；先只读检查，再轻量写入；正式项目里只允许操作当前项目目录。</div>
+  </div>
+  <div class="guide-steps">
+    <div class="guide-step"><div class="guide-num">1</div><div><h3>建立安全测试目录</h3><p>第一次不要绑定整个桌面，也不要直接绑定真实 GitHub 项目。</p><div class="cmd-box">mkdir "$env:USERPROFILE\Desktop\Code\cc-connect-test" -Force
+cd "$env:USERPROFILE\Desktop\Code\cc-connect-test"</div></div></div>
+    <div class="guide-step"><div class="guide-num">2</div><div><h3>安装并检查 cc-connect</h3><p>如果 PATH 没生效，就用完整路径运行。</p><div class="cmd-box">npm install -g cc-connect
+cc-connect --version
+
+# PATH 未生效时示例：
+& "D:\qw\npm-global\cc-connect.cmd" --version</div></div></div>
+    <div class="guide-step"><div class="guide-num">3</div><div><h3>打开 Web 管理页</h3><p>Web 页用于创建项目、选择 Agent、设置工作目录和权限模式。</p><div class="cmd-box">& "D:\qw\npm-global\cc-connect.cmd" web --no-browser
+
+# 启动主服务，窗口不要关闭：
+& "D:\qw\npm-global\cc-connect.cmd"</div></div></div>
+    <div class="guide-step"><div class="guide-num">4</div><div><h3>项目设置建议</h3><p>先用测试目录，Agent 选 Claude Code，权限模式选计划。</p><div class="cmd-box">Project ID: my-project
+Agent: Claudecode
+Work dir: C:\Users\wtm35\Desktop\Code\cc-connect-test
+Permission mode: plan / 计划</div></div></div>
+    <div class="guide-step"><div class="guide-num">5</div><div><h3>绑定微信</h3><p>项目 ID 以管理页网址为准，例如 /projects/my-project 就使用 my-project。</p><div class="cmd-box">& "D:\qw\npm-global\cc-connect.cmd" weixin setup --project my-project
+
+# 需要强制重新扫码：
+& "D:\qw\npm-global\cc-connect.cmd" weixin new --project my-project</div></div></div>
+    <div class="guide-step"><div class="guide-num">6</div><div><h3>微信端只读测试</h3><p>先不要让它改文件。先测试消息、只读分析和隐私检查。</p><div class="cmd-box">/help
+
+你能收到我这条微信消息吗？只回复“收到”，不要操作文件。
+
+总结当前项目目录结构，不要修改任何文件。
+
+检查当前项目是否有 API Key、AK、Token 泄露风险，不要修改文件。</div></div></div>
+  </div>
+</section>
+
+
+<section id="remote-safety-rules">
+  <p class="label">Remote Safety</p>
+  <h2>远程安全规则：微信遥控必须加的刹车</h2>
+  <div class="card">
+    <p>微信远程控制 Claude Code 很方便，但它本质上是在手机里给电脑终端下指令。安全规则必须前置：先限制目录，再限制文件，再限制命令，最后才允许轻量写入。</p>
+    <div class="safety-matrix">
+      <div class="safety-card safe">
+        <h3>推荐允许</h3>
+        <p>只读总结项目结构、检查 README、检查 index.html、生成学习文件、整理 Word / PPT 初稿结构、输出到 output 文件夹。</p>
+      </div>
+      <div class="safety-card danger">
+        <h3>默认禁止</h3>
+        <p>删除文件、清空文件夹、读取密钥配置、操作系统目录、执行 git push、npm publish、format、del、rm -rf、运行未知脚本。</p>
+      </div>
+    </div>
+    <table class="rule-table">
+      <tr><td>目录边界</td><td>只允许操作当前项目目录，不操作 C 盘根目录、下载目录、整个桌面和系统目录。</td></tr>
+      <tr><td>敏感文件</td><td>禁止读取 .env、settings.json、claude_desktop_config.json，以及任何包含 key、token、ak、password 的文件。</td></tr>
+      <tr><td>信息回传</td><td>不允许在微信消息中回传 API Key、AK、Token、Cookie、账号密码、二维码链接或登录 token。</td></tr>
+      <tr><td>写入规则</td><td>修改前必须先给计划，等你回复“确认执行”后再动文件；修改前先备份到 backup。</td></tr>
+      <tr><td>输出规则</td><td>Word、PPT、Markdown、Python 练习统一输出到 output，不覆盖 input 原始文件。</td></tr>
+      <tr><td>终止规则</td><td>发现越权、读取密钥、误删风险时立即停止，并要求人工确认。</td></tr>
+    </table>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>可直接发给微信远程 Claude Code 的安全前缀</h3>
+    <div class="copy-block">远程任务默认规则：
+1. 只允许操作当前项目目录。
+2. 不允许读取 .env、settings.json、claude_desktop_config.json。
+3. 不允许读取或回传任何 API Key、AK、Token、Cookie、账号密码。
+4. 不允许删除文件、移动文件、清空文件夹。
+5. 不允许执行 git push、npm publish、format、del、rm -rf 等高风险命令。
+6. 修改文件前必须先给计划，等我确认后再执行。
+7. 修改前必须备份到 backup 文件夹。
+8. 所有输出文件保存到 output 文件夹。
+9. 遇到不确定操作，必须先问我。</div>
+  </div>
+</section>
+
+<section id="subagents-guide">
+  <p class="label">Subagents</p>
+  <h2>Subagents：给 Claude Code 配三个专门助手</h2>
+  <div class="card">
+    <p>Subagents 适合把复杂任务拆给专门角色处理。这里不追求多，而是只保留三个最实用角色：安全审查、项目维护、学习文件规划。</p>
+    <div class="agent-setup">
+      <div class="agent-setup-card">
+        <h3>security-reviewer</h3>
+        <p>专门检查隐私泄露、敏感文件、危险命令、路径越界和 GitHub 发布风险。</p>
+        <p><code>.claude/agents/security-reviewer.md</code></p>
+      </div>
+      <div class="agent-setup-card">
+        <h3>project-maintainer</h3>
+        <p>专门维护 README、CHANGELOG、SECURITY、index.html 结构说明和发布说明。</p>
+        <p><code>.claude/agents/project-maintainer.md</code></p>
+      </div>
+      <div class="agent-setup-card">
+        <h3>study-file-planner</h3>
+        <p>专门规划 Word、PPT、实验报告、Python 学习文件和 input / output / backup 结构。</p>
+        <p><code>.claude/agents/study-file-planner.md</code></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>让 Claude Code 创建 Subagents 的提示词</h3>
+    <div class="copy-block">请为当前项目创建 3 个项目级 Subagents。
+
+允许创建：
+.claude/agents/security-reviewer.md
+.claude/agents/project-maintainer.md
+.claude/agents/study-file-planner.md
+
+要求：
+1. 使用 Markdown 文件 + YAML frontmatter。
+2. 不创建 agent.json。
+3. 不启用 Hooks。
+4. 不修改全局配置。
+5. 不读取 .env、settings.json、claude_desktop_config.json。
+6. 不回传任何 API Key、AK、Token、Cookie、账号密码。
+7. 创建完成后列出文件路径和每个 Subagent 的用途。</div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>Subagents 测试指令</h3>
+    <div class="copy-block">请调用 security-reviewer 检查当前项目是否有隐私泄露风险。
+要求：只读分析，不要修改文件，不要回传密钥原文。
+
+请调用 project-maintainer 检查 README.md 有没有可以优化的地方。
+要求：只给建议，不要修改文件，不要写得像营销文案。
+
+请调用 study-file-planner，帮我设计一个实验报告项目目录结构。
+要求：包括 input、output、backup，不要创建文件，只给规划。</div>
+  </div>
+</section>
+
+<section id="hooks-guide">
+  <p class="label">Hooks</p>
+  <h2>Hooks：先设计，不急着启用</h2>
+  <div class="card">
+    <p>Hooks 是自动触发的安全守护。它比 Subagents 更强，也更容易误拦截。当前建议是：先写方案，先在 cc-connect-test 里测试，稳定后再考虑用于真实项目。</p>
+    <div class="hook-lane">
+      <div class="hook-step"><b>1. 设计方案</b><span>说明要拦截什么、为什么拦截。</span></div>
+      <div class="hook-step"><b>2. 测试目录</b><span>只在 cc-connect-test 里验证。</span></div>
+      <div class="hook-step"><b>3. 观察误拦截</b><span>确认不会影响正常 Word/PPT/README 输出。</span></div>
+      <div class="hook-step"><b>4. 再考虑启用</b><span>真实项目里只启用安全型 Hook。</span></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>Hooks 方案目标</h3>
+    <table class="rule-table">
+      <tr><td>敏感文件拦截</td><td>阻止读取 .env、settings.json、claude_desktop_config.json 和包含 key/token/ak/password 的文件。</td></tr>
+      <tr><td>危险命令拦截</td><td>阻止 del、rm -rf、format、git push、npm publish 等高风险命令。</td></tr>
+      <tr><td>路径越界提醒</td><td>当目标路径不在当前项目目录时，必须停止并询问。</td></tr>
+      <tr><td>写入前提醒</td><td>修改文件前提醒先备份，输出文件统一进入 output。</td></tr>
+    </table>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>让 Claude Code 只设计 Hooks 的提示词</h3>
+    <div class="copy-block">请帮我设计一套 Claude Code Hooks 安全方案，但先不要写入配置。
+
+目标：
+1. 阻止读取 .env、settings.json、claude_desktop_config.json。
+2. 阻止读取或回传任何 key、token、ak、password。
+3. 阻止 del、rm -rf、format、git push、npm publish。
+4. 修改文件前提醒必须备份。
+5. 检查目标路径是否在当前项目目录内。
+6. 适配微信远程控制场景。
+
+要求：
+1. 先解释应该使用哪些 Hook 事件。
+2. 说明每个 Hook 的作用。
+3. 说明误拦截风险。
+4. 给出测试方案。
+5. 暂时不要修改 settings，不要启用 Hooks。</div>
+  </div>
+</section>
+
+<section id="cc-connect-troubleshooting">
+  <p class="label">Troubleshooting</p>
+  <h2>cc-connect 常见问题排查</h2>
+  <div class="trouble-grid">
+    <div class="trouble-card"><b>localhost 拒绝连接：</b>说明 9820 端口没有服务监听。先运行 cc-connect 主服务，再用 netstat 检查。</div>
+    <div class="trouble-card"><b>PATH 找不到 cc-connect：</b>用完整路径运行，例如 D:\qw\npm-global\cc-connect.cmd。</div>
+    <div class="trouble-card"><b>扫码后页面没更新：</b>确认微信平台是否添加到当前项目，必要时重启 cc-connect 服务并刷新管理页。</div>
+    <div class="trouble-card"><b>手机找不到聊天入口：</b>重新执行 weixin setup 或 weixin new 重新扫码，并把聊天置顶。</div>
+    <div class="trouble-card"><b>微信发消息没反应：</b>先发 /help，再发 /new；确认 cc-connect 服务窗口没有关闭。</div>
+    <div class="trouble-card"><b>误绑定真实项目：</b>把工作目录改回 cc-connect-test，保持 plan 模式，重启服务。</div>
+  </div>
+</section>
+
+<section id="remote-prompt-library">
+  <p class="label">Prompt Library</p>
+  <h2>微信远程常用提示词收藏</h2>
+  <div class="prompt-library">
+    <div class="prompt-card"><h3>通用安全前缀</h3><pre>远程任务默认规则：
+1. 只允许操作当前项目目录。
+2. 不允许读取 .env、settings.json、claude_desktop_config.json。
+3. 不允许读取或回传任何 API Key、AK、Token、Cookie、账号密码。
+4. 不允许删除文件、移动文件、清空文件夹。
+5. 修改文件前必须先给计划，等我确认后再执行。
+6. 修改前必须备份到 backup 文件夹。
+7. 所有输出文件保存到 output 文件夹。</pre></div>
+    <div class="prompt-card"><h3>项目结构检查</h3><pre>请总结当前项目目录结构。
+
+要求：
+1. 不要修改任何文件。
+2. 说明每个主要文件夹和文件的作用。
+3. 判断这个项目当前适合做什么。
+4. 如果发现明显问题，只给建议，不要执行修改。</pre></div>
+    <div class="prompt-card"><h3>隐私泄露检查</h3><pre>请检查当前项目是否有隐私泄露风险。
+
+重点检查 API Key、AK、Token、Cookie、账号密码、手机号、邮箱、.env、settings.json、claude_desktop_config.json。
+
+只读分析，不要修改文件；发现风险时只告诉我文件名和风险类型，不要回传密钥原文。</pre></div>
+    <div class="prompt-card"><h3>先给计划</h3><pre>请根据刚才的建议，给出一个修改计划。
+
+要求：
+1. 列出准备修改哪些文件。
+2. 说明每个文件为什么要改。
+3. 说明预期效果。
+4. 暂时不要执行修改。
+5. 等我回复“确认执行”后再开始。</pre></div>
+    <div class="prompt-card"><h3>Word / 实验报告</h3><pre>请读取 input 文件夹里的资料，整理一份实验报告或课程报告结构。
+
+要求：
+1. 先总结你看到了哪些输入文件。
+2. 先生成大纲，不要直接生成 Word。
+3. 不要编造资料和数据。
+4. 标出哪些内容需要我补充。
+5. 等我确认后再生成正式文档，输出到 output/word。</pre></div>
+    <div class="prompt-card"><h3>PPT 初稿</h3><pre>请根据 input 文件夹里的资料，设计一份 8 页课程汇报 PPT 大纲。
+
+要求：
+1. 每页给出标题、3～4 个要点、演讲备注。
+2. 先不要生成 pptx 文件。
+3. 风格简洁，适合大学课程展示。
+4. 等我确认后再生成到 output/ppt。</pre></div>
+    <div class="prompt-card"><h3>Python 学习</h3><pre>请在当前目录创建 Python Day 练习。
+
+主题：变量、输入输出、if 判断、for 循环、列表。
+
+要求：
+1. 创建 README.md。
+2. 创建 5 个 .py 练习文件。
+3. 每个文件只写题目和提示，不写答案。
+4. 给出自测标准。
+5. 修改前先给计划，等我确认后再执行。</pre></div>
+    <div class="prompt-card"><h3>GitHub 上传前检查</h3><pre>请对当前 GitHub 项目做上传前检查。
+
+重点检查：
+1. 是否有密钥、Token、AK、手机号、账号信息。
+2. README 是否清楚。
+3. CHANGELOG 是否更新。
+4. SECURITY 是否合理。
+5. 是否有不该上传的临时文件。
+
+只读分析，不要修改文件。</pre></div>
   </div>
 </section>
 
