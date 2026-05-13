@@ -1,0 +1,53 @@
+{
+  "version": "0.1.0",
+  "description": "Confirmed memory registry for the AI learning workbench. Only user-approved, evidence-backed facts may be stored here.",
+  "rules": {
+    "write_policy": {
+      "candidate_can_be_generated_by_ai": true,
+      "registry_requires_user_approval": true,
+      "high_risk_requires_explicit_confirmation": true,
+      "no_inferred_preferences": true,
+      "no_private_credentials": true,
+      "no_one_time_task_requirements": true
+    },
+    "allowed_type_values": [
+      "fact"
+    ],
+    "path_format": "dot.notation.only",
+    "risk_assessment": [
+      {
+        "prefix": "formatting.",
+        "risk": "low"
+      },
+      {
+        "prefix": "writing.",
+        "risk": "low"
+      },
+      {
+        "prefix": "workflow.",
+        "risk": "medium"
+      },
+      {
+        "prefix": "tooling.",
+        "risk": "medium"
+      },
+      {
+        "prefix": "remote_control.",
+        "risk": "high"
+      },
+      {
+        "prefix": "security.",
+        "risk": "high"
+      },
+      {
+        "prefix": "identity.",
+        "risk": "high"
+      },
+      {
+        "prefix": "account.",
+        "risk": "high"
+      }
+    ]
+  },
+  "skills": []
+}
