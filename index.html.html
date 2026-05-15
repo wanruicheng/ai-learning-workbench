@@ -1,0 +1,2216 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<script>document.documentElement.classList.add('js')</script>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>本科 AI 学习工作台｜Claude Code 配置方案</title>
+<meta name="description" content="一个面向本科阶段的 Claude Code / Codex / MCP / Skills 学习工作台配置方案。" />
+<meta name="theme-color" content="#F9F6F2" />
+<meta property="og:title" content="本科 AI 学习工作台｜Claude Code 配置方案" />
+<meta property="og:description" content="一个面向本科阶段的 Claude Code / Codex / MCP / Skills 学习工作台配置方案。" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="本科 AI 学习工作台" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="og:url" content="https://wanruicheng.github.io/ai-learning-workbench/" />
+<meta name="twitter:title" content="本科 AI 学习工作台｜Claude Code 配置方案" />
+<meta name="twitter:description" content="一个面向本科阶段的 Claude Code / Codex / MCP / Skills 学习工作台配置方案。" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23C96B43'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Outfit,sans-serif' font-weight='900' font-size='18' fill='white'%3EC%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ── Claude-Style Design System ─────────────────────── */
+:root {
+  --bg: #F9F6F2;
+  --paper: #FFFFFF;
+  --ink: #1A1410;
+  --muted: #6B5E54;
+  --line: #E5D9CF;
+  --accent: #C96B43;
+  --accent2: #A85230;
+  --green: #4E7240;
+  --blue: #3D6480;
+  --shadow: 0 16px 48px rgba(50,30,10,.09);
+  --shadow2: 0 6px 20px rgba(50,30,10,.06);
+  --radius: 20px;
+  --radius-sm: 14px;
+  --code-bg: #1E1510;
+  --border-soft: #EFE0D2;
+  --code-fg: #EFE5DA;
+  --card-warm: linear-gradient(180deg, #FFFDF9, #FFF8EF);
+  --ink-deep: #2E2018;
+}
+
+/* ── Reset & Base ───────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  color: var(--ink);
+  font-family: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(ellipse 80% 40% at 15% 0%, rgba(201,107,67,.14), transparent),
+    radial-gradient(ellipse 60% 50% at 85% 85%, rgba(168,82,48,.10), transparent),
+    radial-gradient(ellipse 40% 30% at 90% 5%, rgba(255,255,255,.6), transparent);
+}
+
+/* Grid lines texture */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background-image:
+    linear-gradient(rgba(30,20,10,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30,20,10,.025) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,.7) 0%, rgba(0,0,0,.1) 50%, transparent 90%);
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ── Typography ─────────────────────────────────────── */
+h1, h2, h3, h4, strong { font-family: "Outfit", "Noto Sans SC", sans-serif; }
+
+h1 {
+  font-size: clamp(38px, 6.5vw, 72px);
+  font-weight: 900;
+  line-height: 1.01;
+  letter-spacing: -.05em;
+  background: linear-gradient(135deg, #1A1410 0%, #3D2A1E 55%, #A85230 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin: 20px 0 0;
+}
+
+h2 {
+  font-size: clamp(26px, 3.5vw, 40px);
+  font-weight: 800;
+  letter-spacing: -.04em;
+  color: var(--ink);
+  margin: 0 0 22px;
+}
+
+h3 { font-size: 17px; font-weight: 700; color: var(--ink); margin: 0 0 10px; }
+p { color: var(--muted); line-height: 1.8; margin: 10px 0; }
+b { font-weight: 700; color: var(--ink); }
+
+/* ── Header / Nav ───────────────────────────────────── */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  border-bottom: 1px solid rgba(229,217,207,.7);
+  background: rgba(249,246,242,.88);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: 0 1px 0 rgba(229,217,207,.5), 0 8px 24px rgba(50,30,10,.04);
+}
+
+.nav {
+  max-width: 1200px;
+  margin: auto;
+  padding: 13px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.brand { display: flex; align-items: center; gap: 12px; }
+
+.logo {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #DA7F55, #B85A2E);
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-family: "Outfit", sans-serif;
+  font-weight: 900;
+  font-size: 18px;
+  box-shadow: 0 8px 20px rgba(184,90,46,.28);
+  position: relative;
+  overflow: hidden;
+}
+
+.logo::after {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,.3), transparent);
+  transform: translateX(-80%) rotate(18deg);
+  animation: shine 6s ease-in-out infinite;
+}
+
+@keyframes shine {
+  0%, 65% { transform: translateX(-90%) rotate(18deg); }
+  100% { transform: translateX(130%) rotate(18deg); }
+}
+
+.brand strong { display: block; font-size: 14px; font-weight: 700; letter-spacing: .01em; color: var(--ink); }
+.brand span { display: block; color: var(--muted); font-size: 11.5px; margin-top: 1px; }
+
+.navlinks { display: flex; gap: 2px; flex-wrap: wrap; justify-content: flex-end; }
+.navlinks a {
+  color: var(--muted);
+  font-size: 13.5px;
+  font-weight: 500;
+  border-radius: 999px;
+  padding: 7px 11px;
+  transition: background .15s ease, color .15s ease;
+}
+.navlinks a:hover { background: rgba(201,107,67,.1); color: var(--accent); }
+
+/* ── Main Layout ────────────────────────────────────── */
+.main { max-width: 1200px; margin: auto; padding: 28px 24px 80px; }
+section { padding: 44px 0; scroll-margin-top: 88px; }
+
+/* ── Hero ───────────────────────────────────────────── */
+.hero {
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 28px;
+  align-items: center;
+  padding-top: 36px;
+  position: relative;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  right: 2%;
+  top: 5%;
+  width: 160px;
+  height: 160px;
+  border-radius: 50px;
+  background: linear-gradient(135deg, rgba(201,107,67,.15), rgba(255,250,244,.2));
+  filter: blur(2px);
+  transform: rotate(15deg);
+  z-index: -1;
+}
+
+.badge {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  border: 1px solid rgba(201,107,67,.25);
+  background: rgba(255,255,255,.8);
+  color: #7A4020;
+  border-radius: 999px;
+  padding: 7px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: var(--shadow2);
+  backdrop-filter: blur(10px);
+  background: linear-gradient(135deg, rgba(255,250,244,.9), rgba(242,224,208,.75));
+}
+
+.lead {
+  font-size: 17px;
+  line-height: 1.85;
+  color: var(--muted);
+  max-width: 680px;
+  margin: 18px 0 0;
+}
+
+/* ── Buttons ────────────────────────────────────────── */
+.btns { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 26px; }
+
+.btn {
+  border: none;
+  border-radius: 999px;
+  padding: 12px 18px;
+  font-size: 13.5px;
+  font-weight: 700;
+  font-family: "Outfit", sans-serif;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  transition: transform .15s ease, box-shadow .15s ease, opacity .15s ease;
+  text-decoration: none;
+}
+
+.btn:hover { transform: translateY(-2px); opacity: .92; }
+
+.btn.dark {
+  background: linear-gradient(135deg, #1A1410, var(--ink-deep));
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(26,20,16,.2);
+}
+
+.btn.light {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  box-shadow: var(--shadow2);
+}
+
+.btn.orange {
+  background: linear-gradient(135deg, #D4733F, #B85630);
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(184,86,48,.22);
+}
+
+/* ── Hero CTA ────────────────────────────────────────── */
+.btn.hero-cta {
+  position: relative;
+  background: linear-gradient(135deg, #D4733F, #A84A20);
+  box-shadow: 0 8px 28px rgba(184,86,48,.35);
+  z-index: 1;
+}
+.btn.hero-cta::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(201,107,67,.5), transparent 70%);
+  z-index: -1;
+  opacity: 0;
+  animation: cta-pulse 2.5s ease-in-out infinite;
+}
+.btn.hero-cta::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(201,107,67,.4), rgba(168,82,48,.2));
+  z-index: -1;
+  filter: blur(10px);
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+.btn.hero-cta:hover::after { opacity: 1; }
+.btn.hero-cta:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 36px rgba(184,86,48,.45);
+}
+@keyframes cta-pulse {
+  0%, 100% { opacity: 0; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+
+/* ── Terminal Card ──────────────────────────────────── */
+.term {
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 24px 70px rgba(50,30,10,.14);
+  border: 1px solid rgba(229,217,207,.6);
+}
+
+.termbar {
+  background: linear-gradient(90deg, #EDE4DA, #F4ECE2);
+  border-bottom: 1px solid var(--line);
+  padding: 13px 16px;
+  display: flex;
+  gap: 7px;
+  align-items: center;
+}
+
+.dot { width: 11px; height: 11px; border-radius: 50%; }
+.red { background: #C9614A; }
+.yel { background: #D4A847; }
+.grn { background: #6EA97A; }
+
+.code {
+  font-family: "JetBrains Mono", "Cascadia Code", Consolas, monospace;
+  font-size: 13.5px;
+  line-height: 1.85;
+  color: #F0E8DE;
+  padding: 20px;
+  background: var(--code-bg);
+}
+
+.code > div { padding: 2px 0; }
+.code b { color: #DA8055; font-weight: 500; }
+
+/* ── Metric Row ─────────────────────────────────────── */
+.metric-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 24px;
+  max-width: 680px;
+}
+
+.metric {
+  border: 1px solid rgba(229,217,207,.8);
+  background: rgba(255,255,255,.7);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 13px 14px;
+  box-shadow: 0 6px 20px rgba(50,30,10,.05);
+}
+
+.metric strong { display: block; font-size: 21px; font-weight: 800; letter-spacing: -.03em; color: var(--ink); }
+.metric span { display: block; margin-top: 3px; font-size: 11.5px; color: var(--muted); }
+
+/* ── Label (section tag) ────────────────────────────── */
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent2);
+  margin: 0 0 10px;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+
+.label::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 5px rgba(201,107,67,.12);
+}
+
+/* ── Cards ──────────────────────────────────────────── */
+.card {
+  background: rgba(255,255,255,.9);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 22px;
+  box-shadow: var(--shadow);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 22px 60px rgba(50,30,10,.11);
+  border-color: #D5C2B3;
+}
+
+.panel { background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(251,247,243,.8)); }
+
+/* ── Grid System ────────────────────────────────────── */
+.grid { display: grid; gap: 16px; }
+.g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+/* ── Status / Pills ─────────────────────────────────── */
+.status { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; }
+
+.pill {
+  display: inline-flex;
+  gap: 5px;
+  align-items: center;
+  border-radius: 999px;
+  padding: 5px 10px;
+  font-size: 11.5px;
+  font-weight: 800;
+  background: #EAF0DE;
+  color: #476035;
+  white-space: nowrap;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.8);
+}
+
+.pill.warn { background: #FFF0DE; color: #8A5225; }
+
+/* ── Icon Badge ─────────────────────────────────────── */
+.icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #EFE0D0, #FFF2E4);
+  color: var(--accent2);
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  font-size: 12px;
+  margin-bottom: 12px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.8);
+  font-family: "Outfit", sans-serif;
+}
+
+/* ── Skills ─────────────────────────────────────────── */
+.skill, .faq {
+  border: 1px solid var(--border-soft);
+  background: var(--card-warm);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+}
+
+.skill .name {
+  font-family: "JetBrains Mono", Consolas, monospace;
+  color: var(--accent2);
+  font-weight: 700;
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+
+/* ── Architecture ───────────────────────────────────── */
+.arch {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr 1fr;
+  gap: 16px;
+  align-items: stretch;
+  position: relative;
+}
+
+.arch::before {
+  content: "";
+  position: absolute;
+  inset: 24px 16%;
+  border: 1px dashed rgba(201,107,67,.2);
+  border-radius: 24px;
+  pointer-events: none;
+}
+
+.node {
+  border: 1px solid var(--line);
+  background: var(--card-warm);
+  border-radius: 18px;
+  padding: 16px;
+  text-align: center;
+}
+
+.node strong { display: block; margin-bottom: 6px; font-family: "Outfit", sans-serif; font-size: 14px; }
+.node p { font-size: 13px; line-height: 1.65; }
+
+.center {
+  background: linear-gradient(135deg, #1A1410, var(--ink-deep)) !important;
+  color: #fff;
+  border-color: #1A1410 !important;
+}
+
+.center strong { color: #fff; font-size: 15px; }
+.center p { color: #CFC4BA !important; }
+
+/* ── Skills Flow ─────────────────────────────────────── */
+.skills-flow {
+  display: grid;
+  grid-template-columns: 1fr auto 1.6fr auto 1fr;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 28px;
+}
+.sf-node {
+  border: 1px solid var(--line);
+  background: var(--card-warm);
+  border-radius: 18px;
+  padding: 18px 16px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 8px 22px rgba(50,30,10,.06);
+}
+.sf-node .sf-icon {
+  width: 36px; height: 36px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-family: "Outfit", sans-serif;
+  font-weight: 900;
+  font-size: 13px;
+  color: #fff;
+  margin-bottom: 4px;
+}
+.sf-icon-in { background: var(--green); }
+.sf-icon-proc { background: linear-gradient(135deg, #D4733F, #B85630); }
+.sf-icon-out { background: var(--blue); }
+.sf-node b { font-family: "Outfit", sans-serif; font-size: 14px; color: var(--ink); }
+.sf-node span { font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+.sf-arrow { display: grid; place-items: center; color: var(--accent); font-size: 20px; font-weight: 900; }
+.sf-core {
+  background: linear-gradient(135deg, #1A1410, var(--ink-deep)) !important;
+  border-color: #1A1410 !important;
+}
+.sf-core b { color: #fff; }
+.sf-core span { color: #CFC4BA !important; }
+
+@media (max-width: 980px) {
+  .skills-flow { grid-template-columns: 1fr; }
+  .sf-arrow { transform: rotate(90deg); }
+}
+
+/* ── Case Tags ──────────────────────────────────────── */
+.case-tag {
+  font-size: 11.5px;
+  color: #7D5535;
+  background: #EFE0D0;
+  display: inline-block;
+  border-radius: 999px;
+  padding: 4px 9px;
+  margin-bottom: 10px;
+  font-weight: 700;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
+}
+
+/* ── Flow Steps ─────────────────────────────────────── */
+.num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  font-size: 11.5px;
+  font-weight: 800;
+  font-family: "Outfit", sans-serif;
+}
+
+.flow {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  border: 1px solid var(--border-soft);
+  background: var(--card-warm);
+  border-radius: var(--radius-sm);
+  padding: 13px;
+}
+
+/* ── Prompts ────────────────────────────────────────── */
+.prompt {
+  position: relative;
+  border: 1px solid var(--border-soft);
+  background: var(--card-warm);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+}
+
+.prompt pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: var(--code-bg);
+  border-radius: 12px;
+  padding: 14px;
+  font-family: "JetBrains Mono", Consolas, monospace;
+  font-size: 12.5px;
+  line-height: 1.75;
+  color: var(--code-fg);
+  margin: 10px 0 0;
+}
+
+.copy {
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #1A1410, var(--ink-deep));
+  color: #fff;
+  padding: 7px 11px;
+  font-size: 11.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .15s ease;
+  font-family: "Outfit", sans-serif;
+}
+
+.copy.done { background: var(--green); }
+
+/* ── Download Area ──────────────────────────────────── */
+.download-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.filters { display: flex; gap: 7px; flex-wrap: wrap; }
+
+.filter {
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--muted);
+  border-radius: 999px;
+  padding: 8px 13px;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: "Outfit", sans-serif;
+  transition: all .15s ease;
+}
+
+.filter.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+.filter:hover:not(.active) { background: rgba(201,107,67,.08); border-color: rgba(201,107,67,.3); }
+
+.download-card {
+  background: var(--card-warm);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 18px;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.download-card:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(50,30,10,.1); }
+
+.download-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.download-badge {
+  font-size: 11.5px;
+  border-radius: 999px;
+  background: #EFE0D0;
+  color: #7A5035;
+  padding: 5px 9px;
+  font-weight: 800;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
+}
+
+.download-btn {
+  text-decoration: none;
+  background: linear-gradient(135deg, #D4733F, #B85630);
+  color: #fff;
+  border-radius: 999px;
+  padding: 7px 12px;
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+  box-shadow: 0 6px 14px rgba(184,86,48,.2);
+  transition: transform .15s ease;
+  font-family: "Outfit", sans-serif;
+}
+
+.download-btn:hover { transform: translateY(-1px); }
+
+.download-card code {
+  font-family: "JetBrains Mono", Consolas, monospace;
+  color: var(--accent2);
+  background: #F0E5D8;
+  border-radius: 8px;
+  padding: 5px 8px;
+  display: inline-block;
+  margin-top: 7px;
+  font-size: 11.5px;
+}
+
+/* ── Timeline ───────────────────────────────────────── */
+.timeline { position: relative; }
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 13px;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  background: linear-gradient(#C96B43, #E5D9CF);
+}
+
+.titem { position: relative; padding-left: 42px; margin: 0 0 16px; }
+
+.titem::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 6px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 4px solid var(--bg);
+  box-shadow: 0 0 0 5px rgba(201,107,67,.1);
+}
+
+/* ── Boxes ──────────────────────────────────────────── */
+.warnbox { border-color: #EFC79E; background: #FFF8ED; }
+.safe { border-color: #D5D2BC; background: #F4F1E6; }
+.danger-line { border: 1px solid #EFC79E; background: #FFF8ED; border-radius: var(--radius-sm); padding: 13px 14px; color: var(--muted); line-height: 1.75; }
+.mini { font-size: 12.5px; color: var(--muted); line-height: 1.65; }
+
+/* ── Code Boxes ─────────────────────────────────────── */
+.codebox, .small-code, .cmd-box, .copy-block {
+  font-family: "JetBrains Mono", Consolas, monospace;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: 12px;
+  white-space: pre-wrap;
+  overflow: auto;
+  margin-top: 10px;
+}
+
+.codebox { padding: 14px; font-size: 13px; line-height: 1.7; }
+.small-code { padding: 10px; font-size: 12.5px; line-height: 1.65; border-radius: 10px; margin-top: 0; }
+.cmd-box { padding: 12px; font-size: 12.5px; line-height: 1.65; }
+.copy-block { padding: 14px; font-size: 12.5px; line-height: 1.65; }
+
+/* ── Start Cards / Beginner ─────────────────────────── */
+.start-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.start-card { border: 1px solid var(--line); background: var(--card-warm); border-radius: var(--radius); padding: 20px; box-shadow: 0 10px 28px rgba(50,30,10,.07); }
+
+.start-steps { margin: 12px 0 0; padding: 0; list-style: none; display: grid; gap: 9px; }
+.start-steps li { border: 1px solid var(--border-soft); background: rgba(255,255,255,.8); border-radius: 12px; padding: 10px 12px; color: var(--muted); line-height: 1.65; font-size: 14px; }
+.start-steps b { color: var(--ink); }
+
+.level-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 999px;
+  background: #EAF0DE;
+  color: #476035;
+  font-size: 11.5px;
+  font-weight: 800;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  font-family: "Outfit", sans-serif;
+}
+
+.beginner-strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 18px; }
+.beginner-pill { border: 1px solid var(--line); background: rgba(255,255,255,.8); border-radius: 16px; padding: 14px; box-shadow: 0 8px 22px rgba(50,30,10,.05); }
+.beginner-pill b { display: block; color: var(--ink); margin-bottom: 4px; font-family: "Outfit", sans-serif; }
+.beginner-pill span { font-size: 12px; color: var(--muted); line-height: 1.55; }
+
+/* ── Terms / Prepare ────────────────────────────────── */
+.term-grid, .prepare-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; }
+.term-card, .prepare-card { border: 1px solid var(--border-soft); background: var(--card-warm); border-radius: 16px; padding: 15px; }
+.term-card code { font-family: "JetBrains Mono", Consolas, monospace; color: var(--accent2); background: #F0E5D8; border-radius: 7px; padding: 3px 6px; font-size: 11.5px; }
+
+/* ── Steps Detail ───────────────────────────────────── */
+.step-detail { border: 1px solid var(--line); background: rgba(255,255,255,.8); border-radius: 18px; padding: 18px; }
+.step-detail .expect { margin-top: 12px; border-left: 3px solid var(--green); background: #F0F4E8; border-radius: 10px; padding: 10px 12px; color: var(--muted); font-size: 13.5px; line-height: 1.65; }
+.step-detail .fail { margin-top: 10px; border-left: 3px solid var(--accent); background: #FFF4EC; border-radius: 10px; padding: 10px 12px; color: var(--muted); font-size: 13.5px; line-height: 1.65; }
+
+/* ── OS / Install ───────────────────────────────────── */
+.os-tabs, .install-compare { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; }
+.os-card, .compare-card { border: 1px solid var(--border-soft); background: rgba(255,255,255,.8); border-radius: 16px; padding: 16px; }
+.compare-card .expect { margin-top: 10px; border-left: 3px solid var(--green); background: #F0F4E8; border-radius: 10px; padding: 10px 12px; color: var(--muted); font-size: 13px; line-height: 1.65; }
+
+/* ── Key Flow ───────────────────────────────────────── */
+.key-flow { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 10px; align-items: stretch; margin-top: 12px; }
+.key-step { border: 1px solid var(--line); background: rgba(255,255,255,.8); border-radius: 14px; padding: 14px; text-align: center; display: flex; flex-direction: column; justify-content: center; min-height: 96px; }
+.key-step b { display: block; color: var(--ink); margin-bottom: 5px; font-family: "Outfit", sans-serif; font-size: 14px; }
+.key-step span { font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+.key-arrow { display: grid; place-items: center; color: var(--accent); font-size: 20px; font-weight: 900; }
+
+/* ── Quick Cases ────────────────────────────────────── */
+.quick-case { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 10px; align-items: stretch; }
+.quick-step { border: 1px solid var(--line); background: rgba(255,255,255,.8); border-radius: 16px; padding: 16px; text-align: center; display: flex; flex-direction: column; justify-content: center; min-height: 116px; }
+.quick-step b { display: block; margin-bottom: 6px; font-family: "Outfit", sans-serif; color: var(--ink); }
+.quick-step span { font-size: 12.5px; color: var(--muted); line-height: 1.6; }
+.quick-arrow { display: grid; place-items: center; color: var(--accent); font-size: 22px; font-weight: 900; }
+
+/* ── Trouble Cards ──────────────────────────────────── */
+.trouble-card { border: 1px solid var(--border-soft); background: rgba(255,255,255,.8); border-radius: 16px; padding: 16px; line-height: 1.7; }
+.trouble-card h3 { display: flex; align-items: center; gap: 8px; font-size: 15px; }
+.trouble-card h3::before { content: "?"; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: #EFE0CE; color: var(--accent2); font-weight: 900; font-size: 12px; flex: 0 0 auto; }
+
+/* ── Skill Use Cards ────────────────────────────────── */
+.skill-use-card { border: 1px solid var(--line); background: rgba(255,255,255,.8); border-radius: 16px; padding: 16px; display: grid; gap: 9px; }
+.skill-use-card .name { font-family: "JetBrains Mono", Consolas, monospace; color: var(--accent2); font-weight: 700; font-size: 13px; }
+.skill-use-row { border-top: 1px solid var(--border-soft); padding-top: 8px; font-size: 13px; color: var(--muted); line-height: 1.6; }
+.skill-use-row b { color: var(--ink); }
+
+/* ── Prompt Route ───────────────────────────────────── */
+.prompt-route { border: 1px solid var(--border-soft); background: rgba(255,255,255,.8); border-radius: 16px; padding: 16px; }
+.prompt-route .tag2 { display: inline-flex; border-radius: 999px; background: #EFE0D0; color: #7A5035; padding: 4px 9px; font-size: 11.5px; font-weight: 800; margin-bottom: 8px; }
+
+/* ── CN Note ────────────────────────────────────────── */
+.cn-note { border: 1px solid #EFC79E; background: linear-gradient(135deg, #FFF8ED, #FFFAF4); border-radius: 20px; padding: 20px; box-shadow: 0 12px 32px rgba(50,30,10,.07); }
+.cn-note h3 { display: flex; align-items: center; gap: 10px; }
+.cn-note h3::before { content: "CN"; display: grid; place-items: center; width: 32px; height: 26px; border-radius: 999px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 900; flex: 0 0 auto; }
+.cn-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 13px; }
+.cn-item { border: 1px solid var(--border-soft); background: rgba(255,255,255,.8); border-radius: 13px; padding: 12px; color: var(--muted); line-height: 1.65; font-size: 13.5px; }
+
+/* ── FAQ Extra ──────────────────────────────────────── */
+.faq-extra { border: 1px solid var(--border-soft); background: rgba(255,255,255,.8); border-radius: 16px; padding: 16px; }
+.faq-extra h3 { display: flex; align-items: center; gap: 8px; font-size: 15px; }
+.faq-extra h3::before { content: "i"; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: #EFE0CE; color: var(--accent2); font-weight: 900; font-size: 12px; flex: 0 0 auto; }
+
+.callout-copy { border: 1px solid #D5D2BC; background: #F4F1E6; border-radius: 14px; padding: 12px 14px; color: var(--muted); line-height: 1.7; margin: 12px 0; font-size: 13.5px; }
+
+/* ── Remote Section ─────────────────────────────────── */
+.remote-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; margin-top: 13px; }
+.remote-card { border: 1px solid var(--line); background: var(--card-warm); border-radius: 18px; padding: 16px; box-shadow: 0 10px 28px rgba(50,30,10,.06); }
+.remote-card p { color: var(--muted); line-height: 1.7; }
+
+.remote-flow { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; gap: 10px; align-items: stretch; margin-top: 15px; }
+.remote-node { border: 1px solid var(--border-soft); background: rgba(255,255,255,.8); border-radius: 16px; padding: 14px; text-align: center; display: flex; flex-direction: column; justify-content: center; min-height: 92px; }
+.remote-node b { display: block; color: var(--ink); margin-bottom: 5px; font-family: "Outfit", sans-serif; }
+.remote-node span { font-size: 12px; color: var(--muted); line-height: 1.55; }
+.remote-arrow { display: grid; place-items: center; color: var(--accent); font-size: 22px; font-weight: 900; }
+
+.rule-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; margin-top: 13px; }
+.rule-item { border: 1px solid var(--border-soft); background: rgba(255,255,255,.8); border-radius: 13px; padding: 11px 13px; color: var(--muted); line-height: 1.65; font-size: 13.5px; }
+
+/* ── Guide Steps ────────────────────────────────────── */
+.guide-steps { display: grid; gap: 11px; margin-top: 13px; }
+.guide-step { display: grid; grid-template-columns: 48px 1fr; gap: 12px; border: 1px solid var(--line); background: rgba(255,255,255,.85); border-radius: 16px; padding: 14px; }
+.guide-num { width: 36px; height: 36px; border-radius: 12px; background: linear-gradient(135deg, #D4733F, #B85630); color: #fff; display: grid; place-items: center; font-weight: 900; font-size: 16px; font-family: "Outfit", sans-serif; }
+.warn-box { border: 1px solid #EFC79E; background: #FFF8ED; border-radius: 16px; padding: 14px; color: var(--muted); line-height: 1.7; margin-top: 12px; font-size: 14px; }
+
+/* ── Prompt Library ─────────────────────────────────── */
+.prompt-library, .trouble-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; margin-top: 13px; }
+.prompt-card { border: 1px solid var(--line); background: rgba(255,255,255,.8); border-radius: 16px; padding: 16px; line-height: 1.7; }
+.prompt-card pre, .remote-prompt pre { white-space: pre-wrap; background: var(--code-bg); border-radius: 12px; padding: 12px; line-height: 1.65; overflow: auto; color: var(--code-fg); font-family: "JetBrains Mono", Consolas, monospace; font-size: 12.5px; }
+
+/* ── Safety / Agents ────────────────────────────────── */
+.safety-matrix { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; margin-top: 13px; }
+.safety-card { border: 1px solid var(--line); background: rgba(255,255,255,.8); border-radius: 16px; padding: 16px; line-height: 1.75; color: var(--muted); }
+.safety-card h3 { margin-bottom: 8px; color: var(--ink); }
+.safety-card.danger { background: #FFF8ED; border-color: #EFC79E; }
+.safety-card.safe { background: #F2F6E8; border-color: #CACED2; }
+
+.agent-setup { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; margin-top: 13px; }
+.agent-setup-card { border: 1px solid var(--line); background: var(--card-warm); border-radius: 18px; padding: 16px; }
+.agent-setup-card code { font-family: "JetBrains Mono", Consolas, monospace; color: var(--accent2); background: #F0E5D8; border-radius: 7px; padding: 3px 6px; font-size: 12px; }
+
+.agent-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; margin-top: 13px; }
+.agent-card { border: 1px solid var(--line); background: rgba(255,255,255,.8); border-radius: 18px; padding: 16px; }
+.agent-card .agent-name { font-family: "JetBrains Mono", Consolas, monospace; color: var(--accent2); font-weight: 700; margin-bottom: 8px; }
+.agent-card ul { margin: 8px 0 0 16px; color: var(--muted); line-height: 1.7; font-size: 13.5px; }
+
+.remote-prompt { border: 1px solid var(--border-soft); background: rgba(255,255,255,.8); border-radius: 16px; padding: 16px; }
+.remote-prompt h3 { margin-bottom: 8px; }
+
+.status-pill { display: inline-flex; align-items: center; border-radius: 999px; background: #EAF0DE; color: #476035; font-size: 11.5px; font-weight: 800; padding: 5px 10px; margin-right: 5px; margin-bottom: 7px; }
+
+/* ── Rule Table ─────────────────────────────────────── */
+.rule-table { width: 100%; border-collapse: separate; border-spacing: 0 8px; margin-top: 12px; }
+.rule-table td { background: rgba(255,255,255,.8); border-top: 1px solid var(--border-soft); border-bottom: 1px solid var(--border-soft); padding: 12px; line-height: 1.65; color: var(--muted); font-size: 13.5px; }
+.rule-table td:first-child { border-left: 1px solid var(--border-soft); border-radius: 12px 0 0 12px; font-weight: 700; color: var(--ink); width: 26%; }
+.rule-table td:last-child { border-right: 1px solid var(--border-soft); border-radius: 0 12px 12px 0; }
+
+/* ── Hook Lane ──────────────────────────────────────── */
+.hook-lane { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 13px; }
+.hook-step { border: 1px solid var(--line); background: rgba(255,255,255,.8); border-radius: 16px; padding: 13px; text-align: center; min-height: 108px; display: flex; flex-direction: column; justify-content: center; }
+.hook-step b { display: block; color: var(--ink); margin-bottom: 5px; font-family: "Outfit", sans-serif; font-size: 14px; }
+.hook-step span { font-size: 12px; color: var(--muted); line-height: 1.55; }
+
+/* ── Card Enhancements ──────────────────────────────── */
+.guide-step, .hook-step, .step-detail, .compare-card, .os-card, .trouble-card, .faq-extra {
+  box-shadow: 0 6px 18px rgba(50,30,10,.05);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.guide-step:hover, .hook-step:hover, .step-detail:hover, .compare-card:hover, .os-card:hover, .trouble-card:hover, .faq-extra:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(50,30,10,.1);
+}
+
+/* ── Footer ─────────────────────────────────────────── */
+.footer {
+  margin-top: 30px;
+  background:
+    radial-gradient(circle at 8% 8%, rgba(201,107,67,.24), transparent 18rem),
+    linear-gradient(135deg, #1A1410, var(--ink-deep));
+  color: #fff;
+  border-radius: 24px;
+  padding: 28px;
+}
+
+.footer h2 { color: #fff; font-size: 22px; }
+.footer p { color: #CFC4BA; line-height: 1.8; }
+
+/* ── Responsive ─────────────────────────────────────── */
+@media (max-width: 980px) {
+  .hero, .g2, .g3, .g4, .arch,
+  .start-grid, .cn-list, .term-grid, .prepare-grid,
+  .os-tabs, .install-compare, .safety-matrix,
+  .agent-setup, .agent-grid, .remote-grid,
+  .prompt-library, .trouble-grid, .rule-list,
+  .hook-lane, .beginner-strip { grid-template-columns: 1fr; }
+
+  .navlinks { display: none; }
+  h1 { font-size: 40px; }
+  .metric-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .quick-case, .key-flow, .remote-flow { grid-template-columns: 1fr; }
+  .quick-arrow, .key-arrow, .remote-arrow { transform: rotate(90deg); }
+}
+
+@media (max-width: 560px) {
+  .metric-row { grid-template-columns: 1fr; }
+  .main { padding-left: 16px; padding-right: 16px; }
+  .card { border-radius: 16px; padding: 16px; }
+  h1 { font-size: 34px; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   LAYOUT & INTERACTION ENHANCEMENTS
+═══════════════════════════════════════════════════════ */
+
+/* ── Scroll Progress Bar ─────────────────────────────── */
+.progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), #E89060);
+  z-index: 200;
+  width: 0%;
+  transition: width .08s linear;
+  border-radius: 0 2px 2px 0;
+}
+
+/* ── Mobile Nav Overlay ──────────────────────────────── */
+.nav-toggle {
+  display: none;
+  border: none;
+  background: rgba(201,107,67,.1);
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 9px 11px;
+  color: var(--ink);
+  font-size: 18px;
+  line-height: 1;
+  transition: background .15s;
+}
+.nav-toggle:hover { background: rgba(201,107,67,.18); }
+
+.mobile-nav-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(249,246,242,.97);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  z-index: 60;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+}
+.mobile-nav-overlay.open { display: flex; }
+.mobile-nav-overlay a {
+  font-family: "Outfit", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink);
+  padding: 12px 32px;
+  border-radius: 14px;
+  transition: background .15s, color .15s;
+  text-decoration: none;
+}
+.mobile-nav-overlay a:hover { background: rgba(201,107,67,.1); color: var(--accent); }
+.mobile-nav-close {
+  position: absolute;
+  top: 22px; right: 22px;
+  border: none;
+  background: rgba(26,20,16,.08);
+  border-radius: 12px;
+  width: 42px; height: 42px;
+  font-size: 22px;
+  cursor: pointer;
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+  transition: background .15s;
+}
+.mobile-nav-close:hover { background: rgba(26,20,16,.14); }
+
+/* ── Back to Top Button ──────────────────────────────── */
+.back-top {
+  position: fixed;
+  bottom: 28px; right: 28px;
+  width: 46px; height: 46px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #1A1410, var(--ink-deep));
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 8px 22px rgba(26,20,16,.22);
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .25s ease, transform .25s ease;
+  z-index: 40;
+}
+.back-top.visible { opacity: 1; transform: translateY(0); }
+.back-top:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(26,20,16,.28); }
+
+/* ── Skip Link ──────────────────────────────────────── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 8px;
+  z-index: 1000;
+  background: var(--ink);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: top .15s ease;
+}
+.skip-link:focus {
+  top: 8px;
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ── Scroll Reveal ───────────────────────────────────── */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .55s cubic-bezier(.22,1,.36,1), transform .55s cubic-bezier(.22,1,.36,1);
+}
+.js .reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* Stagger children */
+.js .reveal-group > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity .5s cubic-bezier(.22,1,.36,1), transform .5s cubic-bezier(.22,1,.36,1);
+}
+.js .reveal-group.visible > *:nth-child(1) { opacity:1; transform:none; transition-delay:.05s; }
+.js .reveal-group.visible > *:nth-child(2) { opacity:1; transform:none; transition-delay:.12s; }
+.js .reveal-group.visible > *:nth-child(3) { opacity:1; transform:none; transition-delay:.19s; }
+.js .reveal-group.visible > *:nth-child(4) { opacity:1; transform:none; transition-delay:.26s; }
+.js .reveal-group.visible > *:nth-child(5) { opacity:1; transform:none; transition-delay:.33s; }
+.js .reveal-group.visible > *:nth-child(6) { opacity:1; transform:none; transition-delay:.40s; }
+
+/* ── Section Divider ─────────────────────────────────── */
+.sec-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--line) 30%, var(--line) 70%, transparent 100%);
+  margin: 0;
+}
+
+/* ── Hero Enhancements ───────────────────────────────── */
+.hero-wrap {
+  position: relative;
+  overflow: visible;
+}
+
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+  filter: blur(70px);
+}
+
+.orb1 {
+  width: 380px; height: 380px;
+  top: -80px; left: -60px;
+  background: rgba(201,107,67,.12);
+  animation: orb-drift1 10s ease-in-out infinite;
+}
+
+.orb2 {
+  width: 260px; height: 260px;
+  top: 40px; right: -40px;
+  background: rgba(255,200,150,.1);
+  animation: orb-drift2 13s ease-in-out infinite;
+}
+
+@keyframes orb-drift1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(20px, -15px) scale(1.04); }
+  66% { transform: translate(-10px, 10px) scale(.97); }
+}
+
+@keyframes orb-drift2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-15px, 20px) scale(1.06); }
+}
+
+/* ── Featured Banner ─────────────────────────────────── */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+.section-header h2 { margin: 0; }
+.section-header .sh-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--line), transparent);
+}
+
+/* ── Dashboard Cards Enhanced ────────────────────────── */
+.card.panel .icon {
+  font-size: 11px;
+  font-family: "Outfit", sans-serif;
+  font-weight: 800;
+}
+
+/* Animated status dot */
+.pill::before {
+  content: "";
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: .7;
+  flex-shrink: 0;
+}
+
+/* ── Improved Terminal Header ────────────────────────── */
+.termbar .term-title {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  color: var(--muted);
+  margin-left: 10px;
+  letter-spacing: .03em;
+}
+
+/* ── Better Nav Active State ─────────────────────────── */
+.navlinks a.active {
+  color: var(--accent);
+  background: rgba(201,107,67,.1);
+}
+
+/* ── Code block copy button ──────────────────────────── */
+.codebox-wrap {
+  position: relative;
+}
+
+.codebox-wrap .cb-copy {
+  position: absolute;
+  top: 8px; right: 8px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255,255,255,.1);
+  color: rgba(255,255,255,.7);
+  padding: 5px 9px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: "Outfit", sans-serif;
+  transition: background .15s;
+}
+.codebox-wrap .cb-copy:hover { background: rgba(255,255,255,.18); color: #fff; }
+.codebox-wrap .cb-copy.done { background: rgba(78,114,64,.5); color: #fff; }
+
+/* ── Responsive enhancements ─────────────────────────── */
+@media (max-width: 980px) {
+  .nav-toggle { display: grid; }
+  .navlinks { display: none; }
+  .back-top { bottom: 20px; right: 20px; }
+}
+
+/* ── Reduced Motion ─────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal, .js .reveal-group > *,
+  .reveal, .reveal-group > * {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .js .reveal.visible, .js .reveal-group.visible > * {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  html { scroll-behavior: auto; }
+}
+
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">跳到主要内容</a>
+<div class="progress-bar" id="progressBar"></div>
+<header class="header"><div class="nav"><div class="brand"><div class="logo">C</div><div><strong>本科 AI 学习工作台</strong><span>Claude Code · DeepSeek · Skills · MCP</span></div></div><nav class="navlinks" id="navlinks"><a href="#top">总览</a><a href="#ai-assistants">AI 助手</a><a href="#start-here">从哪开始</a><a href="#quickstart">试跑</a><a href="#downloads">下载</a><a href="#cc-connect-weixin-guide">微信远程</a><a href="#remote-safety-rules">远程安全</a><a href="#subagents-guide">Subagents</a><a href="#hooks-guide">Hooks</a></nav><button class="nav-toggle" id="navToggle" aria-label="菜单" aria-expanded="false" aria-controls="mobileNav">☰</button></div></header>
+<div class="mobile-nav-overlay" id="mobileNav" role="dialog" aria-modal="true" aria-label="导航菜单">
+  <button class="mobile-nav-close" id="mobileClose">✕</button>
+  <a href="#top" class="mob-link">总览</a>
+  <a href="#start-here" class="mob-link">从哪开始</a>
+  <a href="#quickstart" class="mob-link">试跑</a>
+  <a href="#downloads" class="mob-link">下载 Skills</a>
+  <a href="#cc-connect-weixin-guide" class="mob-link">微信远程</a>
+  <a href="#remote-safety-rules" class="mob-link">远程安全</a>
+  <a href="#subagents-guide" class="mob-link">Subagents</a>
+  <a href="#hooks-guide" class="mob-link">Hooks</a>
+</div>
+<button class="back-top" id="backTop" title="回到顶部">↑</button>
+<main class="main" id="main-content">
+<div class="hero-wrap">
+  <div class="hero-orb orb1"></div>
+  <div class="hero-orb orb2"></div>
+<section class="hero" id="top">
+<div><div class="badge">✓ 受控增强版 · 面向本科阶段的 AI 配置方案</div><h1>Claude Code 桌面端配置方案</h1><p class="lead">一套可维护的学习工作流：Claude 负责文档与作业，Codex 负责代码，Tavily 负责联网检索，百度地图 MCP 负责国内路线，AI-Sandbox 负责安全边界。</p><div class="btns"><a class="btn hero-cta" href="#start-here">从哪开始</a><a class="btn light" href="#downloads">下载 Skills</a><a class="btn orange" href="#prompts">复制常用指令</a></div></div>
+<div class="card term"><div class="termbar"><span class="dot red"></span><span class="dot yel"></span><span class="dot grn"></span><span class="mini" style="margin-left:8px">workspace.config</span></div><div class="code"><div><b>ChatGPT</b> → 规划 / 答疑 / 排错</div><div><b>Claude</b> → Word / PPT / Excel / 实验报告</div><div><b>Codex</b> → Python / 调试</div><div><b>Tavily</b> → 搜索 / 资料 / 网页提取</div><div><b>Baidu MCP</b> → 国内地点 / 路线 / 距离</div><div><b>AI-Sandbox</b> → 安全文件操作</div></div></div>
+</section>
+</div>
+<div class="sec-divider"></div>
+<section id="dashboard"><p class="label">01 · Dashboard</p><div class="section-header reveal"><h2>当前配置状态</h2><div class="sh-line"></div></div><div class="grid g3">
+<div class="card panel"><div class="status"><div><div class="icon">C</div><h3>Claude 桌面端</h3><p>接入 DeepSeek，负责课程作业、文档生成和 Skills 调用。</p></div><span class="pill">已完成</span></div></div>
+<div class="card panel"><div class="status"><div><div class="icon">P</div><h3>Potato 陪伴助手</h3><p>日常聊天、情绪陪伴、学习建议。不强行给意见，只在你问时帮忙。</p></div><span class="pill">已完成</span></div></div>
+<div class="card panel"><div class="status"><div><div class="icon">H</div><h3>Hermes 规划器</h3><p>任务拆解、风险识别、计划生成。说"帮我规划"自动启动完整规划流程。</p></div><span class="pill">已完成</span></div></div>
+<div class="card panel"><div class="status"><div><div class="icon">WX</div><h3>微信集成</h3><p>通过 cc-connect 在微信中使用 Potato 和 Hermes。随时随地，完全无缝。</p></div><span class="pill">已完成</span></div></div>
+<div class="card panel"><div class="status"><div><div class="icon">SK</div><h3>Skills 体系</h3><p>文档、作业、实验报告、数据核查、考试复习、Python 学习均已覆盖。</p></div><span class="pill">16 Skills</span></div></div>
+<div class="card panel"><div class="status"><div><div class="icon">PS</div><h3>PowerShell Claude Code</h3><p>备用排错入口，MCP、环境变量、插件管理都可在这里处理。</p></div><span class="pill">已完成</span></div></div>
+<div class="card panel"><div class="status"><div><div class="icon">TV</div><h3>Tavily MCP</h3><p>用于联网搜索、网页提取、资料整理和报告来源筛选。</p></div><span class="pill">Connected</span></div></div>
+<div class="card panel"><div class="status"><div><div class="icon">BD</div><h3>百度地图 MCP</h3><p>用于国内地点查询、路线距离和旅游规划辅助。</p></div><span class="pill">Connected</span></div></div>
+<div class="card panel"><div class="status"><div><div class="icon">SEC</div><h3>AI-Sandbox</h3><p>input/output/backup/temp 结构，用于限制高权限工具操作范围。</p></div><span class="pill warn">安全区</span></div></div>
+</div></section>
+
+<!-- ── Potato + Hermes + 微信集成 ── -->
+<section id="ai-assistants">
+  <p class="label">AI 助手</p>
+  <h2>Potato 陪伴 + Hermes 规划 + 微信集成</h2>
+  <div class="grid g2">
+    <div class="card">
+      <h3>🤖 Potato 陪伴助手</h3>
+      <p>一个专为本科生设计的陪伴助手。Potato 会认真听你说话，理解你的情绪，在你需要时提供建议——但不会强行给意见或打断你。</p>
+      <p><b>使用场景：</b>日常聊天、学习困惑、情绪陪伴、专业咨询。</p>
+      <p><b>直接在 Claude Code 中使用即可，无需额外配置。</b></p>
+    </div>
+    <div class="card">
+      <h3>📋 Hermes 规划器</h3>
+      <p>专业的任务规划和风险识别系统。自动完成：理解需求 → 任务拆解 → 风险识别 → 生成计划。</p>
+      <p><b>激活方式：</b>在消息中说"帮我规划"、"拆解"、"有什么风险"、"怎样比较安全"、"需要分析"。</p>
+      <div class="small-code" style="margin-top:14px">帮我规划一下怎么在两周内完成这篇 3000 字的课程论文</div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <h3>📱 微信集成（通过 cc-connect）</h3>
+    <p>启动后可以在微信中直接使用系统。不需要打开电脑，随时随地发消息就能获得 Potato 的陪伴或 Hermes 的规划。</p>
+    <div class="grid g2" style="margin-top:14px">
+      <div>
+        <b>工作流程：</b>
+        <p style="margin-top:8px;font-size:13px;color:#6B5E54">微信消息 → cc-connect 接收 → 本地服务(localhost:5000) → 检查关键词 → Potato 陪伴 或 Hermes 规划 → 发回微信</p>
+      </div>
+      <div>
+        <b>启动方式：</b>
+        <div class="codebox" style="margin-top:8px">cd wechat
+python wechat_service.py</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section id="start-here">
+  <p class="label">Start Here</p>
+  <h2>我该从哪开始？</h2>
+  <div class="start-grid">
+    <div class="start-card">
+      <h3>只想快速用起来</h3>
+      <p>适合：今天就想完成课程报告、实验报告、PPT 或复习计划的同学。</p>
+      <ul class="start-steps">
+        <li><b>1.</b> 先看“5～10 分钟新手试跑”。</li>
+        <li><b>2.</b> 下载全部 Skills，优先上传 docx、pptx、xlsx、lab-report-writer、word-college-report-writer。</li>
+        <li><b>3.</b> 用示例 Prompt 跑通一个课程报告大纲或实验报告结构。</li>
+        <li><b>4.</b> 跑通后再考虑 Tavily、百度地图 MCP 等进阶工具。</li>
+      </ul>
+    </div>
+    <div class="start-card">
+      <h3>想完整搭建自己的 AI 学习环境</h3>
+      <p>适合：想长期维护一个可复用学习工作流的同学。</p>
+      <ul class="start-steps">
+        <li><b>1.</b> 看“新手前置准备”和“术语词典”。</li>
+        <li><b>2.</b> 建立 Desktop\Code 和 AI-Sandbox 工作区。</li>
+        <li><b>3.</b> 配置 Claude Code、Skills、Tavily 和百度地图 MCP。</li>
+        <li><b>4.</b> 最后看“安全”和“排错”，避免密钥泄露和误操作。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="audience">
+  <p class="label">02 · Audience</p>
+  <h2>适合谁使用</h2>
+  <div class="grid g3">
+    <div class="card panel"><div class="icon">STU</div><h3>大学生</h3><p>适合需要完成实验报告、课程作业、PPT 汇报、调研报告、期末复习和 Python 学习的本科生。</p></div>
+    <div class="card panel"><div class="icon">LAB</div><h3>实验课高频用户</h3><p>适合经常需要把实验模板、实验指导书照片、数据表和实验图片整理成 Word 报告的人。</p></div>
+    <div class="card panel"><div class="icon">PY</div><h3>Python 初学者</h3><p>适合想用 Codex / Claude Code 学 Python、查报错、做练习、让 AI 审查代码的人。</p></div>
+  </div>
+</section>
+
+<section id="arch"><p class="label">02 · Architecture</p><h2>系统架构图</h2><div class="card"><div class="arch"><div class="grid"><div class="node"><strong>ChatGPT</strong><p>规划、解释、排错、长期学习建议</p></div><div class="node"><strong>Codex</strong><p>Python、代码调试、项目生成</p></div></div><div class="node center"><strong>Claude Code / 桌面端</strong><p>核心执行层：Potato 陪伴 + Hermes 规划 + Skills + MCP + 文档生成</p></div><div class="grid"><div class="node"><strong>Skills</strong><p>docx / pptx / xlsx / lab / exam / Python / 笔记 / 视频</p></div><div class="node"><strong>MCP + 微信</strong><p>Tavily 搜索 + 百度地图 + cc-connect 微信远程</p></div></div></div></div></section>
+
+
+
+<section id="prep">
+  <p class="label">前置准备</p>
+  <h2>新手零门槛前置准备</h2>
+  <div class="card">
+    <p>新手不要一开始就全部装完。最稳路线是：先跑通 <b>Claude 桌面端 + Skills</b>，再配置 <b>Tavily / 百度地图 MCP</b>，最后再扩展更多工具。</p>
+    <div class="prepare-grid">
+      <div class="prepare-card">
+        <h3>必备工具</h3>
+        <p>Claude 桌面端、Claude Code、浏览器、PowerShell 或 macOS 终端、GitHub 账号。</p>
+        <div class="small-code">Windows：PowerShell
+macOS：Terminal / iTerm
+网页发布：GitHub Pages</div>
+      </div>
+      <div class="prepare-card">
+        <h3>可选账号与密钥</h3>
+        <p>DeepSeek / Anthropic 认证、Tavily Key、百度地图服务端 AK。没有这些也可以先跑通 Word/PPT/实验报告类 Skills。</p>
+        <div class="small-code">先跑通 Skills
+再配置 Tavily
+最后配置百度地图 MCP</div>
+      </div>
+      <div class="prepare-card">
+        <h3>最低门槛</h3>
+        <p>无需代码基础。只需要会解压、复制粘贴命令、上传 ZIP、保存文件和截图反馈。</p>
+        <div class="small-code">会复制命令
+会解压 zip
+会上传文件
+会截图反馈</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="beginner">
+  <p class="label">新手须知</p>
+  <h2>新手前置须知</h2>
+  <div class="card">
+    <p>如果你完全没接触过 Claude Code、MCP、Skills，建议先不要追求“一次配置到完美”。先完成最小可用版本：上传文档类 Skills，跑通一个 5～10 分钟试跑，再逐步添加联网和地图 MCP。</p>
+    <div class="beginner-strip">
+      <div class="beginner-pill"><b>第一阶段</b><span>只用 Claude 桌面端 + Word/PPT/Excel/实验报告 Skills。</span></div>
+      <div class="beginner-pill"><b>第二阶段</b><span>添加 Tavily，让 AI 可以搜索网页和整理资料来源。</span></div>
+      <div class="beginner-pill"><b>第三阶段</b><span>添加百度地图 MCP，用于国内地点、路线和距离查询。</span></div>
+      <div class="beginner-pill"><b>第四阶段</b><span>整理自己的工作区、Prompt、作业流程和安全规则。</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="glossary">
+  <p class="label">术语词典</p>
+  <h2>小白术语词典</h2>
+  <div class="term-grid">
+    <div class="term-card"><h3>Claude Code</h3><p>可以读写项目文件、调用工具、辅助编程和生成文档的 AI 工作台。</p><code>claude</code></div>
+    <div class="term-card"><h3>Codex</h3><p>OpenAI 的代码辅助工具，适合写 Python、调试代码、生成项目结构和做编程练习。它和 Claude 分工不同：Codex 更偏代码，Claude 更偏文档和工作流。</p><code>代码助手</code></div>
+
+    <div class="term-card"><h3>Skill</h3><p>给 Claude 的专用工作说明书。它告诉 Claude 什么时候该怎么做某类任务。</p><code>SKILL.md</code></div>
+    <div class="term-card"><h3>MCP</h3><p>让 AI 调用外部工具的连接协议。简单理解：给 AI 接上搜索、地图、数据库等工具。</p><code>Model Context Protocol</code></div>
+    <div class="term-card"><h3>Tavily</h3><p>给 AI 用的联网搜索工具，适合查资料、读网页、整理来源。</p><code>Search MCP</code></div>
+    <div class="term-card"><h3>百度地图 AK</h3><p>百度地图开放平台的访问密钥。用于让地图 MCP 查询地点、距离和路线。</p><code>ak=你的AK</code></div>
+    <div class="term-card"><h3>API Key / Token</h3><p>访问某个服务的密钥。它相当于账号钥匙，不能公开、不能截图泄露。</p><code>不要公开</code></div>
+  </div>
+</section>
+
+<section id="quickstart">
+  <p class="label">快速上手</p>
+  <h2>5～10 分钟新手试跑</h2>
+  <div class="card">
+    <span class="level-badge">目标：先获得一次成功体验</span>
+    <h3>案例：生成一份课程报告大纲</h3>
+    <p>这个案例不需要 Tavily、不需要百度地图 MCP、不需要 API Key。只要 Claude 桌面端和 Word 类 Skill 能用，就能跑通。</p>
+    <div class="quick-case">
+      <div class="quick-step"><b>第 1 步</b><span>打开 Claude 桌面端，进入 Cowork 或 Code。</span></div>
+      <div class="quick-arrow">→</div>
+      <div class="quick-step"><b>第 2 步</b><span>输入一个简单任务：做一篇课程报告大纲。</span></div>
+      <div class="quick-arrow">→</div>
+      <div class="quick-step"><b>第 3 步</b><span>使用 word-college-report-writer 生成结构。</span></div>
+    </div>
+    <p><b>下面这段可以直接复制到 Claude 桌面端使用：</b></p><div class="small-code" style="margin-top:14px">使用 word-college-report-writer，帮我生成一篇《AI 工具对大学学习效率的影响》的课程报告大纲.要求包括研究背景、核心观点、案例、结论，不要直接生成最终 Word，先给我结构。</div>
+    <p>跑通后，再尝试实验报告、PPT、Excel、Tavily 检索等更复杂任务。</p>
+  </div>
+</section>
+
+<section id="key-apply">
+  <p class="label">密钥准备</p>
+  <h2>Key / AK 申请说明</h2>
+  <div class="grid g2">
+    <div class="card">
+      <h3>Tavily Key：给 AI 用的搜索钥匙</h3>
+      <p>用于让 Claude Code 调用 Tavily 搜索网页、提取资料。注册 Tavily 后进入 API Keys 页面创建 Key。</p>
+      <div class="key-flow">
+        <div class="key-step"><b>注册 Tavily</b><span>进入 Tavily 官网或控制台</span></div>
+        <div class="key-arrow">→</div>
+        <div class="key-step"><b>创建 API Key</b><span>复制 Key，先存在本地安全位置</span></div>
+        <div class="key-arrow">→</div>
+        <div class="key-step"><b>添加 MCP</b><span>URL 中使用 tavilyApiKey=你的Key</span></div>
+      </div>
+      <div class="danger-line" style="margin-top:14px">提醒：如果 Tavily Key 曾经被公开过，请重新生成新 Key，旧 Key 不建议继续使用。</div>
+    </div>
+    <div class="card">
+      <h3>百度地图 AK：给地图 MCP 用的钥匙</h3>
+      <p>用于查询国内地点、距离、路线。创建应用时建议选择“服务端 AK”，不要用浏览器端 AK。</p>
+      <div class="key-flow">
+        <div class="key-step"><b>进入百度地图开放平台</b><span>控制台 → 应用管理</span></div>
+        <div class="key-arrow">→</div>
+        <div class="key-step"><b>创建服务端应用</b><span>类型选服务端，开启所需服务</span></div>
+        <div class="key-arrow">→</div>
+        <div class="key-step"><b>复制 AK</b><span>添加到百度地图 MCP URL</span></div>
+      </div>
+      <div class="danger-line" style="margin-top:14px">常见错误：用成浏览器端 AK、应用被删除、IP 白名单限制、服务权限没开。</div>
+    </div>
+  </div>
+</section>
+
+<section id="setup">
+  <p class="label">Setup Guide</p>
+  <h2>Claude Code 从零安装配置流程</h2>
+  <div class="grid g2">
+    <div class="card"><h3>0. 建立固定工作区</h3><p>建议建立 Desktop\Code 和 AI-Sandbox，避免在系统目录里长期运行 Claude Code。</p><div class="codebox">Desktop\Code\
+├─ Python学习
+├─ 课程作业
+├─ 材料学习
+└─ AI-Sandbox
+   ├─ input
+   ├─ output
+   ├─ backup
+   └─ temp</div></div>
+    <div class="card"><h3>1. 安装并检查 Claude Code</h3><p>安装完成后用命令检查是否能正常启动。</p><div class="codebox">claude --version
+claude</div></div>
+    <div class="card"><h3>2. 配置认证方式</h3><p>官方 Claude 或第三方网关都可能需要环境变量。不要把真实 Key 写进网页或公开仓库。</p><div class="codebox">Get-ChildItem Env:ANTHROPIC* | Select-Object Name
+ANTHROPIC_API_KEY
+ANTHROPIC_AUTH_TOKEN
+ANTHROPIC_BASE_URL</div></div>
+    <div class="card"><h3>3. 写入长期指令</h3><p>CLAUDE.md 用来保存你的学习风格、安全规则和任务偏好。</p><div class="codebox">notepad "$env:USERPROFILE\.claude\CLAUDE.md"</div></div>
+    <div class="card"><h3>4. 安装 Skills</h3><p>Claude Code 本地放入 .claude/skills；桌面端在 Customize → Skills 上传 ZIP。</p><div class="codebox">C:\Users\你的用户名\.claude\skills\skill-name\SKILL.md</div></div>
+    <div class="card"><h3>5. 添加 MCP 工具</h3><p>优先使用 Remote MCP。Key 不要公开，截图前打码。</p><div class="codebox">claude mcp add --transport http --scope user tavily "https://mcp.tavily.com/mcp/?tavilyApiKey=你的Key"
+claude mcp add --transport http --scope user baidu-map "https://mcp.map.baidu.com/mcp?ak=你的AK"
+
+# 添加完成后，重新进入 Claude Code，再输入：
+/mcp</div></div>
+  </div>
+</section>
+
+
+<section id="install-details">
+  <p class="label">安装细节</p>
+  <h2>安装命令：怎么判断成功，失败怎么办</h2>
+  <div class="grid g2">
+    <div class="step-detail"><h3>1. 检查 Claude Code 是否可用</h3><div class="codebox">claude --version
+claude</div><div class="expect"><b>预期效果：</b>第一行显示版本号；运行 claude 后能进入 Claude Code 欢迎界面。</div><div class="fail"><b>失败怎么办：</b>如果提示“不是内部或外部命令”，通常是 Claude Code 没安装好或 PATH 没生效。重新打开 PowerShell，仍失败就重新安装。</div></div>
+    <div class="step-detail"><h3>2. 检查 MCP 状态</h3><div class="codebox">claude
+/mcp</div><div class="expect"><b>预期效果：</b>能看到 tavily、baidu-map 等工具，状态为 connected / authenticated。</div><div class="fail"><b>失败怎么办：</b>如果 disconnected，先检查 URL、Key/AK、网络和服务端地址。不要急着重装所有东西。</div></div>
+    <div class="step-detail"><h3>3. 添加 Tavily Remote MCP</h3><div class="codebox">claude mcp add --transport http --scope user tavily "https://mcp.tavily.com/mcp/?tavilyApiKey=你的Key"</div><div class="expect"><b>预期效果：</b>重启 Claude Code 后输入 /mcp，Tavily 显示 connected / authenticated。</div><div class="fail"><b>失败怎么办：</b>检查 Key 有没有复制完整；不要带空格；Key 泄露过就重新生成。</div></div>
+    <div class="step-detail"><h3>4. 添加百度地图 MCP</h3><div class="codebox">claude mcp add --transport http --scope user baidu-map "https://mcp.map.baidu.com/mcp?ak=你的AK"</div><div class="expect"><b>预期效果：</b>能查询地点，例如“贵阳甲秀楼到贵州大学的路线和距离”。</div><div class="fail"><b>失败怎么办：</b>提示 AK 有误时，优先检查是否为“服务端 AK”，不要用浏览器端 AK。</div></div>
+  </div>
+</section>
+
+<section id="os-diff">
+  <p class="label">系统差异</p>
+  <h2>Windows 和 macOS 的操作差异</h2>
+  <div class="os-tabs">
+    <div class="os-card"><h3>Windows</h3><p>推荐使用 PowerShell。路径通常是 <b>C:\Users\你的用户名</b>，用户级 Skills 目录为 <b>.claude\skills</b>。</p><div class="codebox">cd "$env:USERPROFILE\Desktop\Code"
+claude</div></div>
+    <div class="os-card"><h3>macOS</h3><p>推荐使用 Terminal 或 iTerm。路径通常是 <b>/Users/你的用户名</b>，用户级 Skills 目录为 <b>~/.claude/skills</b>。</p><div class="codebox">cd ~/Desktop/Code
+claude</div></div>
+  </div>
+</section>
+
+<section id="skills"><p class="label">03 · Skills</p><h2>Skills 能力地图</h2>
+<div class="skills-flow">
+  <div class="sf-node"><div class="sf-icon sf-icon-in">IN</div><b>输入</b><span>作业要求 · 实验照片 · 数据表 · 考试范围</span></div>
+  <div class="sf-arrow">→</div>
+  <div class="sf-node sf-core"><div class="sf-icon sf-icon-proc">SK</div><b>Skills 处理层</b><span>文档生成 · 课程作业 · 实验报告 · 学习复习</span></div>
+  <div class="sf-arrow">→</div>
+  <div class="sf-node"><div class="sf-icon sf-icon-out">OUT</div><b>输出</b><span>Word 报告 · PPT · Excel · Python · 复习计划</span></div>
+</div>
+<div class="grid g2">
+<div class="card"><h3>文档生成</h3><div class="grid"><div class="skill"><div class="name">pptx</div>生成、读取、编辑 PPT。</div><div class="skill"><div class="name">docx</div>生成、读取、编辑 Word。</div><div class="skill"><div class="name">xlsx</div>生成、读取、编辑 Excel。</div><div class="skill"><div class="name">pdf</div>读取和整理 PDF。</div></div></div>
+<div class="card"><h3>课程作业</h3><div class="grid"><div class="skill"><div class="name">college-assignment-packager</div>大作业总控拆解。</div><div class="skill"><div class="name">ppt-course-presentation-designer</div>PPT 大纲、页面结构、演讲备注。</div><div class="skill"><div class="name">word-college-report-writer</div>课程报告、调研报告、读书报告。</div><div class="skill"><div class="name">excel-data-cleaning-assistant</div>问卷、统计表、实验数据整理。</div></div></div>
+<div class="card"><h3>实验报告</h3><div class="grid"><div class="skill"><div class="name">lab-report-writer</div>实验目的、原理、器材、步骤、图表说明、Word 初稿。</div><div class="skill"><div class="name">lab-data-calculation-checker</div>数据、单位、公式、误差、结论一致性核查。</div></div></div>
+<div class="card"><h3>学习与资料</h3><div class="grid"><div class="skill"><div class="name">pcep-python-tutor</div>Python 教学。</div><div class="skill"><div class="name">python-debug-explainer</div>报错解释和最小修改方案。</div><div class="skill"><div class="name">exam-review-planner</div>六级、Python、期末、专业课复习计划。</div><div class="skill"><div class="name">literature-source-summarizer</div>配合 Tavily 做资料来源整理。</div><div class="skill"><div class="name">course-note-organizer</div>课堂笔记整理、知识点提取、复习资料生成。</div></div></div>
+<div class="card"><h3>创意与设计</h3><div class="grid"><div class="skill"><div class="name">video-script-storyboard-planner</div>视频脚本、分镜和拍摄计划。</div></div></div>
+</div></section>
+
+
+<section id="skill-install">
+  <p class="label">Skill 安装</p>
+  <h2>Skill 怎么安装：桌面端 vs Claude Code</h2>
+  <div class="install-compare">
+    <div class="compare-card"><h3>Claude 桌面端 / Cowork</h3><p>适合图形界面用户。下载 ZIP 后，不要解压，直接上传。</p><div class="codebox">Customize
+→ Skills
+→ Upload a skill
+→ 选择 skill-name.zip</div><div class="expect"><b>成功表现：</b>在 Skills 列表里能看到对应 Skill，聊天时可以说“使用 lab-report-writer”。</div></div>
+    <div class="compare-card"><h3>PowerShell / Claude Code</h3><p>适合本地项目和排错。Skill 本质是一个文件夹加 SKILL.md。</p><div class="codebox">C:\Users\你的用户名\.claude\skills\skill-name\SKILL.md
+
+macOS:
+~/.claude/skills/skill-name/SKILL.md</div><div class="expect"><b>成功表现：</b>重启 Claude Code 或 reload 后，能按 Skill 名称调用。</div></div>
+  </div>
+  <div class="danger-line" style="margin-top:14px">常见错误：把 SKILL.md 单独放在 ZIP 根目录，或解压后只上传 SKILL.md。正确结构应是：skill-name/SKILL.md。</div>
+</section>
+
+
+<section id="skill-usage">
+  <p class="label">Skill 用法</p>
+  <h2>Skill 下载后的极简用法</h2>
+  <div class="grid g3">
+    <div class="skill-use-card"><div class="name">lab-report-writer</div><div class="skill-use-row"><b>什么时候用：</b>实验报告、实验指导书照片、模板、数据、图片。</div><div class="skill-use-row"><b>输入要求：</b>模板、实验照片、实验数据、实验名称。</div><div class="skill-use-row"><b>输出效果：</b>目的、原理、器材、步骤、图表说明、Word 初稿结构。</div><div class="small-code">使用 lab-report-writer，只完成实验二。先识别目的、原理、器材、步骤，不要编造数据。</div></div>
+    <div class="skill-use-card"><div class="name">lab-data-calculation-checker</div><div class="skill-use-row"><b>什么时候用：</b>报告提交前检查数据、单位、误差、公式。</div><div class="skill-use-row"><b>输入要求：</b>数据表、公式、实验要求、理论值。</div><div class="skill-use-row"><b>输出效果：</b>计算过程、误差分析、需核对项。</div><div class="small-code">使用 lab-data-calculation-checker，检查这些数据有没有列填错、单位错误、公式错误。</div></div>
+    <div class="skill-use-card"><div class="name">word-college-report-writer</div><div class="skill-use-row"><b>什么时候用：</b>课程报告、读书报告、调研报告。</div><div class="skill-use-row"><b>输入要求：</b>题目、字数、老师要求、参考资料。</div><div class="skill-use-row"><b>输出效果：</b>报告结构、正文草稿、摘要、结论。</div><div class="small-code">使用 word-college-report-writer，先给我课程报告结构，确认后再写正文。</div></div>
+    <div class="skill-use-card"><div class="name">ppt-course-presentation-designer</div><div class="skill-use-row"><b>什么时候用：</b>课程汇报、小组展示、答辩 PPT。</div><div class="skill-use-row"><b>输入要求：</b>主题、时长、页数、听众、材料。</div><div class="skill-use-row"><b>输出效果：</b>PPT 大纲、每页标题、要点、图表建议。</div><div class="small-code">使用 ppt-course-presentation-designer，帮我设计 8 页课程汇报 PPT 大纲。</div></div>
+    <div class="skill-use-card"><div class="name">exam-review-planner</div><div class="skill-use-row"><b>什么时候用：</b>六级、Python、期末、专业课复习。</div><div class="skill-use-row"><b>输入要求：</b>考试日期、目标分数、每天可用时间、薄弱点。</div><div class="skill-use-row"><b>输出效果：</b>每日任务、检查标准、复盘方式。</div><div class="small-code">使用 exam-review-planner，帮我制定 14 天电工期末复习计划。</div></div>
+    <div class="skill-use-card"><div class="name">literature-source-summarizer</div><div class="skill-use-row"><b>什么时候用：</b>调研报告、资料搜集、引用来源整理。</div><div class="skill-use-row"><b>输入要求：</b>主题、时间范围、优先来源类型。</div><div class="skill-use-row"><b>输出效果：</b>来源、观点、数据、可信度、适合写入位置。</div><div class="small-code">使用 literature-source-summarizer，并调用 Tavily 搜索近五年资料。</div></div>
+  </div>
+</section>
+
+<section id="downloads"><p class="label">04 · Downloads</p><h2>Skills 下载区</h2><div class="card"><div class="download-toolbar"><p style="margin:0">下载后在 Claude 桌面端依次进入 <b>Customize → Skills → Upload a skill</b> 上传 ZIP。网页里的下载链接需要保持 <b>skills</b> 文件夹和本网页在同一目录。</p><a class="btn dark" href="skills/all-skills-bundle.zip" download>下载全部 Skills</a><div class="filters"><button class="filter active" data-filter="全部">全部</button><button class="filter" data-filter="实验报告">实验报告</button><button class="filter" data-filter="课程作业">课程作业</button><button class="filter" data-filter="学习复习">学习复习</button><button class="filter" data-filter="资料检索">资料检索</button></div></div><div class="grid g3" id="downloadGrid">
+    <article class="download-card" data-cat="课程作业">
+      <div class="download-top">
+        <span class="download-badge">课程作业</span>
+        <a class="download-btn" href="skills/college-assignment-packager.zip" download>下载 ZIP</a>
+      </div>
+      <h3>作业总控拆解</h3>
+      <p>把一个大作业拆成 Word、PPT、Excel、讲稿、视频脚本等可执行任务。</p>
+      <code>college-assignment-packager</code>
+    </article>
+
+    <article class="download-card" data-cat="学习复习">
+      <div class="download-top">
+        <span class="download-badge">学习复习</span>
+        <a class="download-btn" href="skills/course-note-organizer.zip" download>下载 ZIP</a>
+      </div>
+      <h3>课堂笔记整理</h3>
+      <p>把教材照片、PPT、课堂内容整理为期末复习笔记、公式、易错点和自测题。</p>
+      <code>course-note-organizer</code>
+    </article>
+
+    <article class="download-card" data-cat="学习复习">
+      <div class="download-top">
+        <span class="download-badge">学习复习</span>
+        <a class="download-btn" href="skills/exam-review-planner.zip" download>下载 ZIP</a>
+      </div>
+      <h3>考试复习规划</h3>
+      <p>六级、Python、期末、专业课每日复习计划、检查标准和复盘方式。</p>
+      <code>exam-review-planner</code>
+    </article>
+
+    <article class="download-card" data-cat="课程作业">
+      <div class="download-top">
+        <span class="download-badge">课程作业</span>
+        <a class="download-btn" href="skills/excel-data-cleaning-assistant.zip" download>下载 ZIP</a>
+      </div>
+      <h3>Excel 数据助手</h3>
+      <p>问卷统计、实验数据、表格设计、公式和图表建议。</p>
+      <code>excel-data-cleaning-assistant</code>
+    </article>
+
+    <article class="download-card" data-cat="实验报告">
+      <div class="download-top">
+        <span class="download-badge">实验报告</span>
+        <a class="download-btn" href="skills/lab-data-calculation-checker.zip" download>下载 ZIP</a>
+      </div>
+      <h3>实验数据核查</h3>
+      <p>检查公式、单位、误差、表格、结论一致性，适合实验报告提交前复核。</p>
+      <code>lab-data-calculation-checker</code>
+    </article>
+
+    <article class="download-card" data-cat="实验报告">
+      <div class="download-top">
+        <span class="download-badge">实验报告</span>
+        <a class="download-btn" href="skills/lab-report-writer.zip" download>下载 ZIP</a>
+      </div>
+      <h3>实验报告写作</h3>
+      <p>识别模板、实验目的、原理、器材、步骤、图表说明，并配合 docx 生成 Word 初稿。</p>
+      <code>lab-report-writer</code>
+    </article>
+
+    <article class="download-card" data-cat="资料检索">
+      <div class="download-top">
+        <span class="download-badge">资料检索</span>
+        <a class="download-btn" href="skills/literature-source-summarizer.zip" download>下载 ZIP</a>
+      </div>
+      <h3>资料来源整理</h3>
+      <p>配合 Tavily 搜索资料，整理来源、核心观点、可用数据和可信度。</p>
+      <code>literature-source-summarizer</code>
+    </article>
+
+    <article class="download-card" data-cat="学习复习">
+      <div class="download-top">
+        <span class="download-badge">学习复习</span>
+        <a class="download-btn" href="skills/pcep-python-tutor.zip" download>下载 ZIP</a>
+      </div>
+      <h3>Python 教学</h3>
+      <p>Python 基础、Python 考点、练习题和选择题。</p>
+      <code>pcep-python-tutor</code>
+    </article>
+
+    <article class="download-card" data-cat="课程作业">
+      <div class="download-top">
+        <span class="download-badge">课程作业</span>
+        <a class="download-btn" href="skills/ppt-course-presentation-designer.zip" download>下载 ZIP</a>
+      </div>
+      <h3>PPT 设计助手</h3>
+      <p>设计课程汇报 PPT 大纲、页标题、要点、图表建议和演讲备注。</p>
+      <code>ppt-course-presentation-designer</code>
+    </article>
+
+    <article class="download-card" data-cat="学习复习">
+      <div class="download-top">
+        <span class="download-badge">学习复习</span>
+        <a class="download-btn" href="skills/python-debug-explainer.zip" download>下载 ZIP</a>
+      </div>
+      <h3>Python 报错解释</h3>
+      <p>解释 traceback、定位错误、给最小修改方案。</p>
+      <code>python-debug-explainer</code>
+    </article>
+
+    <article class="download-card" data-cat="课程作业">
+      <div class="download-top">
+        <span class="download-badge">课程作业</span>
+        <a class="download-btn" href="skills/video-script-storyboard-planner.zip" download>下载 ZIP</a>
+      </div>
+      <h3>视频脚本分镜</h3>
+      <p>课程展示视频、分镜、旁白、字幕和剪辑建议。</p>
+      <code>video-script-storyboard-planner</code>
+    </article>
+
+    <article class="download-card" data-cat="课程作业">
+      <div class="download-top">
+        <span class="download-badge">课程作业</span>
+        <a class="download-btn" href="skills/word-college-report-writer.zip" download>下载 ZIP</a>
+      </div>
+      <h3>Word 报告助手</h3>
+      <p>课程报告、调研报告、读书报告、实验前期文本的结构和正文。</p>
+      <code>word-college-report-writer</code>
+    </article>
+
+</div>
+<div class="danger-line" style="margin-top:14px">发布后建议实测下载全部 Skills、lab-report-writer、word-college-report-writer、ppt-course-presentation-designer，确认 ZIP 能正常下载。</div>
+</div></section>
+
+<section id="cases"><p class="label">05 · Cases</p><h2>真实场景展示</h2><div class="grid g4">
+<div class="card"><span class="case-tag">实验报告</span><h3>电工实验报告</h3><p>模板 + 实验照片 + 数据 → 识别目的、原理、器材、步骤 → 数据核查 → docx 生成 Word 初稿。</p></div>
+<div class="card"><span class="case-tag">课程作业</span><h3>调研任务</h3><p>先拆成 Word、PPT、Excel、讲稿，再分别生成文件，最后人工核验内容和格式。</p></div>
+<div class="card"><span class="case-tag">Python</span><h3>Python 学习</h3><p>Python 教学助手学知识，Codex 写代码，python-debug-explainer 查报错，/grade 做审查。</p></div>
+<div class="card"><span class="case-tag">旅游规划</span><h3>国内旅行</h3><p>Tavily 查攻略和开放时间，百度地图 MCP 查路线距离，Claude 整合成行程。</p></div>
+</div></section>
+
+<section id="workflow"><p class="label">06 · Workflow</p><h2>高频工作流</h2><div class="grid g2">
+<div class="card"><h3>课程作业</h3><div class="grid"><div class="flow"><span class="num">1</span>步骤 1：任务要求放入 Desktop\Code\课程作业。</div><div class="flow"><span class="num">2</span>步骤 2：使用 college-assignment-packager 拆任务。</div><div class="flow"><span class="num">3</span>步骤 3：调用 Word / PPT / Excel 对应 Skill。</div><div class="flow"><span class="num">4</span>步骤 4：生成文件并人工核查。</div></div></div>
+<div class="card"><h3>实验报告</h3><div class="grid"><div class="flow"><span class="num">1</span>步骤 1：模板、照片、数据放同一文件夹。</div><div class="flow"><span class="num">2</span>步骤 2：lab-report-writer 识别报告内容。</div><div class="flow"><span class="num">3</span>步骤 3：lab-data-calculation-checker 核查数据。</div><div class="flow"><span class="num">4</span>步骤 4：docx 生成 Word 初稿。</div></div></div>
+<div class="card"><h3>Python</h3><div class="grid"><div class="flow"><span class="num">1</span>步骤 1：项目放入 Python学习。</div><div class="flow"><span class="num">2</span>步骤 2：学习知识点并写练习。</div><div class="flow"><span class="num">3</span>步骤 3：报错时解释和最小修复。</div><div class="flow"><span class="num">4</span>步骤 4：/grade 做导师式审查。</div></div></div>
+<div class="card"><h3>旅游规划</h3><div class="grid"><div class="flow"><span class="num">1</span>步骤 1：Tavily 搜攻略、门票、开放时间。</div><div class="flow"><span class="num">2</span>步骤 2：百度地图 MCP 查距离路线。</div><div class="flow"><span class="num">3</span>步骤 3：生成不绕路、适合预算的行程。</div><div class="flow"><span class="num">4</span>步骤 4：附百度/高德地图链接。</div></div></div>
+</div></section>
+
+
+<section id="prompt-route">
+  <p class="label">使用场景</p>
+  <h2>这些 Prompt 应该在哪用</h2>
+  <div class="grid g3">
+    <div class="prompt-route"><span class="tag2">Cowork / 桌面端</span><h3>适合文档和作业</h3><p>课程报告、实验报告、PPT 大纲、资料整理、普通聊天都可以在这里做。</p></div>
+    <div class="prompt-route"><span class="tag2">Code / Claude Code</span><h3>适合文件和工具调用</h3><p>需要读取文件夹、生成 Word/PPT/Excel、调用 MCP、处理项目文件时优先用 Code。</p></div>
+    <div class="prompt-route"><span class="tag2">PowerShell</span><h3>适合安装和排错</h3><p>添加 MCP、检查 /mcp、处理环境变量、运行本地命令和排查路径问题时用 PowerShell。</p></div>
+  </div>
+</section>
+
+<section id="prompts"><p class="label">07 · Prompts</p><h2>一键复制 Prompt</h2><div class="grid g2">
+<div class="prompt"><button class="copy">复制</button><h3>实验报告开头</h3><pre>使用 lab-report-writer，只完成本次实验报告。请先识别模板和实验指导书内容，不要编造数据；先整理目的、原理、器材、步骤和图表说明，等我确认后再生成 Word。</pre></div>
+<div class="prompt"><button class="copy">复制</button><h3>实验数据核查</h3><pre>使用 lab-data-calculation-checker，检查这组实验数据有没有列填错、单位错误、公式错误，并生成适合手写的数据处理过程。</pre></div>
+<div class="prompt"><button class="copy">复制</button><h3>课程大作业</h3><pre>使用 college-assignment-packager，帮我把这个课程任务拆成 Word 报告、PPT 汇报、Excel 数据表、视频脚本和讲稿，并给出完成顺序。</pre></div>
+<div class="prompt"><button class="copy">复制</button><h3>联网资料检索</h3><pre>使用 literature-source-summarizer，并调用 Tavily 搜索近五年资料。请按来源、核心观点、可用数据、适合写进报告的位置整理。</pre></div>
+<div class="prompt"><button class="copy">复制</button><h3>复习计划</h3><pre>使用 exam-review-planner，帮我制定一个 14 天复习计划，每天列出任务、用时、检查标准和复盘方式。</pre></div>
+<div class="prompt"><button class="copy">复制</button><h3>路线规划</h3><pre>请先使用 Tavily 搜索景点信息，再使用百度地图 MCP 查询路线和距离，最后生成适合大学生预算、不太赶的行程，并附地图查看链接。</pre></div>
+</div></section>
+
+
+
+<section id="remote-control">
+  <p class="label">Remote Control</p>
+  <h2>进阶：微信远程控制 Claude Code</h2>
+  <div class="card">
+    <p>这部分适合已经完成基础配置、并希望在手机上远程查看进度、发起只读检查、生成学习文件或维护项目的用户。推荐把它当成“手机遥控器”，而不是全权限远程电脑控制器。</p>
+    <div class="remote-flow">
+      <div class="remote-node"><b>微信</b><span>手机发指令</span></div>
+      <div class="remote-arrow">→</div>
+      <div class="remote-node"><b>cc-connect</b><span>消息桥接服务</span></div>
+      <div class="remote-arrow">→</div>
+      <div class="remote-node"><b>Claude Code</b><span>电脑终端执行</span></div>
+      <div class="remote-arrow">→</div>
+      <div class="remote-node"><b>项目目录</b><span>只操作指定工作区</span></div>
+    </div>
+    <div style="margin-top:16px">
+      <span class="status-pill">已验证：微信消息可达</span>
+      <span class="status-pill">已验证：只读检查</span>
+      <span class="status-pill">已验证：轻量写入</span>
+      <span class="status-pill">建议：保持 plan 模式</span>
+    </div>
+  </div>
+
+  <div class="remote-grid">
+    <div class="remote-card">
+      <h3>适合做什么</h3>
+      <p>远程总结项目结构、检查隐私泄露风险、维护 README / CHANGELOG、生成 Python 练习、整理实验报告结构、生成 Word / PPT 初稿。</p>
+    </div>
+    <div class="remote-card">
+      <h3>不适合做什么</h3>
+      <p>不建议远程删除文件、操作整个 C 盘、修改系统环境变量、读取密钥文件、自动 git push、运行未知脚本或安装陌生包。</p>
+    </div>
+    <div class="remote-card">
+      <h3>推荐目录</h3>
+      <p>建议只绑定 <b>Desktop\Code</b> 下的具体项目目录，例如 ai-learning-workbench、Python学习、实验报告，不要绑定整个桌面。</p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>远程安全规则</h3>
+    <div class="rule-list">
+      <div class="rule-item">只允许操作当前项目目录，不操作系统目录、下载目录和整个桌面。</div>
+      <div class="rule-item">默认禁止读取 .env、settings.json、claude_desktop_config.json。</div>
+      <div class="rule-item">不允许回传 API Key、AK、Token、Cookie、账号密码。</div>
+      <div class="rule-item">修改文件前必须先给计划，并等待确认执行。</div>
+      <div class="rule-item">修改前先备份到 backup 文件夹，输出统一放 output 文件夹。</div>
+      <div class="rule-item">禁止执行 git push、npm publish、format、del、rm -rf 等高风险命令。</div>
+    </div>
+  </div>
+</section>
+
+
+<section id="cc-connect-weixin-guide">
+  <p class="label">cc-connect / WeChat</p>
+  <h2>cc-connect 接入微信：完整流程</h2>
+  <div class="card">
+    <p><b>定位：</b>cc-connect 是微信和电脑终端之间的消息桥。手机微信发消息，cc-connect 转给电脑上的 Claude Code，Claude Code 在指定项目目录里执行，再把结果回到微信。</p>
+    <div class="warn-box"><b>推荐使用方式：</b>先绑定测试目录，保持 plan / 计划模式；先只读检查，再轻量写入；正式项目里只允许操作当前项目目录。</div>
+  </div>
+  <div class="guide-steps">
+    <div class="guide-step"><div class="guide-num">1</div><div><h3>建立安全测试目录</h3><p>第一次不要绑定整个桌面，也不要直接绑定真实 GitHub 项目。</p><div class="cmd-box">mkdir "$env:USERPROFILE\Desktop\Code\cc-connect-test" -Force
+cd "$env:USERPROFILE\Desktop\Code\cc-connect-test"</div></div></div>
+    <div class="guide-step"><div class="guide-num">2</div><div><h3>安装并检查 cc-connect</h3><p>如果 PATH 没生效，就用完整路径运行。</p><div class="cmd-box">npm install -g cc-connect
+cc-connect --version
+
+# PATH 未生效时示例：
+& "D:\qw\npm-global\cc-connect.cmd" --version</div></div></div>
+    <div class="guide-step"><div class="guide-num">3</div><div><h3>打开 Web 管理页</h3><p>Web 页用于创建项目、选择 Agent、设置工作目录和权限模式。</p><div class="cmd-box">& "D:\qw\npm-global\cc-connect.cmd" web --no-browser
+
+# 启动主服务，窗口不要关闭：
+& "D:\qw\npm-global\cc-connect.cmd"</div></div></div>
+    <div class="guide-step"><div class="guide-num">4</div><div><h3>项目设置建议</h3><p>先用测试目录，Agent 选 Claude Code，权限模式选计划。</p><div class="cmd-box">Project ID: my-project
+Agent: Claudecode
+Work dir: C:\Users\wtm35\Desktop\Code\cc-connect-test
+Permission mode: plan / 计划</div></div></div>
+    <div class="guide-step"><div class="guide-num">5</div><div><h3>绑定微信</h3><p>项目 ID 以管理页网址为准，例如 /projects/my-project 就使用 my-project。</p><div class="cmd-box">& "D:\qw\npm-global\cc-connect.cmd" weixin setup --project my-project
+
+# 需要强制重新扫码：
+& "D:\qw\npm-global\cc-connect.cmd" weixin new --project my-project</div></div></div>
+    <div class="guide-step"><div class="guide-num">6</div><div><h3>微信端只读测试</h3><p>先不要让它改文件。先测试消息、只读分析和隐私检查。</p><div class="cmd-box">/help
+
+你能收到我这条微信消息吗？只回复“收到”，不要操作文件。
+
+总结当前项目目录结构，不要修改任何文件。
+
+检查当前项目是否有 API Key、AK、Token 泄露风险，不要修改文件。</div></div></div>
+  </div>
+</section>
+
+
+<section id="remote-safety-rules">
+  <p class="label">Remote Safety</p>
+  <h2>远程安全规则：微信遥控必须加的刹车</h2>
+  <div class="card">
+    <p>微信远程控制 Claude Code 很方便，但它本质上是在手机里给电脑终端下指令。安全规则必须前置：先限制目录，再限制文件，再限制命令，最后才允许轻量写入。</p>
+    <div class="safety-matrix">
+      <div class="safety-card safe">
+        <h3>推荐允许</h3>
+        <p>只读总结项目结构、检查 README、检查 index.html、生成学习文件、整理 Word / PPT 初稿结构、输出到 output 文件夹。</p>
+      </div>
+      <div class="safety-card danger">
+        <h3>默认禁止</h3>
+        <p>删除文件、清空文件夹、读取密钥配置、操作系统目录、执行 git push、npm publish、format、del、rm -rf、运行未知脚本。</p>
+      </div>
+    </div>
+    <table class="rule-table">
+      <tr><td>目录边界</td><td>只允许操作当前项目目录，不操作 C 盘根目录、下载目录、整个桌面和系统目录。</td></tr>
+      <tr><td>敏感文件</td><td>禁止读取 .env、settings.json、claude_desktop_config.json，以及任何包含 key、token、ak、password 的文件。</td></tr>
+      <tr><td>信息回传</td><td>不允许在微信消息中回传 API Key、AK、Token、Cookie、账号密码、二维码链接或登录 token。</td></tr>
+      <tr><td>写入规则</td><td>修改前必须先给计划，等你回复“确认执行”后再动文件；修改前先备份到 backup。</td></tr>
+      <tr><td>输出规则</td><td>Word、PPT、Markdown、Python 练习统一输出到 output，不覆盖 input 原始文件。</td></tr>
+      <tr><td>终止规则</td><td>发现越权、读取密钥、误删风险时立即停止，并要求人工确认。</td></tr>
+    </table>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>可直接发给微信远程 Claude Code 的安全前缀</h3>
+    <div class="copy-block">远程任务默认规则：
+1. 只允许操作当前项目目录。
+2. 不允许读取 .env、settings.json、claude_desktop_config.json。
+3. 不允许读取或回传任何 API Key、AK、Token、Cookie、账号密码。
+4. 不允许删除文件、移动文件、清空文件夹。
+5. 不允许执行 git push、npm publish、format、del、rm -rf 等高风险命令。
+6. 修改文件前必须先给计划，等我确认后再执行。
+7. 修改前必须备份到 backup 文件夹。
+8. 所有输出文件保存到 output 文件夹。
+9. 遇到不确定操作，必须先问我。</div>
+  </div>
+</section>
+
+<section id="subagents-guide">
+  <p class="label">Subagents</p>
+  <h2>Subagents：给 Claude Code 配三个专门助手</h2>
+  <div class="card">
+    <p>Subagents 适合把复杂任务拆给专门角色处理。这里不追求多，而是只保留三个最实用角色：安全审查、项目维护、学习文件规划。</p>
+    <div class="agent-setup">
+      <div class="agent-setup-card">
+        <h3>security-reviewer</h3>
+        <p>专门检查隐私泄露、敏感文件、危险命令、路径越界和 GitHub 发布风险。</p>
+        <p><code>.claude/agents/security-reviewer.md</code></p>
+      </div>
+      <div class="agent-setup-card">
+        <h3>project-maintainer</h3>
+        <p>专门维护 README、CHANGELOG、SECURITY、index.html 结构说明和发布说明。</p>
+        <p><code>.claude/agents/project-maintainer.md</code></p>
+      </div>
+      <div class="agent-setup-card">
+        <h3>study-file-planner</h3>
+        <p>专门规划 Word、PPT、实验报告、Python 学习文件和 input / output / backup 结构。</p>
+        <p><code>.claude/agents/study-file-planner.md</code></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>让 Claude Code 创建 Subagents 的提示词</h3>
+    <div class="copy-block">请为当前项目创建 3 个项目级 Subagents。
+
+允许创建：
+.claude/agents/security-reviewer.md
+.claude/agents/project-maintainer.md
+.claude/agents/study-file-planner.md
+
+要求：
+1. 使用 Markdown 文件 + YAML frontmatter。
+2. 不创建 agent.json。
+3. 不启用 Hooks。
+4. 不修改全局配置。
+5. 不读取 .env、settings.json、claude_desktop_config.json。
+6. 不回传任何 API Key、AK、Token、Cookie、账号密码。
+7. 创建完成后列出文件路径和每个 Subagent 的用途。</div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>Subagents 测试指令</h3>
+    <div class="copy-block">请调用 security-reviewer 检查当前项目是否有隐私泄露风险。
+要求：只读分析，不要修改文件，不要回传密钥原文。
+
+请调用 project-maintainer 检查 README.md 有没有可以优化的地方。
+要求：只给建议，不要修改文件，不要写得像营销文案。
+
+请调用 study-file-planner，帮我设计一个实验报告项目目录结构。
+要求：包括 input、output、backup，不要创建文件，只给规划。</div>
+  </div>
+</section>
+
+<section id="hooks-guide">
+  <p class="label">Hooks</p>
+  <h2>Hooks：先设计，不急着启用</h2>
+  <div class="card">
+    <p>Hooks 是自动触发的安全守护。它比 Subagents 更强，也更容易误拦截。当前建议是：先写方案，先在 cc-connect-test 里测试，稳定后再考虑用于真实项目。</p>
+    <div class="hook-lane">
+      <div class="hook-step"><b>1. 设计方案</b><span>说明要拦截什么、为什么拦截。</span></div>
+      <div class="hook-step"><b>2. 测试目录</b><span>只在 cc-connect-test 里验证。</span></div>
+      <div class="hook-step"><b>3. 观察误拦截</b><span>确认不会影响正常 Word/PPT/README 输出。</span></div>
+      <div class="hook-step"><b>4. 再考虑启用</b><span>真实项目里只启用安全型 Hook。</span></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>Hooks 方案目标</h3>
+    <table class="rule-table">
+      <tr><td>敏感文件拦截</td><td>阻止读取 .env、settings.json、claude_desktop_config.json 和包含 key/token/ak/password 的文件。</td></tr>
+      <tr><td>危险命令拦截</td><td>阻止 del、rm -rf、format、git push、npm publish 等高风险命令。</td></tr>
+      <tr><td>路径越界提醒</td><td>当目标路径不在当前项目目录时，必须停止并询问。</td></tr>
+      <tr><td>写入前提醒</td><td>修改文件前提醒先备份，输出文件统一进入 output。</td></tr>
+    </table>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>让 Claude Code 只设计 Hooks 的提示词</h3>
+    <div class="copy-block">请帮我设计一套 Claude Code Hooks 安全方案，但先不要写入配置。
+
+目标：
+1. 阻止读取 .env、settings.json、claude_desktop_config.json。
+2. 阻止读取或回传任何 key、token、ak、password。
+3. 阻止 del、rm -rf、format、git push、npm publish。
+4. 修改文件前提醒必须备份。
+5. 检查目标路径是否在当前项目目录内。
+6. 适配微信远程控制场景。
+
+要求：
+1. 先解释应该使用哪些 Hook 事件。
+2. 说明每个 Hook 的作用。
+3. 说明误拦截风险。
+4. 给出测试方案。
+5. 暂时不要修改 settings，不要启用 Hooks。</div>
+  </div>
+</section>
+
+<section id="cc-connect-troubleshooting">
+  <p class="label">Troubleshooting</p>
+  <h2>cc-connect 常见问题排查</h2>
+  <div class="trouble-grid">
+    <div class="trouble-card"><b>localhost 拒绝连接：</b>说明 9820 端口没有服务监听。先运行 cc-connect 主服务，再用 netstat 检查。</div>
+    <div class="trouble-card"><b>PATH 找不到 cc-connect：</b>用完整路径运行，例如 D:\qw\npm-global\cc-connect.cmd。</div>
+    <div class="trouble-card"><b>扫码后页面没更新：</b>确认微信平台是否添加到当前项目，必要时重启 cc-connect 服务并刷新管理页。</div>
+    <div class="trouble-card"><b>手机找不到聊天入口：</b>重新执行 weixin setup 或 weixin new 重新扫码，并把聊天置顶。</div>
+    <div class="trouble-card"><b>微信发消息没反应：</b>先发 /help，再发 /new；确认 cc-connect 服务窗口没有关闭。</div>
+    <div class="trouble-card"><b>误绑定真实项目：</b>把工作目录改回 cc-connect-test，保持 plan 模式，重启服务。</div>
+  </div>
+</section>
+
+<section id="remote-prompt-library">
+  <p class="label">Prompt Library</p>
+  <h2>微信远程常用提示词收藏</h2>
+  <div class="prompt-library">
+    <div class="prompt-card"><h3>通用安全前缀</h3><pre>远程任务默认规则：
+1. 只允许操作当前项目目录。
+2. 不允许读取 .env、settings.json、claude_desktop_config.json。
+3. 不允许读取或回传任何 API Key、AK、Token、Cookie、账号密码。
+4. 不允许删除文件、移动文件、清空文件夹。
+5. 修改文件前必须先给计划，等我确认后再执行。
+6. 修改前必须备份到 backup 文件夹。
+7. 所有输出文件保存到 output 文件夹。</pre></div>
+    <div class="prompt-card"><h3>项目结构检查</h3><pre>请总结当前项目目录结构。
+
+要求：
+1. 不要修改任何文件。
+2. 说明每个主要文件夹和文件的作用。
+3. 判断这个项目当前适合做什么。
+4. 如果发现明显问题，只给建议，不要执行修改。</pre></div>
+    <div class="prompt-card"><h3>隐私泄露检查</h3><pre>请检查当前项目是否有隐私泄露风险。
+
+重点检查 API Key、AK、Token、Cookie、账号密码、手机号、邮箱、.env、settings.json、claude_desktop_config.json。
+
+只读分析，不要修改文件；发现风险时只告诉我文件名和风险类型，不要回传密钥原文。</pre></div>
+    <div class="prompt-card"><h3>先给计划</h3><pre>请根据刚才的建议，给出一个修改计划。
+
+要求：
+1. 列出准备修改哪些文件。
+2. 说明每个文件为什么要改。
+3. 说明预期效果。
+4. 暂时不要执行修改。
+5. 等我回复“确认执行”后再开始。</pre></div>
+    <div class="prompt-card"><h3>Word / 实验报告</h3><pre>请读取 input 文件夹里的资料，整理一份实验报告或课程报告结构。
+
+要求：
+1. 先总结你看到了哪些输入文件。
+2. 先生成大纲，不要直接生成 Word。
+3. 不要编造资料和数据。
+4. 标出哪些内容需要我补充。
+5. 等我确认后再生成正式文档，输出到 output/word。</pre></div>
+    <div class="prompt-card"><h3>PPT 初稿</h3><pre>请根据 input 文件夹里的资料，设计一份 8 页课程汇报 PPT 大纲。
+
+要求：
+1. 每页给出标题、3～4 个要点、演讲备注。
+2. 先不要生成 pptx 文件。
+3. 风格简洁，适合大学课程展示。
+4. 等我确认后再生成到 output/ppt。</pre></div>
+    <div class="prompt-card"><h3>Python 学习</h3><pre>请在当前目录创建 Python Day 练习。
+
+主题：变量、输入输出、if 判断、for 循环、列表。
+
+要求：
+1. 创建 README.md。
+2. 创建 5 个 .py 练习文件。
+3. 每个文件只写题目和提示，不写答案。
+4. 给出自测标准。
+5. 修改前先给计划，等我确认后再执行。</pre></div>
+    <div class="prompt-card"><h3>GitHub 上传前检查</h3><pre>请对当前 GitHub 项目做上传前检查。
+
+重点检查：
+1. 是否有密钥、Token、AK、手机号、账号信息。
+2. README 是否清楚。
+3. CHANGELOG 是否更新。
+4. SECURITY 是否合理。
+5. 是否有不该上传的临时文件。
+
+只读分析，不要修改文件。</pre></div>
+  </div>
+</section>
+
+<section id="china-note">
+  <p class="label">国内用户提醒</p>
+  <h2>国内用户使用说明</h2>
+  <div class="cn-note">
+    <h3>先判断是网络、密钥，还是 MCP 配置问题</h3>
+    <p>Claude / Claude Code、Tavily、第三方网关和地图 MCP 的可用性可能受地区、网络、账号状态和服务配置影响。建议把它们当作个人学习环境使用，不要把真实 Key、AK、Token 或配置文件公开。</p>
+    <div class="cn-list">
+      <div class="cn-item"><b>Claude / Claude Code：</b>可用性可能受账号、地区和网络影响。遇到连接失败，先确认账号状态和网络。</div>
+      <div class="cn-item"><b>DeepSeek：</b>适合作为低成本中文模型补充，但不要把 API Key 写进仓库或截图。</div>
+      <div class="cn-item"><b>Tavily：</b>主要负责搜索和网页提取。搜索失败时，先检查 Key 是否完整、MCP URL 是否正确。</div>
+      <div class="cn-item"><b>百度地图 MCP：</b>国内路线更适合用百度地图或高德地图方向的工具。百度地图 AK 建议使用服务端 AK。</div>
+      <div class="cn-item"><b>第三方网关：</b>有稳定性、安全性和合规性风险，建议仅用于个人学习和测试。</div>
+      <div class="cn-item"><b>排错顺序：</b>先检查网络，再检查 Key / AK，再检查 MCP 地址，最后再重装工具。</div>
+    </div>
+  </div>
+</section>
+
+<section id="security"><p class="label">08 · Security</p><h2>安全等级：受控增强版</h2><div class="grid g2">
+<div class="card safe"><h3>推荐保留</h3><p>AI-Sandbox、重要文件备份、生成结果放 output、原始文件放 input、操作前确认、PowerShell 只在项目目录运行。</p></div>
+<div class="card warnbox"><h3>避免长期开放</h3><p>Allowed egress hosts = *、Desktop Commander 全盘权限、未知插件、明文 API Key、多个工具同时修改同一目录。</p></div>
+<div class="danger-line" style="margin-top:14px">公开前请再次确认没有 API Key、AK、Token、手机号、账号、真实配置文件或密钥截图。</div></div></section>
+
+<section id="timeline"><p class="label">09 · Timeline</p><h2>配置安装时间线</h2><div class="card timeline">
+<div class="titem"><h3>01 接入 DeepSeek</h3><p>Claude 桌面端与 PowerShell Claude Code 均可使用 DeepSeek。</p></div>
+<div class="titem"><h3>02 安装 document-skills</h3><p>pptx、docx、xlsx、pdf 成为文档生成核心能力。</p></div>
+<div class="titem"><h3>03 创建自定义 Skills</h3><p>课程作业、PPT、Word、Excel、Python、视频、实验报告等场景覆盖。</p></div>
+<div class="titem"><h3>04 建立学习规则</h3><p>Global Instruction、CLAUDE.md、/grade、study-assistant-default 完成。</p></div>
+<div class="titem"><h3>05 接入 Tavily 与百度地图 MCP</h3><p>实现资料检索与国内路线查询。</p></div>
+<div class="titem"><h3>06 实验报告工作流跑通</h3><p>模板 + 照片 + 数据 → Word 初稿，证明配置具备真实生产力。</p></div>
+<div class="titem"><h3>07 Potato + Hermes 上线</h3><p>Potato 陪伴助手和 Hermes 规划器集成到系统提示词，日常陪伴和任务规划自动切换。</p></div>
+<div class="titem"><h3>08 微信集成完成</h3><p>通过 cc-connect + wechat_service.py 实现微信远程调用 Potato 和 Hermes。</p></div>
+</div></section>
+
+
+<section id="troubleshooting">
+  <p class="label">排错指南</p>
+  <h2>新手高频排错指南</h2>
+  <div class="grid g2">
+    <div class="trouble-card"><h3>claude 命令不识别</h3><p>先确认 Claude Code 是否安装成功；重新打开 PowerShell；运行 <b>claude --version</b>。如果仍失败，检查 PATH 或重新安装。</p></div>
+    <div class="trouble-card"><h3>MCP 显示 disconnected</h3><p>先运行 <b>/mcp</b> 看状态；确认 URL、Key、AK 是否正确；Remote MCP 优先检查网络和服务端地址。</p></div>
+    <div class="trouble-card"><h3>百度地图提示 AK 有误</h3><p>确认创建的是“服务端 AK”，不是浏览器端 AK；确认应用没被删除，IP 白名单和服务权限没有限制。</p></div>
+    <div class="trouble-card"><h3>Tavily 无法搜索</h3><p>确认 Tavily Key 没写错，URL 中参数完整；如果 Key 曾经公开过，建议重新生成新 Key。</p></div>
+    <div class="trouble-card"><h3>Skill 上传后看不到</h3><p>确认上传的是 ZIP，且 ZIP 内部包含 skill-name/SKILL.md；不要只把 SKILL.md 放在 ZIP 根目录。</p></div>
+    <div class="trouble-card"><h3>生成 Word/PPT 失败</h3><p>先让 Claude 只分析模板和结构，不要一步生成最终文件；确认输出目录存在，不覆盖原模板。</p></div>
+    <div class="trouble-card"><h3>生成的文件找不到</h3><p>让 Claude 明确保存到 output 文件夹；生成前先创建 output；不要只说“帮我生成”，要指定文件名和路径。</p></div>
+    <div class="trouble-card"><h3>GitHub Pages 没更新</h3><p>确认仓库里的 index.html 已更新；等待 Pages 部署完成；用 Ctrl+F5 或在网址后加 ?v=11 强制刷新。</p></div>
+    <div class="trouble-card"><h3>PowerShell 权限不足</h3><p>用户级设置优先，不要随便改 Machine 级环境变量；需要管理员权限时先确认命令风险。</p></div>
+    <div class="trouble-card"><h3>Windows 和 macOS 路径混乱</h3><p>Windows 用反斜杠和 PowerShell；macOS 用斜杠和 Terminal。不会写路径时，把文件夹拖到终端里获取路径。</p></div>
+  </div>
+</section>
+
+
+<section id="beginner-faq-extra">
+  <p class="label">小白 FAQ</p>
+  <h2>纯小白最常问的 3 个问题</h2>
+  <div class="grid g3">
+    <div class="faq-extra"><h3>怎么在当前文件夹打开 PowerShell？</h3><p>打开目标文件夹，在空白处按住 <b>Shift</b> 后右键，选择“在终端中打开”。Windows 11 也可以直接在地址栏输入 <b>powershell</b> 回车。</p></div>
+    <div class="faq-extra"><h3>我不会代码，可以用吗？</h3><p>可以。先只用 Claude 桌面端和 Skills，不配置 MCP 也能完成课程报告、PPT、实验报告整理和复习计划。</p></div>
+    <div class="faq-extra"><h3>我应该先装哪些 Skill？</h3><p>新手优先装：docx、pptx、xlsx、lab-report-writer、lab-data-calculation-checker、word-college-report-writer。Potato 和 Hermes 不需要单独安装，已内置在系统提示词中。</p></div>
+    <div class="faq-extra"><h3>Potato 和 Hermes 怎么用？</h3><p>直接在 Claude Code 中聊天就是 Potato 模式。说"帮我规划"就会自动切换到 Hermes 模式。微信集成启动后，在微信中也可以使用这两个功能。</p></div>
+  </div>
+</section>
+
+<section id="faq"><p class="label">10 · FAQ</p><h2>常见问题</h2><div class="grid g2">
+<div class="faq"><h3>这个项目技术复杂吗？</h3><p>不复杂。它的价值不在前端技术，而在于真实、可复用的 AI 学习工作流。</p></div>
+<div class="faq"><h3>适合放 GitHub Pages 吗？</h3><p>适合。它是静态展示页和 Skill 下载页，没有后端，也没有敏感密钥。</p></div>
+<div class="faq"><h3>能不能公开？</h3><p>可以，但必须确认没有 API Key、账号、手机号、隐私路径和密钥截图。</p></div>
+<div class="faq"><h3>后续怎么维护？</h3><p>新增 Skill、MCP 或工作流后，更新下载区、时间线和 README 即可。</p></div>
+</div></section>
+
+
+
+
+<section id="docs">
+  <p class="label">References</p>
+  <h2>官方文档入口</h2>
+  <div class="grid g3">
+    <div class="card"><h3>Claude Code 设置</h3><p>查询 settings、CLAUDE.md、权限、MCP、插件和配置层级。</p><a class="btn light" href="https://code.claude.com/docs/en/settings" target="_blank" rel="noreferrer">打开文档</a></div>
+    <div class="card"><h3>环境变量</h3><p>确认 ANTHROPIC_API_KEY、ANTHROPIC_AUTH_TOKEN、ANTHROPIC_BASE_URL 等变量含义。</p><a class="btn light" href="https://code.claude.com/docs/en/env-vars" target="_blank" rel="noreferrer">打开文档</a></div>
+    <div class="card"><h3>认证说明</h3><p>理解登录、API Key、Auth Token、OAuth Token 的优先级与适用范围。</p><a class="btn light" href="https://code.claude.com/docs/en/authentication" target="_blank" rel="noreferrer">打开文档</a></div>
+  </div>
+</section>
+
+
+
+
+<div class="footer"><h2>最终原则</h2><p>不追求装最多工具，而是让每个工具在正确边界内稳定工作：ChatGPT 负责规划，Claude 负责文档，Codex 负责代码，Tavily 负责搜索，百度地图负责路线，AI-Sandbox 负责安全。</p></div>
+</main>
+
+<script>
+/* Copy prompt buttons */
+document.querySelectorAll(".copy").forEach(btn=>{
+  btn.addEventListener("click", async ()=>{
+    const text = btn.parentElement.querySelector("pre").innerText;
+    try{ await navigator.clipboard.writeText(text); btn.textContent="已复制"; btn.classList.add("done"); setTimeout(()=>{btn.textContent="复制";btn.classList.remove("done")},1400); }
+    catch(e){ alert("复制失败，请手动复制。"); }
+  });
+});
+
+/* Download filter */
+document.querySelectorAll(".filter").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const f=btn.dataset.filter;
+    document.querySelectorAll(".filter").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    document.querySelectorAll(".download-card").forEach(card=>{ card.style.display = (f==="全部" || card.dataset.cat===f) ? "" : "none"; });
+  });
+});
+
+/* Scroll progress bar + back to top */
+const progressBar = document.getElementById("progressBar");
+const backTop = document.getElementById("backTop");
+
+function onScroll() {
+  if(progressBar) {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    progressBar.style.width = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + "%";
+  }
+  if(backTop) {
+    if(window.scrollY > 400) backTop.classList.add("visible");
+    else backTop.classList.remove("visible");
+  }
+}
+
+window.addEventListener("scroll", onScroll, { passive: true });
+onScroll();
+
+if(backTop) backTop.addEventListener("click", ()=>{ window.scrollTo({top:0, behavior:"smooth"}); });
+
+/* Mobile nav */
+const navToggle = document.getElementById("navToggle");
+const mobileNav = document.getElementById("mobileNav");
+const mobileClose = document.getElementById("mobileClose");
+
+function openNav() { mobileNav.classList.add("open"); document.body.style.overflow="hidden"; navToggle.setAttribute("aria-expanded","true"); }
+function closeNav() { mobileNav.classList.remove("open"); document.body.style.overflow=""; navToggle.setAttribute("aria-expanded","false"); }
+
+if(navToggle) navToggle.addEventListener("click", openNav);
+if(mobileClose) mobileClose.addEventListener("click", closeNav);
+document.querySelectorAll(".mob-link").forEach(a=>{ a.addEventListener("click", closeNav); });
+document.addEventListener("keydown", e=>{ if(e.key==="Escape" && mobileNav.classList.contains("open")) closeNav(); });
+
+/* Active nav link on scroll */
+const sections = document.querySelectorAll("section[id]");
+const navLinks = document.querySelectorAll(".navlinks a");
+const navObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      navLinks.forEach(a=>a.classList.remove("active"));
+      const link = document.querySelector(`.navlinks a[href="#${e.target.id}"]`);
+      if(link) link.classList.add("active");
+    }
+  });
+}, { rootMargin: "-40% 0px -55% 0px" });
+sections.forEach(s=>navObserver.observe(s));
+
+/* Scroll reveal */
+const revealObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add("visible");
+    }
+  });
+}, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" });
+
+document.querySelectorAll("section, .reveal, .reveal-group").forEach(el=>{
+  if(!el.classList.contains("hero")) revealObserver.observe(el);
+});
+
+/* Unified copy button for all code blocks */
+['.codebox','.small-code','.cmd-box','.copy-block','.prompt-card pre'].forEach(sel=>{
+  document.querySelectorAll(sel).forEach(block=>{
+    if(block.closest('.codebox-wrap')) return;
+    const wrap=document.createElement('div');
+    wrap.className='codebox-wrap';
+    block.parentNode.insertBefore(wrap,block);
+    wrap.appendChild(block);
+    const btn=document.createElement('button');
+    btn.className='cb-copy';
+    btn.textContent='复制';
+    wrap.appendChild(btn);
+    btn.addEventListener('click',async()=>{
+      try{
+        await navigator.clipboard.writeText(block.textContent.trim());
+        btn.textContent='已复制';
+        btn.classList.add('done');
+        setTimeout(()=>{ btn.textContent='复制'; btn.classList.remove('done'); },1400);
+      }catch(e){ alert('复制失败'); }
+    });
+  });
+});
+
+/* Add reveal class to cards inside sections */
+document.querySelectorAll("section > .card, section > .grid, section > .start-grid, section > .remote-grid").forEach(el=>{
+  el.classList.add("reveal");
+  revealObserver.observe(el);
+});
+</script>
+</body>
+</html>
