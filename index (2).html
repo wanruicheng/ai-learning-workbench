@@ -17,27 +17,29 @@
 <meta name="twitter:description" content="一个面向本科阶段的 Claude Code / Codex / MCP / Skills 学习工作台配置方案。" />
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23C96B43'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Outfit,sans-serif' font-weight='900' font-size='18' fill='white'%3EC%3C/text%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 /* ── Claude-Style Design System ─────────────────────── */
 :root {
   --bg: #F9F6F2;
   --paper: #FFFFFF;
-  --paper2: #F2EAE0;
-  --paper3: #FBF7F3;
   --ink: #1A1410;
   --muted: #6B5E54;
-  --soft: #9A8A7E;
   --line: #E5D9CF;
   --accent: #C96B43;
   --accent2: #A85230;
   --green: #4E7240;
   --blue: #3D6480;
-  --dark: #1A1410;
   --shadow: 0 16px 48px rgba(50,30,10,.09);
   --shadow2: 0 6px 20px rgba(50,30,10,.06);
   --radius: 20px;
   --radius-sm: 14px;
+  --code-bg: #1E1510;
+  --border-soft: #EFE0D2;
+  --code-fg: #EFE5DA;
+  --card-warm: linear-gradient(180deg, #FFFDF9, #FFF8EF);
+  --ink-deep: #2E2018;
 }
 
 /* ── Reset & Base ───────────────────────────────────── */
@@ -240,7 +242,7 @@ section { padding: 44px 0; scroll-margin-top: 88px; }
 .btn:hover { transform: translateY(-2px); opacity: .92; }
 
 .btn.dark {
-  background: linear-gradient(135deg, #1A1410, #2E2018);
+  background: linear-gradient(135deg, #1A1410, var(--ink-deep));
   color: #fff;
   box-shadow: 0 8px 20px rgba(26,20,16,.2);
 }
@@ -262,9 +264,18 @@ section { padding: 44px 0; scroll-margin-top: 88px; }
 .btn.hero-cta {
   position: relative;
   background: linear-gradient(135deg, #D4733F, #A84A20);
-  box-shadow: 0 8px 28px rgba(184,86,48,.35), 0 0 0 0 rgba(201,107,67,.4);
-  animation: cta-pulse 2.5s ease-in-out infinite;
+  box-shadow: 0 8px 28px rgba(184,86,48,.35);
   z-index: 1;
+}
+.btn.hero-cta::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(201,107,67,.5), transparent 70%);
+  z-index: -1;
+  opacity: 0;
+  animation: cta-pulse 2.5s ease-in-out infinite;
 }
 .btn.hero-cta::after {
   content: "";
@@ -283,8 +294,8 @@ section { padding: 44px 0; scroll-margin-top: 88px; }
   box-shadow: 0 12px 36px rgba(184,86,48,.45);
 }
 @keyframes cta-pulse {
-  0%, 100% { box-shadow: 0 8px 28px rgba(184,86,48,.35), 0 0 0 0 rgba(201,107,67,.2); }
-  50% { box-shadow: 0 8px 28px rgba(184,86,48,.35), 0 0 0 12px rgba(201,107,67,0); }
+  0%, 100% { opacity: 0; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.08); }
 }
 
 /* ── Terminal Card ──────────────────────────────────── */
@@ -315,7 +326,7 @@ section { padding: 44px 0; scroll-margin-top: 88px; }
   line-height: 1.85;
   color: #F0E8DE;
   padding: 20px;
-  background: #1E1510;
+  background: var(--code-bg);
 }
 
 .code > div { padding: 2px 0; }
@@ -425,8 +436,8 @@ section { padding: 44px 0; scroll-margin-top: 88px; }
 
 /* ── Skills ─────────────────────────────────────────── */
 .skill, .faq {
-  border: 1px solid #EFE0D2;
-  background: linear-gradient(180deg, #FFFDF9, #FFF8EF);
+  border: 1px solid var(--border-soft);
+  background: var(--card-warm);
   border-radius: var(--radius-sm);
   padding: 14px;
 }
@@ -459,7 +470,7 @@ section { padding: 44px 0; scroll-margin-top: 88px; }
 
 .node {
   border: 1px solid var(--line);
-  background: linear-gradient(180deg, #FFFDF9, #FFF8EF);
+  background: var(--card-warm);
   border-radius: 18px;
   padding: 16px;
   text-align: center;
@@ -469,7 +480,7 @@ section { padding: 44px 0; scroll-margin-top: 88px; }
 .node p { font-size: 13px; line-height: 1.65; }
 
 .center {
-  background: linear-gradient(135deg, #1A1410, #2E2018) !important;
+  background: linear-gradient(135deg, #1A1410, var(--ink-deep)) !important;
   color: #fff;
   border-color: #1A1410 !important;
 }
@@ -487,7 +498,7 @@ section { padding: 44px 0; scroll-margin-top: 88px; }
 }
 .sf-node {
   border: 1px solid var(--line);
-  background: linear-gradient(180deg, #FFFDF9, #FFF8EF);
+  background: var(--card-warm);
   border-radius: 18px;
   padding: 18px 16px;
   text-align: center;
@@ -515,7 +526,7 @@ section { padding: 44px 0; scroll-margin-top: 88px; }
 .sf-node span { font-size: 12.5px; color: var(--muted); line-height: 1.55; }
 .sf-arrow { display: grid; place-items: center; color: var(--accent); font-size: 20px; font-weight: 900; }
 .sf-core {
-  background: linear-gradient(135deg, #1A1410, #2E2018) !important;
+  background: linear-gradient(135deg, #1A1410, var(--ink-deep)) !important;
   border-color: #1A1410 !important;
 }
 .sf-core b { color: #fff; }
@@ -558,8 +569,8 @@ section { padding: 44px 0; scroll-margin-top: 88px; }
   display: flex;
   gap: 12px;
   align-items: flex-start;
-  border: 1px solid #EFE0D2;
-  background: linear-gradient(180deg, #FFFDF9, #FFF8EF);
+  border: 1px solid var(--border-soft);
+  background: var(--card-warm);
   border-radius: var(--radius-sm);
   padding: 13px;
 }
@@ -567,8 +578,8 @@ section { padding: 44px 0; scroll-margin-top: 88px; }
 /* ── Prompts ────────────────────────────────────────── */
 .prompt {
   position: relative;
-  border: 1px solid #EFE0D2;
-  background: linear-gradient(180deg, #FFFDF9, #FFF8EF);
+  border: 1px solid var(--border-soft);
+  background: var(--card-warm);
   border-radius: var(--radius-sm);
   padding: 16px;
 }
@@ -576,13 +587,13 @@ section { padding: 44px 0; scroll-margin-top: 88px; }
 .prompt pre {
   white-space: pre-wrap;
   word-break: break-word;
-  background: #1E1510;
+  background: var(--code-bg);
   border-radius: 12px;
   padding: 14px;
   font-family: "JetBrains Mono", Consolas, monospace;
   font-size: 12.5px;
   line-height: 1.75;
-  color: #EFE5DA;
+  color: var(--code-fg);
   margin: 10px 0 0;
 }
 
@@ -592,7 +603,7 @@ section { padding: 44px 0; scroll-margin-top: 88px; }
   top: 14px;
   border: none;
   border-radius: 999px;
-  background: linear-gradient(135deg, #1A1410, #2E2018);
+  background: linear-gradient(135deg, #1A1410, var(--ink-deep));
   color: #fff;
   padding: 7px 11px;
   font-size: 11.5px;
@@ -633,7 +644,7 @@ section { padding: 44px 0; scroll-margin-top: 88px; }
 .filter:hover:not(.active) { background: rgba(201,107,67,.08); border-color: rgba(201,107,67,.3); }
 
 .download-card {
-  background: linear-gradient(180deg, #FFFDF9, #FFF8EF);
+  background: var(--card-warm);
   border: 1px solid var(--line);
   border-radius: 18px;
   padding: 18px;
@@ -722,62 +733,27 @@ section { padding: 44px 0; scroll-margin-top: 88px; }
 .mini { font-size: 12.5px; color: var(--muted); line-height: 1.65; }
 
 /* ── Code Boxes ─────────────────────────────────────── */
-.codebox {
-  background: #1E1510;
-  color: #EFE5DA;
-  border-radius: 12px;
-  padding: 14px;
+.codebox, .small-code, .cmd-box, .copy-block {
   font-family: "JetBrains Mono", Consolas, monospace;
-  font-size: 13px;
-  line-height: 1.7;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: 12px;
   white-space: pre-wrap;
   overflow: auto;
   margin-top: 10px;
 }
 
-.small-code {
-  font-family: "JetBrains Mono", Consolas, monospace;
-  background: #1E1510;
-  color: #EFE5DA;
-  border-radius: 10px;
-  padding: 10px;
-  font-size: 12.5px;
-  line-height: 1.65;
-  white-space: pre-wrap;
-}
-
-.cmd-box {
-  font-family: "JetBrains Mono", Consolas, monospace;
-  background: #1E1510;
-  color: #EFE5DA;
-  border-radius: 12px;
-  padding: 12px;
-  margin-top: 10px;
-  white-space: pre-wrap;
-  overflow: auto;
-  line-height: 1.65;
-  font-size: 12.5px;
-}
-
-.copy-block {
-  font-family: "JetBrains Mono", Consolas, monospace;
-  background: #1E1510;
-  color: #EFE5DA;
-  border-radius: 12px;
-  padding: 14px;
-  white-space: pre-wrap;
-  overflow: auto;
-  line-height: 1.65;
-  font-size: 12.5px;
-  margin-top: 10px;
-}
+.codebox { padding: 14px; font-size: 13px; line-height: 1.7; }
+.small-code { padding: 10px; font-size: 12.5px; line-height: 1.65; border-radius: 10px; margin-top: 0; }
+.cmd-box { padding: 12px; font-size: 12.5px; line-height: 1.65; }
+.copy-block { padding: 14px; font-size: 12.5px; line-height: 1.65; }
 
 /* ── Start Cards / Beginner ─────────────────────────── */
 .start-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-.start-card { border: 1px solid var(--line); background: linear-gradient(180deg, #FFFDF9, #FFF8EF); border-radius: var(--radius); padding: 20px; box-shadow: 0 10px 28px rgba(50,30,10,.07); }
+.start-card { border: 1px solid var(--line); background: var(--card-warm); border-radius: var(--radius); padding: 20px; box-shadow: 0 10px 28px rgba(50,30,10,.07); }
 
 .start-steps { margin: 12px 0 0; padding: 0; list-style: none; display: grid; gap: 9px; }
-.start-steps li { border: 1px solid #EFE0D2; background: rgba(255,255,255,.8); border-radius: 12px; padding: 10px 12px; color: var(--muted); line-height: 1.65; font-size: 14px; }
+.start-steps li { border: 1px solid var(--border-soft); background: rgba(255,255,255,.8); border-radius: 12px; padding: 10px 12px; color: var(--muted); line-height: 1.65; font-size: 14px; }
 .start-steps b { color: var(--ink); }
 
 .level-badge {
@@ -800,12 +776,9 @@ section { padding: 44px 0; scroll-margin-top: 88px; }
 .beginner-pill span { font-size: 12px; color: var(--muted); line-height: 1.55; }
 
 /* ── Terms / Prepare ────────────────────────────────── */
-.term-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; }
-.term-card { border: 1px solid #EFE0D2; background: linear-gradient(180deg, #FFFDF9, #FFF8EF); border-radius: 16px; padding: 15px; }
+.term-grid, .prepare-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; }
+.term-card, .prepare-card { border: 1px solid var(--border-soft); background: var(--card-warm); border-radius: 16px; padding: 15px; }
 .term-card code { font-family: "JetBrains Mono", Consolas, monospace; color: var(--accent2); background: #F0E5D8; border-radius: 7px; padding: 3px 6px; font-size: 11.5px; }
-
-.prepare-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; }
-.prepare-card { border: 1px solid #EFE0D2; background: linear-gradient(180deg, #FFFDF9, #FFF8EF); border-radius: 16px; padding: 16px; }
 
 /* ── Steps Detail ───────────────────────────────────── */
 .step-detail { border: 1px solid var(--line); background: rgba(255,255,255,.8); border-radius: 18px; padding: 18px; }
@@ -814,7 +787,7 @@ section { padding: 44px 0; scroll-margin-top: 88px; }
 
 /* ── OS / Install ───────────────────────────────────── */
 .os-tabs, .install-compare { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; }
-.os-card, .compare-card { border: 1px solid #EFE0D2; background: rgba(255,255,255,.8); border-radius: 16px; padding: 16px; }
+.os-card, .compare-card { border: 1px solid var(--border-soft); background: rgba(255,255,255,.8); border-radius: 16px; padding: 16px; }
 .compare-card .expect { margin-top: 10px; border-left: 3px solid var(--green); background: #F0F4E8; border-radius: 10px; padding: 10px 12px; color: var(--muted); font-size: 13px; line-height: 1.65; }
 
 /* ── Key Flow ───────────────────────────────────────── */
@@ -832,18 +805,18 @@ section { padding: 44px 0; scroll-margin-top: 88px; }
 .quick-arrow { display: grid; place-items: center; color: var(--accent); font-size: 22px; font-weight: 900; }
 
 /* ── Trouble Cards ──────────────────────────────────── */
-.trouble-card { border: 1px solid #EFE0D2; background: rgba(255,255,255,.8); border-radius: 16px; padding: 16px; line-height: 1.7; }
+.trouble-card { border: 1px solid var(--border-soft); background: rgba(255,255,255,.8); border-radius: 16px; padding: 16px; line-height: 1.7; }
 .trouble-card h3 { display: flex; align-items: center; gap: 8px; font-size: 15px; }
 .trouble-card h3::before { content: "?"; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: #EFE0CE; color: var(--accent2); font-weight: 900; font-size: 12px; flex: 0 0 auto; }
 
 /* ── Skill Use Cards ────────────────────────────────── */
 .skill-use-card { border: 1px solid var(--line); background: rgba(255,255,255,.8); border-radius: 16px; padding: 16px; display: grid; gap: 9px; }
 .skill-use-card .name { font-family: "JetBrains Mono", Consolas, monospace; color: var(--accent2); font-weight: 700; font-size: 13px; }
-.skill-use-row { border-top: 1px solid #EFE0D2; padding-top: 8px; font-size: 13px; color: var(--muted); line-height: 1.6; }
+.skill-use-row { border-top: 1px solid var(--border-soft); padding-top: 8px; font-size: 13px; color: var(--muted); line-height: 1.6; }
 .skill-use-row b { color: var(--ink); }
 
 /* ── Prompt Route ───────────────────────────────────── */
-.prompt-route { border: 1px solid #EFE0D2; background: rgba(255,255,255,.8); border-radius: 16px; padding: 16px; }
+.prompt-route { border: 1px solid var(--border-soft); background: rgba(255,255,255,.8); border-radius: 16px; padding: 16px; }
 .prompt-route .tag2 { display: inline-flex; border-radius: 999px; background: #EFE0D0; color: #7A5035; padding: 4px 9px; font-size: 11.5px; font-weight: 800; margin-bottom: 8px; }
 
 /* ── CN Note ────────────────────────────────────────── */
@@ -851,10 +824,10 @@ section { padding: 44px 0; scroll-margin-top: 88px; }
 .cn-note h3 { display: flex; align-items: center; gap: 10px; }
 .cn-note h3::before { content: "CN"; display: grid; place-items: center; width: 32px; height: 26px; border-radius: 999px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 900; flex: 0 0 auto; }
 .cn-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 13px; }
-.cn-item { border: 1px solid #EFE0D2; background: rgba(255,255,255,.8); border-radius: 13px; padding: 12px; color: var(--muted); line-height: 1.65; font-size: 13.5px; }
+.cn-item { border: 1px solid var(--border-soft); background: rgba(255,255,255,.8); border-radius: 13px; padding: 12px; color: var(--muted); line-height: 1.65; font-size: 13.5px; }
 
 /* ── FAQ Extra ──────────────────────────────────────── */
-.faq-extra { border: 1px solid #EFE0D2; background: rgba(255,255,255,.8); border-radius: 16px; padding: 16px; }
+.faq-extra { border: 1px solid var(--border-soft); background: rgba(255,255,255,.8); border-radius: 16px; padding: 16px; }
 .faq-extra h3 { display: flex; align-items: center; gap: 8px; font-size: 15px; }
 .faq-extra h3::before { content: "i"; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: #EFE0CE; color: var(--accent2); font-weight: 900; font-size: 12px; flex: 0 0 auto; }
 
@@ -862,17 +835,17 @@ section { padding: 44px 0; scroll-margin-top: 88px; }
 
 /* ── Remote Section ─────────────────────────────────── */
 .remote-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; margin-top: 13px; }
-.remote-card { border: 1px solid var(--line); background: linear-gradient(180deg, #FFFDF9, #FFF8EF); border-radius: 18px; padding: 16px; box-shadow: 0 10px 28px rgba(50,30,10,.06); }
+.remote-card { border: 1px solid var(--line); background: var(--card-warm); border-radius: 18px; padding: 16px; box-shadow: 0 10px 28px rgba(50,30,10,.06); }
 .remote-card p { color: var(--muted); line-height: 1.7; }
 
 .remote-flow { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; gap: 10px; align-items: stretch; margin-top: 15px; }
-.remote-node { border: 1px solid #EFE0D2; background: rgba(255,255,255,.8); border-radius: 16px; padding: 14px; text-align: center; display: flex; flex-direction: column; justify-content: center; min-height: 92px; }
+.remote-node { border: 1px solid var(--border-soft); background: rgba(255,255,255,.8); border-radius: 16px; padding: 14px; text-align: center; display: flex; flex-direction: column; justify-content: center; min-height: 92px; }
 .remote-node b { display: block; color: var(--ink); margin-bottom: 5px; font-family: "Outfit", sans-serif; }
 .remote-node span { font-size: 12px; color: var(--muted); line-height: 1.55; }
 .remote-arrow { display: grid; place-items: center; color: var(--accent); font-size: 22px; font-weight: 900; }
 
 .rule-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; margin-top: 13px; }
-.rule-item { border: 1px solid #EFE0D2; background: rgba(255,255,255,.8); border-radius: 13px; padding: 11px 13px; color: var(--muted); line-height: 1.65; font-size: 13.5px; }
+.rule-item { border: 1px solid var(--border-soft); background: rgba(255,255,255,.8); border-radius: 13px; padding: 11px 13px; color: var(--muted); line-height: 1.65; font-size: 13.5px; }
 
 /* ── Guide Steps ────────────────────────────────────── */
 .guide-steps { display: grid; gap: 11px; margin-top: 13px; }
@@ -883,7 +856,7 @@ section { padding: 44px 0; scroll-margin-top: 88px; }
 /* ── Prompt Library ─────────────────────────────────── */
 .prompt-library, .trouble-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; margin-top: 13px; }
 .prompt-card { border: 1px solid var(--line); background: rgba(255,255,255,.8); border-radius: 16px; padding: 16px; line-height: 1.7; }
-.prompt-card pre { white-space: pre-wrap; background: #1E1510; border-radius: 12px; padding: 12px; line-height: 1.65; overflow: auto; color: #EFE5DA; font-family: "JetBrains Mono", Consolas, monospace; font-size: 12.5px; }
+.prompt-card pre, .remote-prompt pre { white-space: pre-wrap; background: var(--code-bg); border-radius: 12px; padding: 12px; line-height: 1.65; overflow: auto; color: var(--code-fg); font-family: "JetBrains Mono", Consolas, monospace; font-size: 12.5px; }
 
 /* ── Safety / Agents ────────────────────────────────── */
 .safety-matrix { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; margin-top: 13px; }
@@ -893,7 +866,7 @@ section { padding: 44px 0; scroll-margin-top: 88px; }
 .safety-card.safe { background: #F2F6E8; border-color: #CACED2; }
 
 .agent-setup { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; margin-top: 13px; }
-.agent-setup-card { border: 1px solid var(--line); background: linear-gradient(180deg, #FFFDF9, #FFF8EF); border-radius: 18px; padding: 16px; }
+.agent-setup-card { border: 1px solid var(--line); background: var(--card-warm); border-radius: 18px; padding: 16px; }
 .agent-setup-card code { font-family: "JetBrains Mono", Consolas, monospace; color: var(--accent2); background: #F0E5D8; border-radius: 7px; padding: 3px 6px; font-size: 12px; }
 
 .agent-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; margin-top: 13px; }
@@ -901,17 +874,16 @@ section { padding: 44px 0; scroll-margin-top: 88px; }
 .agent-card .agent-name { font-family: "JetBrains Mono", Consolas, monospace; color: var(--accent2); font-weight: 700; margin-bottom: 8px; }
 .agent-card ul { margin: 8px 0 0 16px; color: var(--muted); line-height: 1.7; font-size: 13.5px; }
 
-.remote-prompt { border: 1px solid #EFE0D2; background: rgba(255,255,255,.8); border-radius: 16px; padding: 16px; }
+.remote-prompt { border: 1px solid var(--border-soft); background: rgba(255,255,255,.8); border-radius: 16px; padding: 16px; }
 .remote-prompt h3 { margin-bottom: 8px; }
-.remote-prompt pre { white-space: pre-wrap; background: #1E1510; border-radius: 12px; padding: 12px; line-height: 1.65; overflow: auto; color: #EFE5DA; font-family: "JetBrains Mono", Consolas, monospace; font-size: 12.5px; }
 
 .status-pill { display: inline-flex; align-items: center; border-radius: 999px; background: #EAF0DE; color: #476035; font-size: 11.5px; font-weight: 800; padding: 5px 10px; margin-right: 5px; margin-bottom: 7px; }
 
 /* ── Rule Table ─────────────────────────────────────── */
 .rule-table { width: 100%; border-collapse: separate; border-spacing: 0 8px; margin-top: 12px; }
-.rule-table td { background: rgba(255,255,255,.8); border-top: 1px solid #EFE0D2; border-bottom: 1px solid #EFE0D2; padding: 12px; line-height: 1.65; color: var(--muted); font-size: 13.5px; }
-.rule-table td:first-child { border-left: 1px solid #EFE0D2; border-radius: 12px 0 0 12px; font-weight: 700; color: var(--ink); width: 26%; }
-.rule-table td:last-child { border-right: 1px solid #EFE0D2; border-radius: 0 12px 12px 0; }
+.rule-table td { background: rgba(255,255,255,.8); border-top: 1px solid var(--border-soft); border-bottom: 1px solid var(--border-soft); padding: 12px; line-height: 1.65; color: var(--muted); font-size: 13.5px; }
+.rule-table td:first-child { border-left: 1px solid var(--border-soft); border-radius: 12px 0 0 12px; font-weight: 700; color: var(--ink); width: 26%; }
+.rule-table td:last-child { border-right: 1px solid var(--border-soft); border-radius: 0 12px 12px 0; }
 
 /* ── Hook Lane ──────────────────────────────────────── */
 .hook-lane { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 13px; }
@@ -934,7 +906,7 @@ section { padding: 44px 0; scroll-margin-top: 88px; }
   margin-top: 30px;
   background:
     radial-gradient(circle at 8% 8%, rgba(201,107,67,.24), transparent 18rem),
-    linear-gradient(135deg, #1A1410, #2E2018);
+    linear-gradient(135deg, #1A1410, var(--ink-deep));
   color: #fff;
   border-radius: 24px;
   padding: 28px;
@@ -950,7 +922,7 @@ section { padding: 44px 0; scroll-margin-top: 88px; }
   .os-tabs, .install-compare, .safety-matrix,
   .agent-setup, .agent-grid, .remote-grid,
   .prompt-library, .trouble-grid, .rule-list,
-  .beginner-strip { grid-template-columns: 1fr; }
+  .hook-lane, .beginner-strip { grid-template-columns: 1fr; }
 
   .navlinks { display: none; }
   h1 { font-size: 40px; }
@@ -1003,6 +975,7 @@ section { padding: 44px 0; scroll-margin-top: 88px; }
   inset: 0;
   background: rgba(249,246,242,.97);
   backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   z-index: 60;
   flex-direction: column;
   justify-content: center;
@@ -1043,7 +1016,7 @@ section { padding: 44px 0; scroll-margin-top: 88px; }
   bottom: 28px; right: 28px;
   width: 46px; height: 46px;
   border-radius: 14px;
-  background: linear-gradient(135deg, #1A1410, #2E2018);
+  background: linear-gradient(135deg, #1A1410, var(--ink-deep));
   color: #fff;
   border: none;
   cursor: pointer;
@@ -1242,8 +1215,8 @@ section { padding: 44px 0; scroll-margin-top: 88px; }
 <body>
 <a href="#main-content" class="skip-link">跳到主要内容</a>
 <div class="progress-bar" id="progressBar"></div>
-<header class="header"><div class="nav"><div class="brand"><div class="logo">C</div><div><strong>本科 AI 学习工作台</strong><span>Claude Code · DeepSeek · Skills · MCP</span></div></div><nav class="navlinks" id="navlinks"><a href="#top">总览</a><a href="#start-here">从哪开始</a><a href="#quickstart">试跑</a><a href="#downloads">下载</a><a href="#cc-connect-weixin-guide">微信远程</a><a href="#remote-safety-rules">远程安全</a><a href="#subagents-guide">Subagents</a><a href="#hooks-guide">Hooks</a></nav><button class="nav-toggle" id="navToggle" aria-label="菜单">☰</button></div></header>
-<div class="mobile-nav-overlay" id="mobileNav">
+<header class="header"><div class="nav"><div class="brand"><div class="logo">C</div><div><strong>本科 AI 学习工作台</strong><span>Claude Code · DeepSeek · Skills · MCP</span></div></div><nav class="navlinks" id="navlinks"><a href="#top">总览</a><a href="#ai-assistants">AI 助手</a><a href="#start-here">从哪开始</a><a href="#quickstart">试跑</a><a href="#downloads">下载</a><a href="#cc-connect-weixin-guide">微信远程</a><a href="#remote-safety-rules">远程安全</a><a href="#subagents-guide">Subagents</a><a href="#hooks-guide">Hooks</a></nav><button class="nav-toggle" id="navToggle" aria-label="菜单" aria-expanded="false" aria-controls="mobileNav">☰</button></div></header>
+<div class="mobile-nav-overlay" id="mobileNav" role="dialog" aria-modal="true" aria-label="导航菜单">
   <button class="mobile-nav-close" id="mobileClose">✕</button>
   <a href="#top" class="mob-link">总览</a>
   <a href="#start-here" class="mob-link">从哪开始</a>
@@ -1267,12 +1240,50 @@ section { padding: 44px 0; scroll-margin-top: 88px; }
 <div class="sec-divider"></div>
 <section id="dashboard"><p class="label">01 · Dashboard</p><div class="section-header reveal"><h2>当前配置状态</h2><div class="sh-line"></div></div><div class="grid g3">
 <div class="card panel"><div class="status"><div><div class="icon">C</div><h3>Claude 桌面端</h3><p>接入 DeepSeek，负责课程作业、文档生成和 Skills 调用。</p></div><span class="pill">已完成</span></div></div>
+<div class="card panel"><div class="status"><div><div class="icon">P</div><h3>Potato 陪伴助手</h3><p>日常聊天、情绪陪伴、学习建议。不强行给意见，只在你问时帮忙。</p></div><span class="pill">已完成</span></div></div>
+<div class="card panel"><div class="status"><div><div class="icon">H</div><h3>Hermes 规划器</h3><p>任务拆解、风险识别、计划生成。说"帮我规划"自动启动完整规划流程。</p></div><span class="pill">已完成</span></div></div>
+<div class="card panel"><div class="status"><div><div class="icon">WX</div><h3>微信集成</h3><p>通过 cc-connect 在微信中使用 Potato 和 Hermes。随时随地，完全无缝。</p></div><span class="pill">已完成</span></div></div>
+<div class="card panel"><div class="status"><div><div class="icon">SK</div><h3>Skills 体系</h3><p>文档、作业、实验报告、数据核查、考试复习、Python 学习均已覆盖。</p></div><span class="pill">16 Skills</span></div></div>
 <div class="card panel"><div class="status"><div><div class="icon">PS</div><h3>PowerShell Claude Code</h3><p>备用排错入口，MCP、环境变量、插件管理都可在这里处理。</p></div><span class="pill">已完成</span></div></div>
-<div class="card panel"><div class="status"><div><div class="icon">SK</div><h3>Skills 体系</h3><p>文档、作业、实验报告、数据核查、考试复习、Python 学习均已覆盖。</p></div><span class="pill">13+ Skills</span></div></div>
 <div class="card panel"><div class="status"><div><div class="icon">TV</div><h3>Tavily MCP</h3><p>用于联网搜索、网页提取、资料整理和报告来源筛选。</p></div><span class="pill">Connected</span></div></div>
 <div class="card panel"><div class="status"><div><div class="icon">BD</div><h3>百度地图 MCP</h3><p>用于国内地点查询、路线距离和旅游规划辅助。</p></div><span class="pill">Connected</span></div></div>
 <div class="card panel"><div class="status"><div><div class="icon">SEC</div><h3>AI-Sandbox</h3><p>input/output/backup/temp 结构，用于限制高权限工具操作范围。</p></div><span class="pill warn">安全区</span></div></div>
 </div></section>
+
+<!-- ── Potato + Hermes + 微信集成 ── -->
+<section id="ai-assistants">
+  <p class="label">AI 助手</p>
+  <h2>Potato 陪伴 + Hermes 规划 + 微信集成</h2>
+  <div class="grid g2">
+    <div class="card">
+      <h3>🤖 Potato 陪伴助手</h3>
+      <p>一个专为本科生设计的陪伴助手。Potato 会认真听你说话，理解你的情绪，在你需要时提供建议——但不会强行给意见或打断你。</p>
+      <p><b>使用场景：</b>日常聊天、学习困惑、情绪陪伴、专业咨询。</p>
+      <p><b>直接在 Claude Code 中使用即可，无需额外配置。</b></p>
+    </div>
+    <div class="card">
+      <h3>📋 Hermes 规划器</h3>
+      <p>专业的任务规划和风险识别系统。自动完成：理解需求 → 任务拆解 → 风险识别 → 生成计划。</p>
+      <p><b>激活方式：</b>在消息中说"帮我规划"、"拆解"、"有什么风险"、"怎样比较安全"、"需要分析"。</p>
+      <div class="small-code" style="margin-top:14px">帮我规划一下怎么在两周内完成这篇 3000 字的课程论文</div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <h3>📱 微信集成（通过 cc-connect）</h3>
+    <p>启动后可以在微信中直接使用系统。不需要打开电脑，随时随地发消息就能获得 Potato 的陪伴或 Hermes 的规划。</p>
+    <div class="grid g2" style="margin-top:14px">
+      <div>
+        <b>工作流程：</b>
+        <p style="margin-top:8px;font-size:13px;color:#6B5E54">微信消息 → cc-connect 接收 → 本地服务(localhost:5000) → 检查关键词 → Potato 陪伴 或 Hermes 规划 → 发回微信</p>
+      </div>
+      <div>
+        <b>启动方式：</b>
+        <div class="codebox" style="margin-top:8px">cd wechat
+python wechat_service.py</div>
+      </div>
+    </div>
+  </div>
+</section>
 
 
 
@@ -1313,7 +1324,7 @@ section { padding: 44px 0; scroll-margin-top: 88px; }
   </div>
 </section>
 
-<section id="arch"><p class="label">02 · Architecture</p><h2>系统架构图</h2><div class="card"><div class="arch"><div class="grid"><div class="node"><strong>ChatGPT</strong><p>规划、解释、排错、长期学习建议</p></div><div class="node"><strong>Codex</strong><p>Python、代码调试、项目生成</p></div></div><div class="node center"><strong>Claude Code / 桌面端</strong><p>核心执行层：Skills、MCP、文档生成、项目工作区</p></div><div class="grid"><div class="node"><strong>Skills</strong><p>docx / pptx / xlsx / lab / exam / Python</p></div><div class="node"><strong>MCP</strong><p>Tavily 搜索 + 百度地图路线</p></div></div></div></div></section>
+<section id="arch"><p class="label">02 · Architecture</p><h2>系统架构图</h2><div class="card"><div class="arch"><div class="grid"><div class="node"><strong>ChatGPT</strong><p>规划、解释、排错、长期学习建议</p></div><div class="node"><strong>Codex</strong><p>Python、代码调试、项目生成</p></div></div><div class="node center"><strong>Claude Code / 桌面端</strong><p>核心执行层：Potato 陪伴 + Hermes 规划 + Skills + MCP + 文档生成</p></div><div class="grid"><div class="node"><strong>Skills</strong><p>docx / pptx / xlsx / lab / exam / Python / 笔记 / 视频</p></div><div class="node"><strong>MCP + 微信</strong><p>Tavily 搜索 + 百度地图 + cc-connect 微信远程</p></div></div></div></div></section>
 
 
 
@@ -1494,7 +1505,8 @@ claude</div></div>
 <div class="card"><h3>文档生成</h3><div class="grid"><div class="skill"><div class="name">pptx</div>生成、读取、编辑 PPT。</div><div class="skill"><div class="name">docx</div>生成、读取、编辑 Word。</div><div class="skill"><div class="name">xlsx</div>生成、读取、编辑 Excel。</div><div class="skill"><div class="name">pdf</div>读取和整理 PDF。</div></div></div>
 <div class="card"><h3>课程作业</h3><div class="grid"><div class="skill"><div class="name">college-assignment-packager</div>大作业总控拆解。</div><div class="skill"><div class="name">ppt-course-presentation-designer</div>PPT 大纲、页面结构、演讲备注。</div><div class="skill"><div class="name">word-college-report-writer</div>课程报告、调研报告、读书报告。</div><div class="skill"><div class="name">excel-data-cleaning-assistant</div>问卷、统计表、实验数据整理。</div></div></div>
 <div class="card"><h3>实验报告</h3><div class="grid"><div class="skill"><div class="name">lab-report-writer</div>实验目的、原理、器材、步骤、图表说明、Word 初稿。</div><div class="skill"><div class="name">lab-data-calculation-checker</div>数据、单位、公式、误差、结论一致性核查。</div></div></div>
-<div class="card"><h3>学习与资料</h3><div class="grid"><div class="skill"><div class="name">pcep-python-tutor</div>Python 教学。</div><div class="skill"><div class="name">python-debug-explainer</div>报错解释和最小修改方案。</div><div class="skill"><div class="name">exam-review-planner</div>六级、Python、期末、专业课复习计划。</div><div class="skill"><div class="name">literature-source-summarizer</div>配合 Tavily 做资料来源整理。</div></div></div>
+<div class="card"><h3>学习与资料</h3><div class="grid"><div class="skill"><div class="name">pcep-python-tutor</div>Python 教学。</div><div class="skill"><div class="name">python-debug-explainer</div>报错解释和最小修改方案。</div><div class="skill"><div class="name">exam-review-planner</div>六级、Python、期末、专业课复习计划。</div><div class="skill"><div class="name">literature-source-summarizer</div>配合 Tavily 做资料来源整理。</div><div class="skill"><div class="name">course-note-organizer</div>课堂笔记整理、知识点提取、复习资料生成。</div></div></div>
+<div class="card"><h3>创意与设计</h3><div class="grid"><div class="skill"><div class="name">video-script-storyboard-planner</div>视频脚本、分镜和拍摄计划。</div></div></div>
 </div></section>
 
 
@@ -1647,7 +1659,9 @@ macOS:
       <h3>Word 报告助手</h3>
       <p>课程报告、调研报告、读书报告、实验前期文本的结构和正文。</p>
       <code>word-college-report-writer</code>
-    </article></div>
+    </article>
+
+</div>
 <div class="danger-line" style="margin-top:14px">发布后建议实测下载全部 Skills、lab-report-writer、word-college-report-writer、ppt-course-presentation-designer，确认 ZIP 能正常下载。</div>
 </div></section>
 
@@ -1999,41 +2013,6 @@ Permission mode: plan / 计划</div></div></div>
   </div>
 </section>
 
-<section id=”subagents-hooks”>
-  <p class="label">Subagents / Hooks</p>
-  <h2>进阶：Subagents 与 Hooks</h2>
-  <div class="card">
-    <p>Subagents 适合把复杂任务拆给专门助手处理；Hooks 适合做自动提醒、拦截和安全守护。当前建议是：先使用 Subagents，Hooks 暂时只设计方案，不急着启用。</p>
-    <div class="agent-grid">
-      <div class="agent-card">
-        <div class="agent-name">security-reviewer</div>
-        <p>专门检查隐私泄露、敏感文件、危险命令、路径越界和 GitHub 发布风险。</p>
-        <ul><li>只读分析</li><li>不回传密钥原文</li><li>只输出风险类型和建议</li></ul>
-      </div>
-      <div class="agent-card">
-        <div class="agent-name">project-maintainer</div>
-        <p>专门维护 README、CHANGELOG、SECURITY、index.html 结构说明和发布说明。</p>
-        <ul><li>先给计划</li><li>修改前备份</li><li>不执行 git push</li></ul>
-      </div>
-      <div class="agent-card">
-        <div class="agent-name">study-file-planner</div>
-        <p>专门规划 Word、PPT、实验报告、Python 学习文件和 input / output / backup 结构。</p>
-        <ul><li>先给结构</li><li>不覆盖原始文件</li><li>输出统一放 output</li></ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" style="margin-top:16px">
-    <h3>当前建议路线</h3>
-    <div class="rule-list">
-      <div class="rule-item">先在 cc-connect-test 测试目录验证 Subagents。</div>
-      <div class="rule-item">确认稳定后，再复制到 ai-learning-workbench 项目。</div>
-      <div class="rule-item">Hooks 先只做安全方案，不急着启用自动拦截。</div>
-      <div class="rule-item">远程微信入口继续保持 plan 模式，修改前必须确认。</div>
-    </div>
-  </div>
-</section>
-
 <section id="china-note">
   <p class="label">国内用户提醒</p>
   <h2>国内用户使用说明</h2>
@@ -2063,6 +2042,8 @@ Permission mode: plan / 计划</div></div></div>
 <div class="titem"><h3>04 建立学习规则</h3><p>Global Instruction、CLAUDE.md、/grade、study-assistant-default 完成。</p></div>
 <div class="titem"><h3>05 接入 Tavily 与百度地图 MCP</h3><p>实现资料检索与国内路线查询。</p></div>
 <div class="titem"><h3>06 实验报告工作流跑通</h3><p>模板 + 照片 + 数据 → Word 初稿，证明配置具备真实生产力。</p></div>
+<div class="titem"><h3>07 Potato + Hermes 上线</h3><p>Potato 陪伴助手和 Hermes 规划器集成到系统提示词，日常陪伴和任务规划自动切换。</p></div>
+<div class="titem"><h3>08 微信集成完成</h3><p>通过 cc-connect + wechat_service.py 实现微信远程调用 Potato 和 Hermes。</p></div>
 </div></section>
 
 
@@ -2090,7 +2071,8 @@ Permission mode: plan / 计划</div></div></div>
   <div class="grid g3">
     <div class="faq-extra"><h3>怎么在当前文件夹打开 PowerShell？</h3><p>打开目标文件夹，在空白处按住 <b>Shift</b> 后右键，选择“在终端中打开”。Windows 11 也可以直接在地址栏输入 <b>powershell</b> 回车。</p></div>
     <div class="faq-extra"><h3>我不会代码，可以用吗？</h3><p>可以。先只用 Claude 桌面端和 Skills，不配置 MCP 也能完成课程报告、PPT、实验报告整理和复习计划。</p></div>
-    <div class="faq-extra"><h3>我应该先装哪些 Skill？</h3><p>新手优先装：docx、pptx、xlsx、lab-report-writer、lab-data-calculation-checker、word-college-report-writer。</p></div>
+    <div class="faq-extra"><h3>我应该先装哪些 Skill？</h3><p>新手优先装：docx、pptx、xlsx、lab-report-writer、lab-data-calculation-checker、word-college-report-writer。Potato 和 Hermes 不需要单独安装，已内置在系统提示词中。</p></div>
+    <div class="faq-extra"><h3>Potato 和 Hermes 怎么用？</h3><p>直接在 Claude Code 中聊天就是 Potato 模式。说"帮我规划"就会自动切换到 Hermes 模式。微信集成启动后，在微信中也可以使用这两个功能。</p></div>
   </div>
 </section>
 
@@ -2140,45 +2122,44 @@ document.querySelectorAll(".filter").forEach(btn=>{
   });
 });
 
-/* Scroll progress bar */
+/* Scroll progress bar + back to top */
 const progressBar = document.getElementById("progressBar");
-function updateProgress() {
-  const scrollTop = window.scrollY;
-  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-  const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-  if(progressBar) progressBar.style.width = pct + "%";
-}
-
-/* Back to top */
 const backTop = document.getElementById("backTop");
-function updateBackTop() {
-  if(!backTop) return;
-  if(window.scrollY > 400) backTop.classList.add("visible");
-  else backTop.classList.remove("visible");
-}
-if(backTop) backTop.addEventListener("click", ()=>{ window.scrollTo({top:0, behavior:"smooth"}); });
 
-window.addEventListener("scroll", ()=>{
-  updateProgress();
-  updateBackTop();
-}, { passive: true });
-updateProgress();
+function onScroll() {
+  if(progressBar) {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    progressBar.style.width = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + "%";
+  }
+  if(backTop) {
+    if(window.scrollY > 400) backTop.classList.add("visible");
+    else backTop.classList.remove("visible");
+  }
+}
+
+window.addEventListener("scroll", onScroll, { passive: true });
+onScroll();
+
+if(backTop) backTop.addEventListener("click", ()=>{ window.scrollTo({top:0, behavior:"smooth"}); });
 
 /* Mobile nav */
 const navToggle = document.getElementById("navToggle");
 const mobileNav = document.getElementById("mobileNav");
 const mobileClose = document.getElementById("mobileClose");
 
-if(navToggle) navToggle.addEventListener("click", ()=>{ mobileNav.classList.add("open"); document.body.style.overflow="hidden"; });
-if(mobileClose) mobileClose.addEventListener("click", ()=>{ mobileNav.classList.remove("open"); document.body.style.overflow=""; });
-document.querySelectorAll(".mob-link").forEach(a=>{
-  a.addEventListener("click",()=>{ mobileNav.classList.remove("open"); document.body.style.overflow=""; });
-});
+function openNav() { mobileNav.classList.add("open"); document.body.style.overflow="hidden"; navToggle.setAttribute("aria-expanded","true"); }
+function closeNav() { mobileNav.classList.remove("open"); document.body.style.overflow=""; navToggle.setAttribute("aria-expanded","false"); }
+
+if(navToggle) navToggle.addEventListener("click", openNav);
+if(mobileClose) mobileClose.addEventListener("click", closeNav);
+document.querySelectorAll(".mob-link").forEach(a=>{ a.addEventListener("click", closeNav); });
+document.addEventListener("keydown", e=>{ if(e.key==="Escape" && mobileNav.classList.contains("open")) closeNav(); });
 
 /* Active nav link on scroll */
 const sections = document.querySelectorAll("section[id]");
 const navLinks = document.querySelectorAll(".navlinks a");
-const observer2 = new IntersectionObserver((entries)=>{
+const navObserver = new IntersectionObserver((entries)=>{
   entries.forEach(e=>{
     if(e.isIntersecting){
       navLinks.forEach(a=>a.classList.remove("active"));
@@ -2187,7 +2168,7 @@ const observer2 = new IntersectionObserver((entries)=>{
     }
   });
 }, { rootMargin: "-40% 0px -55% 0px" });
-sections.forEach(s=>observer2.observe(s));
+sections.forEach(s=>navObserver.observe(s));
 
 /* Scroll reveal */
 const revealObserver = new IntersectionObserver((entries)=>{
@@ -2199,12 +2180,7 @@ const revealObserver = new IntersectionObserver((entries)=>{
 }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" });
 
 document.querySelectorAll("section, .reveal, .reveal-group").forEach(el=>{
-  if(!el.classList.contains("hero")) {
-    if(!el.classList.contains("reveal") && !el.classList.contains("reveal-group")){
-      /* Add reveal to direct child cards of sections */
-    }
-    revealObserver.observe(el);
-  }
+  if(!el.classList.contains("hero")) revealObserver.observe(el);
 });
 
 /* Unified copy button for all code blocks */
